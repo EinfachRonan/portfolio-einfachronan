@@ -34,7 +34,7 @@ const galleryItems = lightboxButtons.map((button) => {
   return {
     src: image.getAttribute("src"),
     alt: image.getAttribute("alt"),
-    caption: title ? `${title} / ${category}` : category,
+    caption: title ? `${title} / ${category}` : image.getAttribute("alt"),
   };
 });
 
