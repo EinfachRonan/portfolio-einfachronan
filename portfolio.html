@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Kategorisiertes Portfolio von EinfachRonan mit Portraits, Hochzeiten, Club, Autos und Tieren."
+    />
+    <title>Portfolio | EinfachRonan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="assets/logo-einfachronan.png" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="portfolio-page">
+    <header class="site-header" data-header>
+      <a class="brand" href="index.html#start" aria-label="EinfachRonan Startseite">
+        <img class="brand-logo" src="assets/logo-einfachronan.png" alt="EinfachRonan" />
+      </a>
+
+      <button class="menu-toggle" type="button" aria-label="Navigation öffnen" aria-expanded="false" data-menu-toggle>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="nav" data-nav aria-label="Hauptnavigation">
+        <a href="index.html">Start</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="portfolio.html?filter=club#portfolio">Club</a>
+        <a href="portfolio.html?filter=portrait#portfolio">Portraits</a>
+        <a href="portfolio.html?filter=wedding#portfolio">Hochzeiten</a>
+        <a href="portfolio.html?filter=auto#portfolio">Autos</a>
+        <a href="portfolio.html?filter=animal#portfolio">Tiere</a>
+        <a class="nav-pill" href="https://www.instagram.com/einfach.ronan/" target="_blank" rel="noreferrer">
+          Instagram
+        </a>
+      </nav>
+    </header>
+
+    <main id="portfolio">
+      <section class="portfolio-hero" aria-labelledby="portfolio-title">
+        <p class="kicker">Portfolio</p>
+        <h1 id="portfolio-title">Alle Arbeiten nach Kategorien.</h1>
+        <p>
+          Wähle eine Kategorie oder nutze die Filterleiste. Jedes Bild kann geöffnet und groß angesehen werden.
+        </p>
+      </section>
+
+      <section class="category-overview category-overview-portfolio" aria-label="Portfolio Kategorien">
+        <a href="portfolio.html?filter=club#portfolio"><span>01</span>Club</a>
+        <a href="portfolio.html?filter=portrait#portfolio"><span>02</span>Portrait</a>
+        <a href="portfolio.html?filter=wedding#portfolio"><span>03</span>Hochzeit</a>
+        <a href="portfolio.html?filter=auto#portfolio"><span>04</span>Autos</a>
+        <a href="portfolio.html?filter=animal#portfolio"><span>05</span>Tiere</a>
+      </section>
+
+      <section class="filter-bar" aria-label="Galerie Filter">
+        <button class="filter is-active" type="button" data-filter="all">Alle</button>
+        <button class="filter" type="button" data-filter="club">Club</button>
+        <button class="filter" type="button" data-filter="portrait">Portrait</button>
+        <button class="filter" type="button" data-filter="wedding">Hochzeit</button>
+        <button class="filter" type="button" data-filter="auto">Auto</button>
+        <button class="filter" type="button" data-filter="animal">Tiere</button>
+      </section>
+
+      <section class="gallery" aria-label="Portfolio Galerie">
+        <article class="photo-tile" data-category="club">
+          <button type="button" data-lightbox="0">
+            <img src="assets/photos/club-dj-profile-dark.webp" alt="DJ im dunklen Raum" />
+            <span><small>Club</small></span>
+          </button>
+        </article>
+        <article class="photo-tile" data-category="club">
+          <button type="button" data-lightbox="1">
+            <img src="assets/photos/club-dj-red-light.webp" alt="DJ am Mischpult mit rotem Licht" />
+            <span><small>Club</small></span>
+          </button>
+        </article>
+        <article class="photo-tile" data-category="club">
+          <button type="button" data-lightbox="2">
+            <img src="assets/photos/club-dj-console.webp" alt="DJ am Mischpult" />
+            <span><small>Club</small></span>
+          </button>
+        </article>
+        <article class="photo-tile" data-category="auto">
+          <button type="button" data-lightbox="3">
+            <img src="assets/photos/automotive-audi-night.webp" alt="Audi bei Nacht unter Tankstellenlicht" />
+            <span><small>Auto</small></span>
+          </button>
+        </article>
+        <article class="photo-tile" data-category="portrait">
+          <button type="button" data-lightbox="4">
+            <img src="assets/photos/portrait-point-night.webp" alt="Portrait eines Mannes vor dunkler Wand" />
+            <span><small>Portrait</small></span>
+          </button>
+        </article>
+        <article class="photo-tile" data-category="portrait">
+          <button type="button" data-lightbox="5">
+            <img src="assets/photos/portrait-white-shirt-outdoor.webp" alt="Portrait draußen am Wasser" />
+            <span><small>Portrait</small></span>
+          </button>
+        </article>
+        <article class="photo-tile" data-category="portrait">
+          <button type="button" data-lightbox="6">
+            <img src="assets/photos/portrait-window-stripes.webp" alt="Mann mit gestreiftem Hemd vor hellem Fenster" />
+            <span><small>Portrait</small></span>
+          </button>
+        </article>
+        <article class="photo-tile" data-category="portrait">
+          <button type="button" data-lightbox="7">
+            <img src="assets/photos/portrait-studio-beanie.webp" alt="Studio Portrait mit Mütze und Mikrofon" />
+            <span><small>Portrait</small></span>
+          </button>
+        </article>
+        <article class="photo-tile" data-category="animal">
+          <button type="button" data-lightbox="8">
+            <img src="assets/photos/animal-dog-grass.webp" alt="Schwarzer Hund auf einer Wiese" />
+            <span><small>Tiere</small></span>
+          </button>
+        </article>
+        <article class="photo-tile" data-category="portrait">
+          <button type="button" data-lightbox="9">
+            <img src="assets/photos/portrait-riverside-profile.webp" alt="Profilportrait im Sonnenlicht am Wasser" />
+            <span><small>Portrait</small></span>
+          </button>
+        </article>
+        <article class="photo-tile" data-category="wedding">
+          <button type="button" data-lightbox="10">
+            <img src="assets/photos/wedding-blue-bouquet.webp" alt="Hände mit Eheringen auf blauweißem Brautstrauß" />
+            <span><small>Hochzeit</small></span>
+          </button>
+        </article>
+        <article class="photo-tile" data-category="wedding">
+          <button type="button" data-lightbox="11">
+            <img src="assets/photos/wedding-guest-toast.webp" alt="Gast mit Glas und Flasche bei einer Hochzeit" />
+            <span><small>Hochzeit</small></span>
+          </button>
+        </article>
+        <article class="photo-tile" data-category="wedding">
+          <button type="button" data-lightbox="12">
+            <img src="assets/photos/wedding-table-flowers.webp" alt="Blumenschmuck auf Hochzeitstisch" />
+            <span><small>Hochzeit</small></span>
+          </button>
+        </article>
+        <article class="photo-tile" data-category="wedding">
+          <button type="button" data-lightbox="13">
+            <img src="assets/photos/wedding-table-detail.webp" alt="Blumen und Gläser auf Hochzeitstisch" />
+            <span><small>Hochzeit</small></span>
+          </button>
+        </article>
+        <article class="photo-tile" data-category="animal">
+          <button type="button" data-lightbox="14">
+            <img src="assets/photos/animal-cats-window.webp" alt="Zwei Katzen auf einem Fensterplatz" />
+            <span><small>Tiere</small></span>
+          </button>
+        </article>
+        <article class="photo-tile" data-category="animal">
+          <button type="button" data-lightbox="15">
+            <img src="assets/photos/animal-cat-close.webp" alt="Katze leckt ihre Pfote" />
+            <span><small>Tiere</small></span>
+          </button>
+        </article>
+        <article class="photo-tile" data-category="portrait">
+          <button type="button" data-lightbox="16">
+            <img src="assets/photos/portrait-cap-outdoor.webp" alt="Portrait eines Mannes mit weißer Cap" />
+            <span><small>Portrait</small></span>
+          </button>
+        </article>
+        <article class="photo-tile" data-category="portrait">
+          <button type="button" data-lightbox="17">
+            <img src="assets/photos/portrait-redhair-sun.webp" alt="Rothaarige Frau im Sonnenlicht" />
+            <span><small>Portrait</small></span>
+          </button>
+        </article>
+        <article class="photo-tile" data-category="wedding">
+          <button type="button" data-lightbox="18">
+            <img src="assets/photos/wedding-red-bouquet.webp" alt="Eheringe über rotem und blauem Brautstrauß" />
+            <span><small>Hochzeit</small></span>
+          </button>
+        </article>
+        <article class="photo-tile" data-category="portrait">
+          <button type="button" data-lightbox="19">
+            <img src="assets/photos/portrait-night-arcade.webp" alt="Nachtportrait vor beleuchtetem Gebäude" />
+            <span><small>Portrait</small></span>
+          </button>
+        </article>
+        <article class="photo-tile" data-category="portrait">
+          <button type="button" data-lightbox="20">
+            <img src="assets/photos/portrait-urban-walk.webp" alt="Person mit Blazer in der Stadt" />
+            <span><small>Portrait</small></span>
+          </button>
+        </article>
+        <article class="photo-tile" data-category="portrait">
+          <button type="button" data-lightbox="21">
+            <img src="assets/photos/portrait-city-smile.webp" alt="Lächelndes Portrait auf einer Straße" />
+            <span><small>Portrait</small></span>
+          </button>
+        </article>
+        <article class="photo-tile" data-category="portrait">
+          <button type="button" data-lightbox="22">
+            <img src="assets/photos/portrait-leather-jacket-snow.webp" alt="Portrait mit schwarzer Jacke im Schnee" />
+            <span><small>Portrait</small></span>
+          </button>
+        </article>
+      </section>
+    </main>
+
+    <div class="lightbox" data-lightbox-modal aria-hidden="true">
+      <button class="lightbox-close" type="button" aria-label="Bildansicht schließen" data-lightbox-close>Schließen</button>
+      <button class="lightbox-nav lightbox-prev" type="button" aria-label="Vorheriges Bild" data-lightbox-prev>Zurück</button>
+      <figure>
+        <img src="assets/photos/portrait-city-smile.webp" alt="" data-lightbox-image />
+        <figcaption data-lightbox-caption></figcaption>
+      </figure>
+      <button class="lightbox-nav lightbox-next" type="button" aria-label="Nächstes Bild" data-lightbox-next>Weiter</button>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
