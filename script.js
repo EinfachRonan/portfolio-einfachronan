@@ -2,7 +2,6 @@ const header = document.querySelector("[data-header]");
 const menuToggle = document.querySelector("[data-menu-toggle]");
 const nav = document.querySelector("[data-nav]");
 const filters = Array.from(document.querySelectorAll("[data-filter]"));
-const categoryLinks = Array.from(document.querySelectorAll("[data-category-link]"));
 const tiles = Array.from(document.querySelectorAll("[data-category]"));
 const modal = document.querySelector("[data-lightbox-modal]");
 const modalImage = document.querySelector("[data-lightbox-image]");
@@ -165,7 +164,6 @@ function setupRevealAnimation() {
 
 function applyGalleryFilter(selected = "all") {
   filters.forEach((button) => button.classList.toggle("is-active", button.dataset.filter === selected));
-  categoryLinks.forEach((link) => link.classList.toggle("is-current", link.dataset.categoryLink === selected));
   tiles.forEach((tile) => {
     tile.classList.toggle("is-hidden", selected !== "all" && tile.dataset.category !== selected);
   });
