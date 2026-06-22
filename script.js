@@ -2,6 +2,7 @@ const header = document.querySelector("[data-header]");
 const menuToggle = document.querySelector("[data-menu-toggle]");
 const nav = document.querySelector("[data-nav]");
 const filters = Array.from(document.querySelectorAll("[data-filter]"));
+const categoryLinks = Array.from(document.querySelectorAll("[data-category-link]"));
 const tiles = Array.from(document.querySelectorAll("[data-category]"));
 const modal = document.querySelector("[data-lightbox-modal]");
 const modalImage = document.querySelector("[data-lightbox-image]");
@@ -28,13 +29,10 @@ document.body.classList.add("js-ready");
 
 const galleryItems = lightboxButtons.map((button) => {
   const image = button.querySelector("img");
-  const title = button.querySelector("b")?.textContent ?? "";
-  const category = button.querySelector("small")?.textContent ?? "";
 
   return {
     src: image.getAttribute("src"),
     alt: image.getAttribute("alt"),
-    caption: title ? `${title} / ${category}` : image.getAttribute("alt"),
   };
 });
 
@@ -58,7 +56,7 @@ function openLightbox(index) {
   const item = galleryItems[activeIndex];
   modalImage.src = item.src;
   modalImage.alt = item.alt;
-  modalCaption.textContent = item.caption;
+  modalCaption.textContent = "";
   modal.classList.add("is-open");
   modal.setAttribute("aria-hidden", "false");
   document.body.classList.add("is-locked");
@@ -119,7 +117,6 @@ function setupRevealAnimation() {
     ".section-heading",
     ".feature-story",
     ".preview-card",
-    ".category-overview a",
     ".photo-tile",
     ".service",
     ".contact > *",
@@ -168,6 +165,7 @@ function setupRevealAnimation() {
 
 function applyGalleryFilter(selected = "all") {
   filters.forEach((button) => button.classList.toggle("is-active", button.dataset.filter === selected));
+  categoryLinks.forEach((link) => link.classList.toggle("is-current", link.dataset.categoryLink === selected));
   tiles.forEach((tile) => {
     tile.classList.toggle("is-hidden", selected !== "all" && tile.dataset.category !== selected);
   });
