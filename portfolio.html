@@ -36,8 +36,13 @@
         <a href="portfolio.html?filter=wedding#portfolio">Hochzeiten</a>
         <a href="portfolio.html?filter=auto#portfolio">Autos</a>
         <a href="portfolio.html?filter=animal#portfolio">Tiere</a>
-        <a class="nav-pill" href="https://www.instagram.com/einfach.ronan/" target="_blank" rel="noreferrer">
-          Instagram
+        <a class="nav-pill nav-icon-link" href="https://www.instagram.com/einfach.ronan/" target="_blank" rel="noreferrer" aria-label="Instagram öffnen">
+          <svg class="instagram-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <path d="M17.5 6.5h.01"></path>
+          </svg>
+          <span>Instagram</span>
         </a>
       </nav>
     </header>
@@ -45,9 +50,9 @@
     <main id="portfolio">
       <section class="portfolio-hero" aria-labelledby="portfolio-title">
         <p class="kicker">Portfolio</p>
-        <h1 id="portfolio-title">Portfolio.</h1>
+        <h1 id="portfolio-title">Ausgewählte Arbeiten.</h1>
         <p>
-          Ruhig sortiert. Fokus auf die Bilder.
+          Eine ruhige Galerie mit Portraits, Hochzeiten, Club, Autos und Tieren. Sortiert nach Bereichen, ohne zusätzliche Texte unter den Bildern.
         </p>
       </section>
 
@@ -63,17 +68,17 @@
       <section class="gallery" aria-label="Portfolio Galerie">
         <article class="photo-tile" data-category="club">
           <button type="button" data-lightbox="0">
-            <img decoding="async" src="assets/photos/club-dj-profile-dark.webp" alt="DJ im dunklen Raum" />
+            <img loading="eager" fetchpriority="high" src="assets/photos/club-dj-profile-dark.webp" alt="DJ im dunklen Raum" />
           </button>
         </article>
         <article class="photo-tile" data-category="club">
           <button type="button" data-lightbox="1">
-            <img decoding="async" src="assets/photos/club-dj-red-light.webp" alt="DJ am Mischpult mit rotem Licht" />
+            <img loading="eager" fetchpriority="high" src="assets/photos/club-dj-red-light.webp" alt="DJ am Mischpult mit rotem Licht" />
           </button>
         </article>
         <article class="photo-tile" data-category="club">
           <button type="button" data-lightbox="2">
-            <img decoding="async" src="assets/photos/club-dj-console.webp" alt="DJ am Mischpult" />
+            <img loading="eager" fetchpriority="high" src="assets/photos/club-dj-console.webp" alt="DJ am Mischpult" />
           </button>
         </article>
         <article class="photo-tile" data-category="auto">
