@@ -1426,6 +1426,7 @@ body,
 
 .hero-copy {
   max-width: 620px;
+  gap: 18px;
 }
 
 .hero h1,
@@ -1595,7 +1596,7 @@ body,
 }
 
 .portfolio-hero {
-  min-height: 64svh;
+  min-height: 54svh;
   border-bottom: 1px solid var(--editorial-line);
   background:
     linear-gradient(90deg, rgba(8, 8, 8, 0.05) 1px, transparent 1px),
