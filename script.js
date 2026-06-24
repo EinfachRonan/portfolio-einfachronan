@@ -14,14 +14,26 @@ const slider = document.querySelector("[data-slider]");
 const sliderPrev = document.querySelector("[data-slider-prev]");
 const sliderNext = document.querySelector("[data-slider-next]");
 const sliderProgress = document.querySelector("[data-slider-progress]");
+const portfolioTitle = document.querySelector("[data-portfolio-title]");
 const hashFilterMap = {
   club: "club",
   portraits: "portrait",
+  portrait: "portrait",
   hochzeiten: "wedding",
+  hochzeit: "wedding",
   autos: "auto",
+  auto: "auto",
   tiere: "animal",
 };
 const validFilters = new Set(["all", "club", "portrait", "wedding", "auto", "animal"]);
+const filterTitleMap = {
+  all: "Portfolio.",
+  club: "Club.",
+  portrait: "Portrait.",
+  wedding: "Hochzeit.",
+  auto: "Autos.",
+  animal: "Tiere.",
+};
 
 let activeIndex = 0;
 document.body.classList.add("js-ready");
@@ -164,6 +176,9 @@ function setupRevealAnimation() {
 
 function applyGalleryFilter(selected = "all") {
   filters.forEach((button) => button.classList.toggle("is-active", button.dataset.filter === selected));
+  if (portfolioTitle) {
+    portfolioTitle.textContent = filterTitleMap[selected] ?? filterTitleMap.all;
+  }
   tiles.forEach((tile) => {
     tile.classList.toggle("is-hidden", selected !== "all" && tile.dataset.category !== selected);
   });
@@ -203,6 +218,15 @@ if (nav) {
 filters.forEach((filter) => {
   filter.addEventListener("click", () => {
     applyGalleryFilter(filter.dataset.filter);
+    const url = new URL(window.location.href);
+    const selected = filter.dataset.filter;
+    if (selected === "all") {
+      url.searchParams.delete("filter");
+    } else {
+      url.searchParams.set("filter", selected);
+    }
+    url.hash = "portfolio";
+    window.history.replaceState({}, "", url);
   });
 });
 
