@@ -28,5 +28,3 @@ jobs:
           local-path: .
           remote-path: ${{ secrets.STRATO_PATH }}
           sync: full
-          remote-path: ${{ secrets.STRATO_PATH }}
-          sync: delta
