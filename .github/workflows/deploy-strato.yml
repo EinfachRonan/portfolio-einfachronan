@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Code holen
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Zu STRATO hochladen
         uses: milanmk/actions-file-deployer@1.18
