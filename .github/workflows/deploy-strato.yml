@@ -15,17 +15,6 @@ jobs:
       - name: Code holen
         uses: actions/checkout@v4
 
-      - name: Node installieren
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Pakete installieren
-        run: npm install
-
-      - name: Webseite bauen
-        run: npm run build
-
       - name: Zu STRATO hochladen
         uses: milanmk/actions-file-deployer@1.18
         with:
@@ -34,6 +23,6 @@ jobs:
           remote-port: ${{ secrets.STRATO_PORT }}
           remote-user: ${{ secrets.STRATO_USER }}
           remote-password: ${{ secrets.STRATO_PASSWORD }}
-          local-path: dist
+          local-path: .
           remote-path: ${{ secrets.STRATO_PATH }}
           sync: delta
