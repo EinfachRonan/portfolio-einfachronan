@@ -15,6 +15,8 @@ const sliderPrev = document.querySelector("[data-slider-prev]");
 const sliderNext = document.querySelector("[data-slider-next]");
 const sliderProgress = document.querySelector("[data-slider-progress]");
 const portfolioTitle = document.querySelector("[data-portfolio-title]");
+const portfolioCopy = document.querySelector("[data-portfolio-copy]");
+const portfolioHeroImage = document.querySelector("[data-portfolio-hero-image]");
 const hashFilterMap = {
   club: "club",
   portraits: "portrait",
@@ -25,27 +27,70 @@ const hashFilterMap = {
   auto: "auto",
   tiere: "animal",
 };
-const validFilters = new Set(["all", "club", "portrait", "wedding", "auto", "animal"]);
+const validFilters = new Set(["club", "portrait", "wedding", "auto", "animal"]);
 const filterTitleMap = {
-  all: "Portfolio.",
-  club: "Club.",
-  portrait: "Portrait.",
-  wedding: "Hochzeit.",
-  auto: "Autos.",
-  animal: "Tiere.",
+  club: "Club",
+  portrait: "Portrait",
+  wedding: "Hochzeit",
+  auto: "Autos",
+  animal: "Tiere",
+};
+const filterCopyMap = {
+  club: "Clubfotos mit Licht, Bewegung und Atmosphäre.",
+  portrait: "Ruhige Portraits, klare Ausschnitte und echtes Licht.",
+  wedding: "Details, Menschen und Momente vom Hochzeitstag.",
+  auto: "Autos bei Nacht, urbanes Licht und klare Linien.",
+  animal: "Tierbilder nah, ruhig und natürlich.",
+};
+const filterHeroMap = {
+  club: {
+    src: "assets/photos/club-dj-console.webp",
+    alt: "DJ am Mischpult",
+  },
+  portrait: {
+    src: "assets/photos/portrait-city-smile.webp",
+    alt: "Lächelndes Portrait auf einer Straße",
+  },
+  wedding: {
+    src: "assets/photos/wedding-blue-bouquet.webp",
+    alt: "Hände mit Eheringen auf blauweißem Brautstrauß",
+  },
+  auto: {
+    src: "assets/photos/automotive-audi-night.webp",
+    alt: "Audi bei Nacht unter Tankstellenlicht",
+  },
+  animal: {
+    src: "assets/photos/animal-cats-window.webp",
+    alt: "Zwei Katzen auf einem Fensterplatz",
+  },
 };
 
 let activeIndex = 0;
+let activeGalleryItems = [];
 document.body.classList.add("js-ready");
 
 const galleryItems = lightboxButtons.map((button) => {
   const image = button.querySelector("img");
+  if (image) {
+    button.style.backgroundImage = `url("${image.getAttribute("src")}")`;
+  }
 
   return {
+    button,
+    category: button.closest("[data-category]")?.dataset.category,
     src: image.getAttribute("src"),
     alt: image.getAttribute("alt"),
   };
 });
+
+function getActiveFilter() {
+  const activeFilter = filters.find((button) => button.classList.contains("is-active"));
+  return activeFilter?.dataset.filter ?? "portrait";
+}
+
+function refreshActiveGalleryItems(selected = getActiveFilter()) {
+  activeGalleryItems = galleryItems.filter((item) => item.category === selected);
+}
 
 function setPageAtmosphere() {
   const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
@@ -61,10 +106,11 @@ function closeMenu() {
 }
 
 function openLightbox(index) {
-  if (!modal || !modalImage || !modalCaption || !modalClose || !galleryItems[index]) return;
+  if (!activeGalleryItems.length) refreshActiveGalleryItems();
+  if (!modal || !modalImage || !modalCaption || !modalClose || !activeGalleryItems[index]) return;
 
   activeIndex = index;
-  const item = galleryItems[activeIndex];
+  const item = activeGalleryItems[activeIndex];
   modalImage.src = item.src;
   modalImage.alt = item.alt;
   modalCaption.textContent = "";
@@ -83,7 +129,10 @@ function closeLightbox() {
 }
 
 function stepLightbox(direction) {
-  activeIndex = (activeIndex + direction + galleryItems.length) % galleryItems.length;
+  if (!activeGalleryItems.length) refreshActiveGalleryItems();
+  if (!activeGalleryItems.length) return;
+
+  activeIndex = (activeIndex + direction + activeGalleryItems.length) % activeGalleryItems.length;
   openLightbox(activeIndex);
 }
 
@@ -125,6 +174,7 @@ function setupRevealAnimation() {
     ".slider-head",
     ".hero-strip figure",
     ".portfolio-hero",
+    ".home-category",
     ".section-heading",
     ".feature-story",
     ".preview-card",
@@ -174,14 +224,22 @@ function setupRevealAnimation() {
   window.addEventListener("hashchange", () => requestAnimationFrame(revealVisibleItems));
 }
 
-function applyGalleryFilter(selected = "all") {
+function applyGalleryFilter(selected = "portrait") {
   filters.forEach((button) => button.classList.toggle("is-active", button.dataset.filter === selected));
   if (portfolioTitle) {
-    portfolioTitle.textContent = filterTitleMap[selected] ?? filterTitleMap.all;
+    portfolioTitle.textContent = filterTitleMap[selected] ?? filterTitleMap.portrait;
+  }
+  if (portfolioCopy) {
+    portfolioCopy.textContent = filterCopyMap[selected] ?? filterCopyMap.portrait;
+  }
+  if (portfolioHeroImage && filterHeroMap[selected]) {
+    portfolioHeroImage.src = filterHeroMap[selected].src;
+    portfolioHeroImage.alt = filterHeroMap[selected].alt;
   }
   tiles.forEach((tile) => {
-    tile.classList.toggle("is-hidden", selected !== "all" && tile.dataset.category !== selected);
+    tile.classList.toggle("is-hidden", tile.dataset.category !== selected);
   });
+  refreshActiveGalleryItems(selected);
 }
 
 function applyFilterFromLocation() {
@@ -189,8 +247,7 @@ function applyFilterFromLocation() {
 
   const queryFilter = new URLSearchParams(window.location.search).get("filter");
   const hash = window.location.hash.replace("#", "");
-  const selected = validFilters.has(queryFilter) ? queryFilter : hashFilterMap[hash] ?? (hash === "portfolio" ? "all" : null);
-  if (!selected) return;
+  const selected = validFilters.has(queryFilter) ? queryFilter : hashFilterMap[hash] ?? "portrait";
 
   applyGalleryFilter(selected);
 }
@@ -220,11 +277,7 @@ filters.forEach((filter) => {
     applyGalleryFilter(filter.dataset.filter);
     const url = new URL(window.location.href);
     const selected = filter.dataset.filter;
-    if (selected === "all") {
-      url.searchParams.delete("filter");
-    } else {
-      url.searchParams.set("filter", selected);
-    }
+    url.searchParams.set("filter", selected);
     url.hash = "portfolio";
     window.history.replaceState({}, "", url);
   });
@@ -233,8 +286,12 @@ filters.forEach((filter) => {
 window.addEventListener("hashchange", applyFilterFromLocation);
 applyFilterFromLocation();
 
-lightboxButtons.forEach((button, index) => {
-  button.addEventListener("click", () => openLightbox(index));
+lightboxButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    refreshActiveGalleryItems();
+    const index = activeGalleryItems.findIndex((item) => item.button === button);
+    openLightbox(Math.max(index, 0));
+  });
 });
 
 modalClose?.addEventListener("click", closeLightbox);

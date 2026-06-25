@@ -29,34 +29,32 @@
       </button>
 
       <nav class="nav" data-nav aria-label="Hauptnavigation">
-        <a href="index.html">Start</a>
-        <a href="#portfolio">Portfolio</a>
-        <a href="portfolio.html?filter=club#portfolio">Club</a>
-        <a href="portfolio.html?filter=portrait#portfolio">Portrait</a>
-        <a href="portfolio.html?filter=wedding#portfolio">Hochzeit</a>
-        <a href="portfolio.html?filter=auto#portfolio">Autos</a>
-        <a href="portfolio.html?filter=animal#portfolio">Tiere</a>
-        <a class="nav-pill nav-icon-link" href="https://www.instagram.com/einfach.ronan/" target="_blank" rel="noreferrer" aria-label="Instagram öffnen">
+        <a class="nav-pill nav-icon-link" href="https://www.instagram.com/einfach.ronan/" target="_blank" rel="noreferrer" aria-label="@einfach.ronan">
           <svg class="instagram-icon" viewBox="0 0 24 24" aria-hidden="true">
             <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
             <path d="M17.5 6.5h.01"></path>
           </svg>
-          <span>Instagram</span>
+          <span>@einfach.ronan</span>
         </a>
       </nav>
     </header>
 
     <main id="portfolio">
-      <section class="portfolio-hero" aria-labelledby="portfolio-title">
-        <p class="kicker">Portfolio</p>
-        <h1 id="portfolio-title" data-portfolio-title>Portfolio.</h1>
+      <section class="portfolio-hero portfolio-hero-feature" aria-labelledby="portfolio-title">
+        <div class="portfolio-hero-copy">
+          <p class="kicker">EinfachRonan</p>
+          <h1 id="portfolio-title" data-portfolio-title>Portrait</h1>
+          <p data-portfolio-copy>Ruhige Portraits, klare Ausschnitte und echtes Licht.</p>
+        </div>
+        <figure class="portfolio-hero-image">
+          <img data-portfolio-hero-image loading="eager" fetchpriority="high" decoding="async" src="assets/photos/portrait-city-smile.webp" alt="Lächelndes Portrait auf einer Straße" />
+        </figure>
       </section>
 
       <section class="filter-bar" aria-label="Galerie Filter">
-        <button class="filter is-active" type="button" data-filter="all">Alle</button>
         <button class="filter" type="button" data-filter="club">Club</button>
-        <button class="filter" type="button" data-filter="portrait">Portrait</button>
+        <button class="filter is-active" type="button" data-filter="portrait">Portrait</button>
         <button class="filter" type="button" data-filter="wedding">Hochzeit</button>
         <button class="filter" type="button" data-filter="auto">Auto</button>
         <button class="filter" type="button" data-filter="animal">Tiere</button>
