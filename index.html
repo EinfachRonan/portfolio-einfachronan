@@ -30,7 +30,6 @@
 
       <nav class="nav" data-nav aria-label="Hauptnavigation">
         <a href="portfolio.html">Portfolio</a>
-        <a href="#arbeiten">Arbeiten</a>
         <a href="#bereiche">Bereiche</a>
         <a href="#kontakt">Kontakt</a>
         <a class="nav-pill nav-icon-link" href="https://www.instagram.com/einfach.ronan/" target="_blank" rel="noreferrer" aria-label="Instagram öffnen">
@@ -45,16 +44,7 @@
     </header>
 
     <main id="start">
-      <section class="hero hero-home" aria-labelledby="hero-title">
-        <div class="hero-copy">
-          <p class="kicker">Portfolio</p>
-          <h1 id="hero-title"><span>Einfach</span><span>Ronan</span></h1>
-          <div class="hero-actions">
-            <a class="button button-primary" href="portfolio.html">Portfolio öffnen</a>
-            <a class="button button-secondary" href="#arbeiten">Auswahl ansehen</a>
-          </div>
-        </div>
-
+      <section class="hero hero-home" aria-label="Startbilder">
         <div class="hero-gallery" aria-label="Ausgewählte Fotos">
           <a class="hero-image hero-image-large" href="portfolio.html?filter=portrait#portfolio">
             <img loading="eager" fetchpriority="high" decoding="async" src="assets/photos/portrait-city-smile.webp" alt="Lächelndes Portrait auf einer Straße" />
@@ -65,8 +55,8 @@
           <a class="hero-image" href="portfolio.html?filter=wedding#portfolio">
             <img loading="eager" decoding="async" src="assets/photos/wedding-blue-bouquet.webp" alt="Hände mit Eheringen auf blauweißem Brautstrauß" />
           </a>
-          <a class="hero-image" href="portfolio.html?filter=auto#portfolio">
-            <img loading="eager" decoding="async" src="assets/photos/automotive-audi-night.webp" alt="Audi bei Nacht unter Tankstellenlicht" />
+          <a class="hero-image" href="portfolio.html?filter=animal#portfolio">
+            <img loading="eager" decoding="async" src="assets/photos/animal-cats-window.webp" alt="Zwei Katzen auf einem Fensterplatz" />
           </a>
         </div>
       </section>
@@ -77,43 +67,6 @@
         <span>Club</span>
         <span>Autos</span>
         <span>Tiere</span>
-      </section>
-
-      <section class="selected-strip" id="arbeiten" aria-label="Top-Bilder Vorschau">
-        <div class="slider-head">
-          <span>Ausgewählte Arbeiten</span>
-          <div class="slider-controls" aria-label="Slider Steuerung">
-            <button class="slider-control" type="button" aria-label="Vorheriges Bild" data-slider-prev>‹</button>
-            <button class="slider-control" type="button" aria-label="Nächstes Bild" data-slider-next>›</button>
-          </div>
-        </div>
-
-        <div class="hero-strip" data-slider>
-          <figure>
-            <img loading="lazy" decoding="async" src="assets/photos/portrait-city-smile.webp" alt="Lächelndes Portrait auf einer Straße" />
-            <figcaption>Portrait</figcaption>
-          </figure>
-          <figure>
-            <img loading="lazy" decoding="async" src="assets/photos/wedding-red-bouquet.webp" alt="Eheringe über rotem und blauem Brautstrauß" />
-            <figcaption>Hochzeit</figcaption>
-          </figure>
-          <figure>
-            <img loading="lazy" decoding="async" src="assets/photos/club-dj-red-light.webp" alt="DJ am Mischpult mit rotem Licht" />
-            <figcaption>Club</figcaption>
-          </figure>
-          <figure>
-            <img loading="lazy" decoding="async" src="assets/photos/automotive-audi-night.webp" alt="Audi bei Nacht unter Tankstellenlicht" />
-            <figcaption>Auto</figcaption>
-          </figure>
-          <figure>
-            <img loading="lazy" decoding="async" src="assets/photos/animal-cats-window.webp" alt="Zwei Katzen auf einem Fensterplatz" />
-            <figcaption>Tiere</figcaption>
-          </figure>
-        </div>
-
-        <div class="slider-progress" aria-hidden="true">
-          <span data-slider-progress></span>
-        </div>
       </section>
 
       <section class="feature-stories" aria-label="Bildgeschichten">
