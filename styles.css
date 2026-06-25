@@ -3126,6 +3126,24 @@ body.portfolio-page {
   transform: translateY(-4px);
 }
 
+.home-page .home-category,
+.home-page .home-category:hover {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.home-page .home-category:hover {
+  color: #10131a;
+  background: #f4f4f1;
+}
+
+.home-page .home-category img,
+.home-page .home-category:hover img {
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+}
+
 .home-category-wide {
   grid-column: 1 / -1;
 }
