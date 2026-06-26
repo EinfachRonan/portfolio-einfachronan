@@ -17,6 +17,7 @@ const sliderProgress = document.querySelector("[data-slider-progress]");
 const portfolioTitle = document.querySelector("[data-portfolio-title]");
 const portfolioCopy = document.querySelector("[data-portfolio-copy]");
 const portfolioHeroImage = document.querySelector("[data-portfolio-hero-image]");
+const portfolioHero = document.querySelector(".portfolio-hero-feature");
 const hashFilterMap = {
   club: "club",
   portraits: "portrait",
@@ -235,6 +236,9 @@ function applyGalleryFilter(selected = "portrait") {
   if (portfolioHeroImage && filterHeroMap[selected]) {
     portfolioHeroImage.src = filterHeroMap[selected].src;
     portfolioHeroImage.alt = filterHeroMap[selected].alt;
+  }
+  if (portfolioHero) {
+    portfolioHero.dataset.category = selected;
   }
   tiles.forEach((tile) => {
     tile.classList.toggle("is-hidden", tile.dataset.category !== selected);
