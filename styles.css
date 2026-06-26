@@ -3542,9 +3542,9 @@ body.portfolio-page {
     overflow: visible !important;
   }
 
-  .mobile-header-links a,
-  .mobile-header-links > a:nth-of-type(1),
-  .mobile-header-links > a:nth-of-type(2) {
+.mobile-header-links a,
+.mobile-header-links > a:nth-of-type(1),
+.mobile-header-links > a:nth-of-type(2) {
     position: static !important;
     right: auto !important;
     top: auto !important;
@@ -3555,6 +3555,242 @@ body.portfolio-page {
     letter-spacing: 0 !important;
     line-height: 1 !important;
     white-space: nowrap !important;
+  }
+}
+
+/* Final homepage category layout */
+.home-page .home-categories {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  align-items: start !important;
+  justify-content: stretch !important;
+  width: min(100%, 1180px) !important;
+  gap: clamp(18px, 2vw, 28px) !important;
+  margin-inline: auto !important;
+  padding: clamp(104px, 10vw, 138px) clamp(14px, 3.8vw, 54px) clamp(64px, 8vw, 112px) !important;
+}
+
+.home-page .home-category,
+.home-page .home-category-wide {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  max-width: none !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+  transform: none !important;
+}
+
+.home-page .home-category:hover {
+  background: transparent !important;
+  transform: none !important;
+}
+
+.home-page .home-category-images,
+.home-page .home-category-images-single {
+  position: relative !important;
+  display: grid !important;
+  place-items: center !important;
+  width: 100% !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  background-color: transparent !important;
+  background-image: var(--category-image) !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+}
+
+.home-page .home-category--portrait .home-category-images-single {
+  aspect-ratio: 4 / 5 !important;
+}
+
+.home-page .home-category--landscape .home-category-images-single {
+  aspect-ratio: 16 / 10 !important;
+}
+
+.home-page .home-category img,
+.home-page .home-category:hover img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  background: transparent !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+.home-page .home-category > span {
+  position: absolute !important;
+  left: 12px !important;
+  bottom: 12px !important;
+  z-index: 2 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  margin: 0 !important;
+  padding: 6px 10px !important;
+  color: #ffffff !important;
+  font-family: inherit !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  background: rgba(5, 10, 20, 0.72) !important;
+  backdrop-filter: blur(6px) !important;
+}
+
+@media (max-width: 980px) {
+  .home-page .home-categories {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 660px) {
+  .home-page .home-categories {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Homepage category sizing */
+.home-page .home-categories {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  align-items: start !important;
+}
+
+.home-page .home-category,
+.home-page .home-category-wide {
+  grid-column: auto !important;
+  padding: 0 !important;
+  gap: 0 !important;
+}
+
+.home-page .home-category-images-single {
+  position: relative !important;
+  width: 100% !important;
+  overflow: hidden !important;
+}
+
+.home-page .home-category--portrait .home-category-images-single {
+  aspect-ratio: 4 / 5 !important;
+}
+
+.home-page .home-category--landscape .home-category-images-single {
+  aspect-ratio: 16 / 10 !important;
+}
+
+.home-page .home-category img {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: none !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+}
+
+.home-page .home-category > span {
+  left: 12px !important;
+  bottom: 12px !important;
+  max-width: calc(100% - 24px) !important;
+}
+
+@media (max-width: 900px) {
+  .home-page .home-categories {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 660px) {
+  .home-page .home-categories {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Clean single header navigation */
+.site-header .menu-toggle,
+.mobile-header-links {
+  display: none !important;
+}
+
+.nav-icon-link {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 24px !important;
+  min-width: 24px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  opacity: 0.88 !important;
+}
+
+.nav-icon-link::after,
+.nav-icon-link span {
+  display: none !important;
+}
+
+.nav-icon-link:hover,
+.nav-icon-link:focus-visible {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.nav-icon-link .instagram-icon {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+@media (max-width: 1120px) {
+  .site-header,
+  .home-page .site-header,
+  .portfolio-page .site-header {
+    justify-content: space-between !important;
+    gap: 16px !important;
+    padding: 12px 16px !important;
+  }
+
+  .site-header .brand {
+    width: 84px !important;
+    min-width: 84px !important;
+  }
+
+  .site-header .brand-logo,
+  .home-page .brand-logo,
+  .portfolio-page .brand-logo {
+    width: 84px !important;
+    height: 46px !important;
+  }
+
+  .site-header .nav,
+  .home-page .nav,
+  .portfolio-page .nav {
+    position: static !important;
+    right: auto !important;
+    left: auto !important;
+    inset: auto !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: calc(100vw - 116px) !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 14px !important;
+    margin-left: auto !important;
+    font-size: 11px !important;
+  }
+
+  .site-header .nav a,
+  .home-page .nav a,
+  .portfolio-page .nav a {
+    opacity: 1 !important;
   }
 }
 

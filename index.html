@@ -15,7 +15,7 @@
       rel="stylesheet"
     />
     <link rel="icon" type="image/png" href="assets/logo-einfachronan.png" />
-    <link rel="stylesheet" href="styles.css?v=mobile-polish-7" />
+    <link rel="stylesheet" href="styles.css?v=home-grid-1" />
   </head>
   <body class="home-page">
     <header class="site-header" data-header>
@@ -31,60 +31,50 @@
       <nav class="nav" data-nav aria-label="Hauptnavigation">
         <a href="portfolio.html">Portfolio</a>
         <a href="#kontakt">Kontakt</a>
-        <a class="nav-pill nav-icon-link" href="https://www.instagram.com/einfach.ronan/" target="_blank" rel="noreferrer" aria-label="@einfach.ronan">
+        <a class="nav-icon-link" href="https://www.instagram.com/einfach.ronan/" target="_blank" rel="noreferrer" aria-label="Instagram">
           <svg class="instagram-icon" viewBox="0 0 24 24" aria-hidden="true">
             <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
             <path d="M17.5 6.5h.01"></path>
           </svg>
-          <span>@einfach.ronan</span>
         </a>
-      </nav>
-
-      <nav class="mobile-header-links" aria-label="Mobile Navigation">
-        <a href="portfolio.html">Portfolio</a>
-        <a href="#kontakt">Kontakt</a>
       </nav>
     </header>
 
     <main id="start">
       <section class="home-categories" aria-label="Fotografie Kategorien">
-        <a class="home-category home-category-wide" href="portfolio.html?filter=portrait#portfolio">
+        <a class="home-category home-category--portrait" href="portfolio.html?filter=portrait">
           <span>Portrait</span>
-          <div class="home-category-images">
+          <div class="home-category-images home-category-images-single" style="--category-image: url('assets/photos/portrait-city-smile.webp');">
             <img loading="eager" fetchpriority="high" decoding="async" src="assets/photos/portrait-city-smile.webp" alt="Lächelndes Portrait auf einer Straße" />
-            <img loading="eager" decoding="async" src="assets/photos/portrait-blue-jacket-glasses.jpg" alt="Portrait mit Brille und blauer Jacke im warmen Licht" />
           </div>
         </a>
 
-        <a class="home-category" href="portfolio.html?filter=wedding#portfolio">
+        <a class="home-category home-category--portrait" href="portfolio.html?filter=wedding">
           <span>Hochzeit</span>
-          <div class="home-category-images">
+          <div class="home-category-images home-category-images-single" style="--category-image: url('assets/photos/wedding-blue-bouquet.webp');">
             <img loading="eager" decoding="async" src="assets/photos/wedding-blue-bouquet.webp" alt="Hände mit Eheringen auf blauweißem Brautstrauß" />
-            <img loading="lazy" decoding="async" src="assets/photos/wedding-red-bouquet.webp" alt="Eheringe über rotem und blauem Brautstrauß" />
           </div>
         </a>
 
-        <a class="home-category" href="portfolio.html?filter=club#portfolio">
+        <a class="home-category home-category--portrait" href="portfolio.html?filter=club">
           <span>Club</span>
-          <div class="home-category-images">
+          <div class="home-category-images home-category-images-single" style="--category-image: url('assets/photos/club-dj-console.webp');">
             <img loading="eager" decoding="async" src="assets/photos/club-dj-console.webp" alt="DJ am Mischpult" />
-            <img loading="lazy" decoding="async" src="assets/photos/club-dj-profile-dark.webp" alt="DJ im dunklen Raum" />
           </div>
         </a>
 
-        <a class="home-category" href="portfolio.html?filter=auto#portfolio">
+        <a class="home-category home-category--landscape" href="portfolio.html?filter=auto">
           <span>Autos</span>
-          <div class="home-category-images home-category-images-single">
+          <div class="home-category-images home-category-images-single" style="--category-image: url('assets/photos/automotive-audi-night.webp');">
             <img loading="eager" decoding="async" src="assets/photos/automotive-audi-night.webp" alt="Audi bei Nacht unter Tankstellenlicht" />
           </div>
         </a>
 
-        <a class="home-category" href="portfolio.html?filter=animal#portfolio">
+        <a class="home-category home-category--landscape" href="portfolio.html?filter=animal">
           <span>Tiere</span>
-          <div class="home-category-images">
+          <div class="home-category-images home-category-images-single" style="--category-image: url('assets/photos/animal-cats-window.webp');">
             <img loading="eager" decoding="async" src="assets/photos/animal-cats-window.webp" alt="Zwei Katzen auf einem Fensterplatz" />
-            <img loading="lazy" decoding="async" src="assets/photos/animal-dog-grass.webp" alt="Schwarzer Hund auf einer Wiese" />
           </div>
         </a>
       </section>
@@ -108,6 +98,6 @@
       </section>
     </main>
 
-    <script src="script.js?v=mobile-polish-7"></script>
+    <script src="script.js?v=home-grid-1"></script>
   </body>
 </html>

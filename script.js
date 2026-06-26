@@ -103,7 +103,17 @@ function setPageAtmosphere() {
 
 function closeMenu() {
   header.classList.remove("is-open");
-  menuToggle.setAttribute("aria-expanded", "false");
+  menuToggle?.setAttribute("aria-expanded", "false");
+}
+
+function normalizeEntryScroll() {
+  if (window.location.hash === "#portfolio") {
+    window.history.replaceState({}, "", `${window.location.pathname}${window.location.search}`);
+  }
+
+  if (!window.location.hash || window.location.hash === "#start") {
+    window.scrollTo(0, 0);
+  }
 }
 
 function openLightbox(index) {
@@ -256,7 +266,9 @@ function applyFilterFromLocation() {
   applyGalleryFilter(selected);
 }
 
+window.history.scrollRestoration = "manual";
 window.addEventListener("scroll", setPageAtmosphere, { passive: true });
+window.addEventListener("load", normalizeEntryScroll);
 setupPortfolioSlider();
 setupRevealAnimation();
 setPageAtmosphere();
@@ -282,8 +294,9 @@ filters.forEach((filter) => {
     const url = new URL(window.location.href);
     const selected = filter.dataset.filter;
     url.searchParams.set("filter", selected);
-    url.hash = "portfolio";
+    url.hash = "";
     window.history.replaceState({}, "", url);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   });
 });
 
