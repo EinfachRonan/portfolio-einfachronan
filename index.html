@@ -15,89 +15,100 @@
       rel="stylesheet"
     />
     <link rel="icon" type="image/png" href="assets/logo-einfachronan.png" />
-    <link rel="stylesheet" href="styles.css?v=portfolio-polish-2" />
+    <link rel="stylesheet" href="styles.css?v=premium-motion-1" />
   </head>
   <body class="home-page">
     <header class="site-header" data-header>
-      <a class="brand" href="index.html#start" aria-label="EinfachRonan Startseite">
+      <a class="brand" href="index.html" aria-label="EinfachRonan Startseite">
         <img class="brand-logo" decoding="async" src="assets/logo-einfachronan.png" alt="EinfachRonan" />
       </a>
 
-      <button class="menu-toggle" type="button" aria-label="Navigation öffnen" aria-expanded="false" data-menu-toggle>
-        <span></span>
-        <span></span>
-      </button>
-
-      <nav class="nav" data-nav aria-label="Hauptnavigation">
-        <a href="portfolio.html">Portfolio</a>
+      <nav class="nav" aria-label="Hauptnavigation">
         <a href="#kontakt">Kontakt</a>
-        <a class="nav-icon-link" href="https://www.instagram.com/einfach.ronan/" target="_blank" rel="noreferrer" aria-label="Instagram">
+        <a class="instagram-link" href="https://www.instagram.com/einfach.ronan/" target="_blank" rel="noreferrer">
           <svg class="instagram-icon" viewBox="0 0 24 24" aria-hidden="true">
             <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
             <path d="M17.5 6.5h.01"></path>
           </svg>
+          <span>@einfach.ronan</span>
         </a>
       </nav>
     </header>
 
     <main id="start">
-      <section class="home-categories" aria-label="Fotografie Kategorien">
-        <a class="home-category home-category--portrait" href="portfolio.html?filter=portrait">
-          <span>Portrait</span>
-          <div class="home-category-images home-category-images-single" style="background-image: url('assets/photos/portrait-city-smile.webp');">
-            <img loading="eager" fetchpriority="high" decoding="async" src="assets/photos/portrait-city-smile.webp" alt="Lächelndes Portrait auf einer Straße" />
-          </div>
-        </a>
+      <section class="hero hero-home" aria-labelledby="hero-title">
+        <div class="hero-media reveal">
+          <img
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            src="assets/photos/portrait-city-smile.webp"
+            alt="Portrait in der Stadt"
+          />
+        </div>
 
-        <a class="home-category home-category--portrait" href="portfolio.html?filter=wedding">
-          <span>Hochzeit</span>
-          <div class="home-category-images home-category-images-single" style="background-image: url('assets/photos/wedding-blue-bouquet.webp');">
-            <img loading="eager" decoding="async" src="assets/photos/wedding-blue-bouquet.webp" alt="Hände mit Eheringen auf blauweißem Brautstrauß" />
-          </div>
-        </a>
-
-        <a class="home-category home-category--portrait home-category--club" href="portfolio.html?filter=club">
-          <span>Club</span>
-          <div class="home-category-images home-category-images-single" style="background-image: url('assets/photos/club-dj-red-light.webp');">
-            <img loading="eager" decoding="async" src="assets/photos/club-dj-red-light.webp" alt="DJ am Mischpult mit rotem Licht" />
-          </div>
-        </a>
-
-        <a class="home-category home-category--landscape home-category--auto" href="portfolio.html?filter=auto">
-          <span>Autos</span>
-          <div class="home-category-images home-category-images-single" style="background-image: url('assets/photos/automotive-audi-night.webp');">
-            <img loading="eager" decoding="async" src="assets/photos/automotive-audi-night.webp" alt="Audi bei Nacht unter Tankstellenlicht" />
-          </div>
-        </a>
-
-        <a class="home-category home-category--landscape home-category--animal" href="portfolio.html?filter=animal">
-          <span>Tiere</span>
-          <div class="home-category-images home-category-images-single" style="background-image: url('assets/photos/animal-dog-grass.webp');">
-            <img loading="eager" decoding="async" src="assets/photos/animal-dog-grass.webp" alt="Schwarzer Hund auf einer Wiese" />
-          </div>
-        </a>
+        <div class="hero-copy reveal">
+          <p class="eyebrow">EinfachRonan</p>
+          <h1 id="hero-title">Fotografie mit Ruhe, Licht und echtem Blick.</h1>
+          <p>
+            Portraits, Hochzeiten, Club, Autos und Tiere. Klar fotografiert,
+            sauber präsentiert und mit Fokus auf den Moment.
+          </p>
+          <a class="button button-primary" href="portfolio.html?filter=portrait">Portfolio ansehen</a>
+        </div>
       </section>
 
-      <section class="contact" id="kontakt">
-        <div>
-          <img class="contact-logo" loading="lazy" decoding="async" src="assets/logo-einfachronan.png" alt="EinfachRonan Logo" />
-          <p class="section-kicker">Kontakt</p>
-          <h2>Kontakt</h2>
+      <section class="category-section" aria-labelledby="category-title">
+        <div class="section-head reveal">
+          <p class="eyebrow">Portfolio</p>
+          <h2 id="category-title">Bereiche</h2>
         </div>
-        <a class="instagram-button" href="https://www.instagram.com/einfach.ronan/" target="_blank" rel="noreferrer">
+
+        <div class="category-grid">
+          <a class="category-card tilt-card reveal" href="portfolio.html?filter=portrait">
+            <img loading="lazy" decoding="async" src="assets/photos/portrait-redhair-sun.webp" alt="Portrait im Sonnenlicht" />
+            <span>Portrait</span>
+          </a>
+
+          <a class="category-card tilt-card reveal" href="portfolio.html?filter=wedding">
+            <img loading="lazy" decoding="async" src="assets/photos/wedding-blue-bouquet.webp" alt="Hochzeitsdetail mit Ringen" />
+            <span>Hochzeit</span>
+          </a>
+
+          <a class="category-card tilt-card reveal" href="portfolio.html?filter=club">
+            <img loading="lazy" decoding="async" src="assets/photos/club-dj-red-light.webp" alt="DJ im Clublicht" />
+            <span>Club</span>
+          </a>
+
+          <a class="category-card category-card-wide tilt-card reveal" href="portfolio.html?filter=auto">
+            <img loading="lazy" decoding="async" src="assets/photos/automotive-audi-night.webp" alt="Auto bei Nacht" />
+            <span>Autos</span>
+          </a>
+
+          <a class="category-card category-card-wide tilt-card reveal" href="portfolio.html?filter=animal">
+            <img loading="lazy" decoding="async" src="assets/photos/animal-cats-window.webp" alt="Katzen am Fenster" />
+            <span>Tiere</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="contact-section reveal" id="kontakt" aria-labelledby="contact-title">
+        <div>
+          <p class="eyebrow">Kontakt</p>
+          <h2 id="contact-title">Bereit für ein Shooting?</h2>
+        </div>
+        <a class="button button-secondary" href="https://www.instagram.com/einfach.ronan/" target="_blank" rel="noreferrer">
           <svg class="instagram-icon" viewBox="0 0 24 24" aria-hidden="true">
             <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
             <path d="M17.5 6.5h.01"></path>
           </svg>
-          <span>
-            <strong>@einfach.ronan</strong>
-          </span>
+          <span>@einfach.ronan</span>
         </a>
       </section>
     </main>
 
-    <script src="script.js?v=portfolio-polish-2"></script>
+    <script src="script.js?v=premium-motion-1"></script>
   </body>
 </html>
