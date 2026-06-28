@@ -19,7 +19,7 @@ const parallaxMedia = Array.from(document.querySelectorAll("[data-parallax-media
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 const isTouch = window.matchMedia("(pointer: coarse)").matches;
-const introDurationMs = reduceMotion ? 650 : 2200;
+const introDurationMs = reduceMotion ? 800 : isTouch ? 900 : 1150;
 
 const categories = {
   portrait: {
@@ -286,9 +286,9 @@ function runIntro() {
   window.setTimeout(() => {
     document.body.classList.add("is-intro-complete");
     updateParallax();
-    window.setTimeout(() => {
+    window.requestAnimationFrame(() => {
       document.documentElement.style.scrollBehavior = "smooth";
-    }, 500);
+    });
   }, introDurationMs);
 }
 
@@ -335,7 +335,7 @@ function setupPageTransitions() {
 
       window.setTimeout(() => {
         window.location.href = link.href;
-      }, Math.max(introDurationMs - 180, 420));
+      }, Math.max(introDurationMs - 120, 420));
     });
   });
 }
