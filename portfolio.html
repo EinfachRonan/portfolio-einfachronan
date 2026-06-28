@@ -11,11 +11,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="icon" type="image/png" href="assets/logo-einfachronan.png" />
-    <link rel="stylesheet" href="styles.css?v=premium-motion-1" />
+    <link rel="stylesheet" href="styles.css?v=cinematic-premium-2" />
   </head>
   <body class="portfolio-page">
     <header class="site-header" data-header>
@@ -24,8 +24,8 @@
       </a>
 
       <nav class="nav" aria-label="Hauptnavigation">
-        <a href="portfolio.html?filter=portrait">Portfolio</a>
-        <a href="index.html#kontakt">Kontakt</a>
+        <a class="nav-link is-active" href="portfolio.html?filter=portrait" aria-current="page">Portfolio</a>
+        <a class="nav-link" href="index.html#kontakt">Kontakt</a>
         <a class="instagram-link" href="https://www.instagram.com/einfach.ronan/" target="_blank" rel="noreferrer">
           <svg class="instagram-icon" viewBox="0 0 24 24" aria-hidden="true">
             <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
@@ -40,11 +40,10 @@
     <main>
       <section class="portfolio-hero reveal" data-portfolio-hero>
         <div class="portfolio-hero-copy">
-          <p class="eyebrow">EinfachRonan</p>
           <h1 data-portfolio-title>Portrait</h1>
-          <p data-portfolio-copy>Ruhige Portraits, klares Licht und natürliche Momente.</p>
+          <p data-portfolio-copy>Ruhige Portraits, klares Licht und nat&uuml;rliche Momente.</p>
         </div>
-        <figure class="portfolio-hero-image">
+        <figure class="portfolio-hero-image" data-parallax-media>
           <img
             data-portfolio-hero-image
             loading="eager"
@@ -82,7 +81,7 @@
         </article>
         <article class="photo-tile reveal" data-category="portrait">
           <button type="button" data-lightbox>
-            <img loading="lazy" decoding="async" src="assets/photos/portrait-white-shirt-outdoor.webp" alt="Portrait draußen am Wasser" />
+            <img loading="lazy" decoding="async" src="assets/photos/portrait-white-shirt-outdoor.webp" alt="Portrait drau&szlig;en am Wasser" />
           </button>
         </article>
         <article class="photo-tile reveal" data-category="portrait">
@@ -92,7 +91,7 @@
         </article>
         <article class="photo-tile reveal" data-category="portrait">
           <button type="button" data-lightbox>
-            <img loading="lazy" decoding="async" src="assets/photos/portrait-studio-beanie.webp" alt="Studio Portrait mit Mütze" />
+            <img loading="lazy" decoding="async" src="assets/photos/portrait-studio-beanie.webp" alt="Studio Portrait mit M&uuml;tze" />
           </button>
         </article>
         <article class="photo-tile reveal" data-category="portrait">
@@ -102,7 +101,7 @@
         </article>
         <article class="photo-tile reveal" data-category="portrait">
           <button type="button" data-lightbox>
-            <img loading="lazy" decoding="async" src="assets/photos/portrait-cap-outdoor.webp" alt="Portrait mit weißer Cap" />
+            <img loading="lazy" decoding="async" src="assets/photos/portrait-cap-outdoor.webp" alt="Portrait mit wei&szlig;er Cap" />
           </button>
         </article>
         <article class="photo-tile reveal" data-category="portrait">
@@ -128,12 +127,12 @@
 
         <article class="photo-tile reveal" data-category="wedding">
           <button type="button" data-lightbox>
-            <img loading="lazy" decoding="async" src="assets/photos/wedding-blue-bouquet.webp" alt="Hände mit Eheringen auf Brautstrauß" />
+            <img loading="lazy" decoding="async" src="assets/photos/wedding-blue-bouquet.webp" alt="H&auml;nde mit Eheringen auf Brautstrau&szlig;" />
           </button>
         </article>
         <article class="photo-tile reveal" data-category="wedding">
           <button type="button" data-lightbox>
-            <img loading="lazy" decoding="async" src="assets/photos/wedding-red-bouquet.webp" alt="Hochzeitsringe und Brautstrauß" />
+            <img loading="lazy" decoding="async" src="assets/photos/wedding-red-bouquet.webp" alt="Hochzeitsringe und Brautstrau&szlig;" />
           </button>
         </article>
         <article class="photo-tile reveal" data-category="wedding">
@@ -193,20 +192,20 @@
     </main>
 
     <div class="lightbox" data-lightbox-modal aria-hidden="true">
-      <button class="lightbox-close" type="button" aria-label="Bildansicht schließen" data-lightbox-close>
-        Schließen
+      <button class="lightbox-close" type="button" aria-label="Bildansicht schlie&szlig;en" data-lightbox-close>
+        Schlie&szlig;en
       </button>
       <button class="lightbox-nav lightbox-prev" type="button" aria-label="Vorheriges Bild" data-lightbox-prev>
-        Zurück
+        Zur&uuml;ck
       </button>
       <figure>
         <img decoding="async" src="assets/photos/portrait-city-smile.webp" alt="" data-lightbox-image />
       </figure>
-      <button class="lightbox-nav lightbox-next" type="button" aria-label="Nächstes Bild" data-lightbox-next>
+      <button class="lightbox-nav lightbox-next" type="button" aria-label="N&auml;chstes Bild" data-lightbox-next>
         Weiter
       </button>
     </div>
 
-    <script src="script.js?v=premium-motion-1"></script>
+    <script src="script.js?v=cinematic-premium-2"></script>
   </body>
 </html>

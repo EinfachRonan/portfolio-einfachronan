@@ -1,4 +1,5 @@
 const header = document.querySelector("[data-header]");
+const introScreen = document.querySelector(".intro-screen");
 const filters = Array.from(document.querySelectorAll("[data-filter]"));
 const tiles = Array.from(document.querySelectorAll("[data-category]"));
 const lightboxButtons = Array.from(document.querySelectorAll("[data-lightbox]"));
@@ -11,6 +12,7 @@ const portfolioHero = document.querySelector("[data-portfolio-hero]");
 const portfolioTitle = document.querySelector("[data-portfolio-title]");
 const portfolioCopy = document.querySelector("[data-portfolio-copy]");
 const portfolioHeroImage = document.querySelector("[data-portfolio-hero-image]");
+const parallaxMedia = Array.from(document.querySelectorAll("[data-parallax-media]"));
 
 const categories = {
   portrait: {
@@ -56,13 +58,18 @@ const hashAliases = {
   tiere: "animal",
 };
 
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+const isTouch = window.matchMedia("(pointer: coarse)").matches;
+
 let activeCategory = "portrait";
 let activeItems = [];
 let activeIndex = 0;
+let scrollTicking = false;
 
 function updateHeader() {
   if (!header) return;
-  header.classList.toggle("is-scrolled", window.scrollY > 10);
+  header.classList.toggle("is-scrolled", window.scrollY > 36);
 }
 
 function getInitialCategory() {
@@ -122,15 +129,27 @@ function applyFilter(category, options = {}) {
   }
 
   if (options.scrollTop) {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
   }
 }
 
+function renderLightboxImage(index) {
+  if (!modalImage || !activeItems[index]) return;
+  modalImage.style.opacity = "0";
+  modalImage.style.transform = "scale(0.985)";
+
+  window.setTimeout(() => {
+    modalImage.src = activeItems[index].src;
+    modalImage.alt = activeItems[index].alt;
+    modalImage.style.opacity = "1";
+    modalImage.style.transform = "scale(1)";
+  }, reduceMotion ? 0 : 90);
+}
+
 function openLightbox(index) {
-  if (!modal || !modalImage || !activeItems[index]) return;
+  if (!modal || !activeItems[index]) return;
   activeIndex = index;
-  modalImage.src = activeItems[activeIndex].src;
-  modalImage.alt = activeItems[activeIndex].alt;
+  renderLightboxImage(activeIndex);
   modal.classList.add("is-open");
   modal.setAttribute("aria-hidden", "false");
   document.body.classList.add("is-locked");
@@ -146,18 +165,18 @@ function closeLightbox() {
 
 function stepLightbox(direction) {
   if (!activeItems.length) return;
-  const nextIndex = (activeIndex + direction + activeItems.length) % activeItems.length;
-  openLightbox(nextIndex);
+  activeIndex = (activeIndex + direction + activeItems.length) % activeItems.length;
+  renderLightboxImage(activeIndex);
 }
 
 function setupReveal() {
   const revealItems = Array.from(document.querySelectorAll(".reveal"));
 
   revealItems.forEach((item, index) => {
-    item.style.setProperty("--delay", `${Math.min((index % 8) * 55, 260)}ms`);
+    item.style.setProperty("--delay", `${Math.min((index % 7) * 70, 280)}ms`);
   });
 
-  if (!("IntersectionObserver" in window)) {
+  if (!("IntersectionObserver" in window) || reduceMotion) {
     revealItems.forEach((item) => item.classList.add("is-visible"));
     return;
   }
@@ -170,24 +189,22 @@ function setupReveal() {
         observer.unobserve(entry.target);
       });
     },
-    { rootMargin: "0px 0px -10% 0px", threshold: 0.12 },
+    { rootMargin: "0px 0px -10% 0px", threshold: 0.14 },
   );
 
   revealItems.forEach((item) => observer.observe(item));
 }
 
 function setupTilt() {
-  const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (!canHover || reducedMotion) return;
+  if (!canHover || reduceMotion) return;
 
   document.querySelectorAll(".tilt-card, .photo-tile button").forEach((item) => {
     item.addEventListener("pointermove", (event) => {
       const rect = item.getBoundingClientRect();
       const x = (event.clientX - rect.left) / rect.width - 0.5;
       const y = (event.clientY - rect.top) / rect.height - 0.5;
-      item.style.setProperty("--tilt-x", `${(-y * 5).toFixed(2)}deg`);
-      item.style.setProperty("--tilt-y", `${(x * 5).toFixed(2)}deg`);
+      item.style.setProperty("--tilt-x", `${(-y * 4.2).toFixed(2)}deg`);
+      item.style.setProperty("--tilt-y", `${(x * 4.8).toFixed(2)}deg`);
     });
 
     item.addEventListener("pointerleave", () => {
@@ -197,13 +214,54 @@ function setupTilt() {
   });
 }
 
-window.history.scrollRestoration = "manual";
-window.addEventListener("scroll", updateHeader, { passive: true });
-window.addEventListener("load", () => {
-  if (!window.location.hash || window.location.hash === "#start") {
-    window.scrollTo(0, 0);
+function updateParallax() {
+  scrollTicking = false;
+  if (reduceMotion || isTouch) return;
+
+  const viewport = window.innerHeight || 1;
+  parallaxMedia.forEach((block) => {
+    const rect = block.getBoundingClientRect();
+    const progress = (rect.top + rect.height * 0.5 - viewport * 0.5) / viewport;
+    const shift = Math.max(Math.min(progress * -18, 18), -18);
+    block.style.setProperty("--parallax-shift", `${shift}px`);
+  });
+}
+
+function onScroll() {
+  updateHeader();
+  if (scrollTicking) return;
+  scrollTicking = true;
+  window.requestAnimationFrame(updateParallax);
+}
+
+function runIntro() {
+  if (!document.body.classList.contains("home-page") || reduceMotion || !introScreen) {
+    document.body.classList.add("is-intro-complete");
+    document.documentElement.style.scrollBehavior = "smooth";
+    return;
   }
+
+  document.documentElement.style.scrollBehavior = "auto";
+  window.setTimeout(() => {
+    document.body.classList.add("is-intro-complete");
+    updateParallax();
+    window.setTimeout(() => {
+      document.documentElement.style.scrollBehavior = "smooth";
+    }, 500);
+  }, 1000);
+}
+
+window.history.scrollRestoration = "manual";
+
+window.addEventListener("load", () => {
+  window.scrollTo(0, 0);
+  runIntro();
+  updateHeader();
+  updateParallax();
 });
+
+window.addEventListener("scroll", onScroll, { passive: true });
+window.addEventListener("resize", updateParallax, { passive: true });
 
 filters.forEach((filter) => {
   filter.addEventListener("click", () => {
@@ -240,3 +298,4 @@ if (filters.length && tiles.length) {
 updateHeader();
 setupReveal();
 setupTilt();
+updateParallax();

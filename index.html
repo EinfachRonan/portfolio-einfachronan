@@ -5,27 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="EinfachRonan Fotografie Portfolio für Portraits, Hochzeiten, Club, Autos und Tiere."
+      content="EinfachRonan Fotografie Portfolio f&uuml;r Portraits, Hochzeiten, Club, Autos und Tiere."
     />
     <title>EinfachRonan | Fotografie</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="icon" type="image/png" href="assets/logo-einfachronan.png" />
-    <link rel="stylesheet" href="styles.css?v=premium-motion-1" />
+    <link rel="stylesheet" href="styles.css?v=cinematic-premium-2" />
   </head>
   <body class="home-page">
+    <div class="intro-screen" aria-hidden="true">
+      <div class="intro-screen-inner">
+        <p class="intro-mark">EinfachRonan</p>
+      </div>
+    </div>
+
     <header class="site-header" data-header>
       <a class="brand" href="index.html" aria-label="EinfachRonan Startseite">
         <img class="brand-logo" decoding="async" src="assets/logo-einfachronan.png" alt="EinfachRonan" />
       </a>
 
       <nav class="nav" aria-label="Hauptnavigation">
-        <a href="portfolio.html?filter=portrait">Portfolio</a>
-        <a href="#kontakt">Kontakt</a>
+        <a class="nav-link" href="portfolio.html?filter=portrait">Portfolio</a>
+        <a class="nav-link" href="#kontakt">Kontakt</a>
         <a class="instagram-link" href="https://www.instagram.com/einfach.ronan/" target="_blank" rel="noreferrer">
           <svg class="instagram-icon" viewBox="0 0 24 24" aria-hidden="true">
             <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
@@ -39,7 +45,13 @@
 
     <main id="start">
       <section class="hero hero-home" aria-labelledby="hero-title">
-        <div class="hero-media reveal">
+        <div class="hero-atmosphere" aria-hidden="true">
+          <span class="mist mist-one"></span>
+          <span class="mist mist-two"></span>
+          <span class="mist mist-three"></span>
+        </div>
+
+        <div class="hero-media reveal" data-parallax-media>
           <img
             loading="eager"
             fetchpriority="high"
@@ -50,13 +62,14 @@
         </div>
 
         <div class="hero-copy reveal">
-          <p class="eyebrow">EinfachRonan</p>
-          <h1 id="hero-title">Fotografie mit Ruhe, Licht und echtem Blick.</h1>
+          <p class="eyebrow">Visual Stories</p>
+          <h1 id="hero-title"><span>EinfachRonan</span></h1>
+          <p class="hero-subtitle">Photography &#8226; Emotion &#8226; Storytelling</p>
           <p>
-            Portraits, Hochzeiten, Club, Autos und Tiere. Klar fotografiert,
-            sauber präsentiert und mit Fokus auf den Moment.
+            Filmische Bildwelten f&uuml;r Portraits, Hochzeiten, Club, Autos und Tiere.
+            Ruhig inszeniert, emotional gef&uuml;hrt und mit einem klaren Blick f&uuml;r Atmosph&auml;re.
           </p>
-          <a class="button button-primary" href="portfolio.html?filter=portrait">Portfolio ansehen</a>
+          <a class="button button-primary hero-cta" href="portfolio.html?filter=portrait">Enter Portfolio</a>
         </div>
       </section>
 
@@ -97,7 +110,7 @@
       <section class="contact-section reveal" id="kontakt" aria-labelledby="contact-title">
         <div>
           <p class="eyebrow">Kontakt</p>
-          <h2 id="contact-title">Bereit für ein Shooting?</h2>
+          <h2 id="contact-title">Bereit f&uuml;r ein Shooting?</h2>
         </div>
         <a class="button button-secondary" href="https://www.instagram.com/einfach.ronan/" target="_blank" rel="noreferrer">
           <svg class="instagram-icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -110,6 +123,6 @@
       </section>
     </main>
 
-    <script src="script.js?v=premium-motion-1"></script>
+    <script src="script.js?v=cinematic-premium-2"></script>
   </body>
 </html>
