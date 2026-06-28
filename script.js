@@ -1,5 +1,4 @@
 const header = document.querySelector("[data-header]");
-const introScreen = document.querySelector(".intro-screen");
 const filters = Array.from(document.querySelectorAll("[data-filter]"));
 const tiles = Array.from(document.querySelectorAll("[data-category]"));
 const lightboxButtons = Array.from(document.querySelectorAll("[data-lightbox]"));
@@ -16,10 +15,12 @@ const portfolioCopy = document.querySelector("[data-portfolio-copy]");
 const portfolioHeroImage = document.querySelector("[data-portfolio-hero-image]");
 const filterLinks = Array.from(document.querySelectorAll("[data-filter-link]"));
 const parallaxMedia = Array.from(document.querySelectorAll("[data-parallax-media]"));
+const categoryCards = Array.from(document.querySelectorAll("[data-category-card]"));
+const heroSlides = Array.from(document.querySelectorAll(".hero-slide"));
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 const isTouch = window.matchMedia("(pointer: coarse)").matches;
-const introDurationMs = reduceMotion ? 800 : isTouch ? 900 : 1150;
+const pageFadeDurationMs = reduceMotion ? 0 : 240;
 
 const categories = {
   portrait: {
@@ -27,30 +28,62 @@ const categories = {
     copy: "Ruhige Portraits, klares Licht und natürliche Momente.",
     hero: "assets/photos/portrait-city-smile.webp",
     alt: "Portrait in der Stadt",
+    images: [
+      { src: "assets/photos/portrait-city-smile.webp", alt: "Portrait in der Stadt" },
+      { src: "assets/photos/portrait-redhair-sun.webp", alt: "Rothaarige Frau im Sonnenlicht" },
+      { src: "assets/photos/portrait-riverside-profile.webp", alt: "Profilportrait am Wasser" },
+      { src: "assets/photos/portrait-white-shirt-outdoor.webp", alt: "Portrait draußen am Wasser" },
+      { src: "assets/photos/portrait-window-stripes.webp", alt: "Portrait vor hellem Fenster" },
+      { src: "assets/photos/portrait-studio-beanie.webp", alt: "Studio Portrait mit Mütze" },
+      { src: "assets/photos/portrait-blue-jacket-glasses.jpg", alt: "Portrait mit Brille" },
+      { src: "assets/photos/portrait-cap-outdoor.webp", alt: "Portrait mit weißer Cap" },
+      { src: "assets/photos/portrait-night-arcade.webp", alt: "Nachtportrait" },
+      { src: "assets/photos/portrait-urban-walk.webp", alt: "Portrait in der Stadt" },
+      { src: "assets/photos/portrait-point-night.webp", alt: "Portrait bei Nacht" },
+      { src: "assets/photos/portrait-leather-jacket-snow.webp", alt: "Portrait im Schnee" },
+    ],
   },
   wedding: {
     title: "Hochzeit",
     copy: "Details, Menschen und echte Augenblicke vom Hochzeitstag.",
     hero: "assets/photos/wedding-blue-bouquet.webp",
     alt: "Hochzeitsdetail mit Ringen",
+    images: [
+      { src: "assets/photos/wedding-blue-bouquet.webp", alt: "Hände mit Eheringen auf Brautstrauß" },
+      { src: "assets/photos/wedding-red-bouquet.webp", alt: "Hochzeitsringe und Brautstrauß" },
+      { src: "assets/photos/wedding-guest-toast.webp", alt: "Hochzeitsgast mit Glas" },
+      { src: "assets/photos/wedding-table-flowers.webp", alt: "Blumen auf Hochzeitstisch" },
+      { src: "assets/photos/wedding-table-detail.webp", alt: "Details auf Hochzeitstisch" },
+    ],
   },
   club: {
     title: "Club",
     copy: "Licht, Bewegung und Atmosphäre aus der Nacht.",
     hero: "assets/photos/club-dj-red-light.webp",
     alt: "DJ im Clublicht",
+    images: [
+      { src: "assets/photos/club-dj-profile-dark.webp", alt: "DJ im dunklen Raum" },
+      { src: "assets/photos/club-dj-red-light.webp", alt: "DJ am Mischpult mit rotem Licht" },
+      { src: "assets/photos/club-dj-console.webp", alt: "DJ am Mischpult" },
+    ],
   },
   auto: {
     title: "Autos",
     copy: "Klare Linien, dunkle Stimmung und urbanes Licht.",
     hero: "assets/photos/automotive-audi-night.webp",
     alt: "Auto bei Nacht",
+    images: [{ src: "assets/photos/automotive-audi-night.webp", alt: "Audi bei Nacht" }],
   },
   animal: {
     title: "Tiere",
     copy: "Natürliche Tierbilder mit Ruhe und Nähe.",
     hero: "assets/photos/animal-cats-window.webp",
     alt: "Katzen am Fenster",
+    images: [
+      { src: "assets/photos/animal-cats-window.webp", alt: "Zwei Katzen am Fenster" },
+      { src: "assets/photos/animal-cat-close.webp", alt: "Katze leckt ihre Pfote" },
+      { src: "assets/photos/animal-dog-grass.webp", alt: "Hund auf einer Wiese" },
+    ],
   },
 };
 
@@ -70,7 +103,7 @@ let activeItems = [];
 let activeIndex = 0;
 let scrollTicking = false;
 let transitionLocked = false;
-let portfolioMode = "overview";
+let heroSlideTimer = null;
 
 function updateHeader() {
   if (!header) return;
@@ -90,7 +123,6 @@ function updatePortfolioMode(category) {
   if (!portfolioOverview || !portfolioDetail) return;
 
   const hasCategory = Boolean(category && categories[category]);
-  portfolioMode = hasCategory ? "detail" : "overview";
   portfolioOverview.hidden = hasCategory;
   portfolioDetail.hidden = !hasCategory;
 }
@@ -126,11 +158,8 @@ function applyFilter(category, options = {}) {
   filterLinks.forEach((link) => {
     const isActive = link.dataset.filterLink === activeCategory;
     link.classList.toggle("is-active", isActive);
-    if (isActive) {
-      link.setAttribute("aria-current", "page");
-    } else {
-      link.removeAttribute("aria-current");
-    }
+    if (isActive) link.setAttribute("aria-current", "page");
+    else link.removeAttribute("aria-current");
   });
 
   tiles.forEach((tile) => {
@@ -269,55 +298,96 @@ function onScroll() {
   window.requestAnimationFrame(updateParallax);
 }
 
-function runIntro() {
-  if (!introScreen) {
-    document.body.classList.add("is-intro-complete");
-    document.documentElement.style.scrollBehavior = "smooth";
-    return;
+function shuffle(list) {
+  const clone = [...list];
+  for (let index = clone.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [clone[index], clone[randomIndex]] = [clone[randomIndex], clone[index]];
   }
-
-  introScreen.classList.remove("play");
-  void introScreen.offsetWidth;
-  introScreen.classList.add("play");
-  document.body.classList.remove("is-intro-complete");
-  document.body.classList.remove("is-transitioning");
-  document.documentElement.style.scrollBehavior = "auto";
-  document.documentElement.style.setProperty("--intro-duration", `${introDurationMs}ms`);
-  window.setTimeout(() => {
-    document.body.classList.add("is-intro-complete");
-    updateParallax();
-    window.requestAnimationFrame(() => {
-      document.documentElement.style.scrollBehavior = "smooth";
-    });
-  }, introDurationMs);
+  return clone;
 }
 
-function isInternalNavigation(link) {
-  const href = link.getAttribute("href");
-  if (!href || href.startsWith("#")) return false;
-  if (link.target && link.target !== "_self") return false;
-  if (link.hasAttribute("download")) return false;
+function setupRandomCategoryImages() {
+  if (!categoryCards.length) return;
 
-  const url = new URL(href, window.location.href);
-  if (url.protocol.startsWith("http")) {
-    if (url.origin !== window.location.origin) return false;
-  } else if (url.protocol === "file:") {
-    if (window.location.protocol !== "file:") return false;
-  } else {
-    return false;
-  }
+  categoryCards.forEach((card) => {
+    const category = card.dataset.categoryCard;
+    const image = card.querySelector("img");
+    const pool = categories[category]?.images ?? [];
+    if (!image || !pool.length) return;
 
-  const currentBase = `${window.location.pathname}${window.location.search}`;
-  const nextBase = `${url.pathname}${url.search}`;
-  if (currentBase === nextBase && url.hash) return false;
-
-  return true;
+    const selected = pool[Math.floor(Math.random() * pool.length)];
+    image.src = selected.src;
+    image.alt = selected.alt;
+  });
 }
 
-function setupPageTransitions() {
+function getHeroSlideshowImages() {
+  const ordered = [
+    ...categories.club.images.slice(-2),
+    ...categories.portrait.images.slice(-3),
+    ...categories.wedding.images.slice(-2),
+    ...categories.animal.images.slice(-1),
+    ...categories.auto.images.slice(-1),
+  ];
+
+  const deduped = ordered.filter((item, index, list) => {
+    return list.findIndex((entry) => entry.src === item.src) === index;
+  });
+
+  return deduped.slice(-8);
+}
+
+function setupHeroSlideshow() {
+  if (heroSlides.length < 2) return;
+
+  const slides = getHeroSlideshowImages();
+  if (!slides.length) return;
+
+  let activeSlideIndex = 0;
+  let visibleLayer = 0;
+
+  heroSlides.forEach((slide, index) => {
+    const image = slides[index % slides.length];
+    slide.src = image.src;
+    slide.alt = image.alt;
+    slide.classList.toggle("is-active", index === 0);
+  });
+
+  if (reduceMotion || slides.length < 2) return;
+
+  heroSlideTimer = window.setInterval(() => {
+    const nextLayer = visibleLayer === 0 ? 1 : 0;
+    activeSlideIndex = (activeSlideIndex + 1) % slides.length;
+    const nextImage = slides[activeSlideIndex];
+    const nextSlide = heroSlides[nextLayer];
+    const currentSlide = heroSlides[visibleLayer];
+
+    nextSlide.src = nextImage.src;
+    nextSlide.alt = nextImage.alt;
+    nextSlide.classList.add("is-active");
+    currentSlide.classList.remove("is-active");
+    visibleLayer = nextLayer;
+  }, 5200);
+}
+
+function setupPageFade() {
+  document.body.classList.add("is-page-ready");
+
   document.querySelectorAll("a[href]").forEach((link) => {
     link.addEventListener("click", (event) => {
-      if (!isInternalNavigation(link)) return;
+      const href = link.getAttribute("href");
+      if (!href || href.startsWith("#")) return;
+      if (link.target && link.target !== "_self") return;
+      if (link.hasAttribute("download")) return;
+
+      const url = new URL(href, window.location.href);
+      if (url.origin !== window.location.origin && url.protocol !== "file:") return;
+
+      const currentBase = `${window.location.pathname}${window.location.search}`;
+      const nextBase = `${url.pathname}${url.search}`;
+      if (currentBase === nextBase && url.hash) return;
+
       if (transitionLocked) {
         event.preventDefault();
         return;
@@ -325,28 +395,31 @@ function setupPageTransitions() {
 
       transitionLocked = true;
       event.preventDefault();
-      document.body.classList.add("is-transitioning");
-      document.body.classList.remove("is-intro-complete");
-      if (introScreen) {
-        introScreen.classList.remove("play");
-        void introScreen.offsetWidth;
-        introScreen.classList.add("play");
-      }
+      document.body.classList.remove("is-page-ready");
+      document.body.classList.add("is-page-leaving");
 
       window.setTimeout(() => {
         window.location.href = link.href;
-      }, Math.max(introDurationMs - 120, 420));
+      }, pageFadeDurationMs);
     });
   });
 }
 
 window.history.scrollRestoration = "manual";
 
+window.addEventListener("pageshow", () => {
+  document.body.classList.add("is-page-ready");
+  document.body.classList.remove("is-page-leaving");
+});
+
 window.addEventListener("load", () => {
   window.scrollTo(0, 0);
-  runIntro();
+  document.body.classList.add("is-page-ready");
+  document.body.classList.remove("is-page-leaving");
   updateHeader();
   updateParallax();
+  setupRandomCategoryImages();
+  setupHeroSlideshow();
 });
 
 window.addEventListener("scroll", onScroll, { passive: true });
@@ -376,22 +449,16 @@ window.addEventListener("keydown", (event) => {
 
 if (filters.length && tiles.length) {
   const initialCategory = getInitialCategory();
-  if (initialCategory) {
-    applyFilter(initialCategory);
-  } else {
-    showPortfolioOverview();
-  }
+  if (initialCategory) applyFilter(initialCategory);
+  else showPortfolioOverview();
 } else if (tiles.length && portfolioOverview && portfolioDetail) {
   const initialCategory = getInitialCategory();
-  if (initialCategory) {
-    applyFilter(initialCategory);
-  } else {
-    showPortfolioOverview();
-  }
+  if (initialCategory) applyFilter(initialCategory);
+  else showPortfolioOverview();
 }
 
 updateHeader();
 setupReveal();
 setupTilt();
 updateParallax();
-setupPageTransitions();
+setupPageFade();
