@@ -16,6 +16,7 @@ const portfolioHeroImage = document.querySelector("[data-portfolio-hero-image]")
 const filterLinks = Array.from(document.querySelectorAll("[data-filter-link]"));
 const parallaxMedia = Array.from(document.querySelectorAll("[data-parallax-media]"));
 const categoryCards = Array.from(document.querySelectorAll("[data-category-card]"));
+const portfolioSpotlights = Array.from(document.querySelectorAll("[data-spotlight]"));
 const heroSlides = Array.from(document.querySelectorAll(".hero-slide"));
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -105,6 +106,12 @@ let scrollTicking = false;
 let transitionLocked = false;
 let heroSlideTimer = null;
 
+function scrollPageTop() {
+  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+}
+
 function updateHeader() {
   if (!header) return;
   header.classList.toggle("is-scrolled", window.scrollY > 36);
@@ -123,8 +130,8 @@ function updatePortfolioMode(category) {
   if (!portfolioOverview || !portfolioDetail) return;
 
   const hasCategory = Boolean(category && categories[category]);
-  portfolioOverview.hidden = hasCategory;
-  portfolioDetail.hidden = !hasCategory;
+  portfolioOverview.toggleAttribute("hidden", hasCategory);
+  portfolioDetail.toggleAttribute("hidden", !hasCategory);
 }
 
 function syncHero(category) {
@@ -179,7 +186,8 @@ function applyFilter(category, options = {}) {
   }
 
   if (options.scrollTop) {
-    window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+    scrollPageTop();
+    window.requestAnimationFrame(scrollPageTop);
   }
 }
 
@@ -322,20 +330,43 @@ function setupRandomCategoryImages() {
   });
 }
 
+function setupRandomPortfolioSpotlights() {
+  if (!portfolioSpotlights.length) return;
+
+  portfolioSpotlights.forEach((spotlight) => {
+    const category = spotlight.dataset.spotlight;
+    const image = spotlight.querySelector("img");
+    const pool = categories[category]?.images ?? [];
+    if (!image || !pool.length) return;
+
+    const selected = pool[Math.floor(Math.random() * pool.length)];
+    image.src = selected.src;
+    image.alt = selected.alt;
+  });
+}
+
 function getHeroSlideshowImages() {
+  if (window.innerWidth <= 680) {
+    return [
+      categories.portrait.images[0],
+      categories.portrait.images[1],
+    ].filter(Boolean);
+  }
+
   const ordered = [
-    ...categories.club.images.slice(-2),
-    ...categories.portrait.images.slice(-3),
-    ...categories.wedding.images.slice(-2),
-    ...categories.animal.images.slice(-1),
-    ...categories.auto.images.slice(-1),
-  ];
+    categories.auto.images[0],
+    categories.animal.images[0],
+    categories.club.images[0],
+    categories.club.images[2],
+    categories.auto.images[0],
+    categories.animal.images[0],
+  ].filter(Boolean);
 
   const deduped = ordered.filter((item, index, list) => {
-    return list.findIndex((entry) => entry.src === item.src) === index;
+    return list.findIndex((entry) => entry.src === item.src && entry.alt === item.alt) === index;
   });
 
-  return deduped.slice(-8);
+  return deduped.slice(0, 6);
 }
 
 function setupHeroSlideshow() {
@@ -369,6 +400,26 @@ function setupHeroSlideshow() {
     currentSlide.classList.remove("is-active");
     visibleLayer = nextLayer;
   }, 5200);
+}
+
+function setupPortfolioRouting() {
+  if (!portfolioSpotlights.length) return;
+
+  portfolioSpotlights.forEach((spotlight) => {
+    const target = spotlight.dataset.categoryRoute;
+    if (!target) return;
+
+    spotlight.addEventListener("click", (event) => {
+      if (event.target.closest("a, button")) return;
+      window.location.href = target;
+    });
+
+    spotlight.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      event.preventDefault();
+      window.location.href = target;
+    });
+  });
 }
 
 function setupPageFade() {
@@ -410,16 +461,21 @@ window.history.scrollRestoration = "manual";
 window.addEventListener("pageshow", () => {
   document.body.classList.add("is-page-ready");
   document.body.classList.remove("is-page-leaving");
+  if (getInitialCategory()) {
+    scrollPageTop();
+  }
 });
 
 window.addEventListener("load", () => {
-  window.scrollTo(0, 0);
+  scrollPageTop();
   document.body.classList.add("is-page-ready");
   document.body.classList.remove("is-page-leaving");
   updateHeader();
   updateParallax();
   setupRandomCategoryImages();
+  setupRandomPortfolioSpotlights();
   setupHeroSlideshow();
+  setupPortfolioRouting();
 });
 
 window.addEventListener("scroll", onScroll, { passive: true });
@@ -449,11 +505,11 @@ window.addEventListener("keydown", (event) => {
 
 if (filters.length && tiles.length) {
   const initialCategory = getInitialCategory();
-  if (initialCategory) applyFilter(initialCategory);
+  if (initialCategory) applyFilter(initialCategory, { scrollTop: true });
   else showPortfolioOverview();
 } else if (tiles.length && portfolioOverview && portfolioDetail) {
   const initialCategory = getInitialCategory();
-  if (initialCategory) applyFilter(initialCategory);
+  if (initialCategory) applyFilter(initialCategory, { scrollTop: true });
   else showPortfolioOverview();
 }
 
