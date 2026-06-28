@@ -17,6 +17,7 @@ const filterLinks = Array.from(document.querySelectorAll("[data-filter-link]"));
 const parallaxMedia = Array.from(document.querySelectorAll("[data-parallax-media]"));
 const categoryCards = Array.from(document.querySelectorAll("[data-category-card]"));
 const portfolioSpotlights = Array.from(document.querySelectorAll("[data-spotlight]"));
+const categoryRouteLinks = Array.from(document.querySelectorAll("[data-category-route]"));
 const heroSlides = Array.from(document.querySelectorAll(".hero-slide"));
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -110,6 +111,11 @@ function scrollPageTop() {
   window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   document.documentElement.scrollTop = 0;
   document.body.scrollTop = 0;
+}
+
+function navigateToRoute(route) {
+  if (!route) return;
+  window.location.assign(route);
 }
 
 function updateHeader() {
@@ -411,13 +417,28 @@ function setupPortfolioRouting() {
 
     spotlight.addEventListener("click", (event) => {
       if (event.target.closest("a, button")) return;
-      window.location.href = target;
+      navigateToRoute(target);
     });
 
     spotlight.addEventListener("keydown", (event) => {
       if (event.key !== "Enter" && event.key !== " ") return;
       event.preventDefault();
-      window.location.href = target;
+      navigateToRoute(target);
+    });
+  });
+}
+
+function setupCategoryRoutes() {
+  if (!categoryRouteLinks.length) return;
+
+  categoryRouteLinks.forEach((link) => {
+    const target = link.dataset.categoryRoute || link.getAttribute("href");
+    if (!target) return;
+
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      navigateToRoute(target);
     });
   });
 }
@@ -429,6 +450,7 @@ function setupPageFade() {
     link.addEventListener("click", (event) => {
       const href = link.getAttribute("href");
       if (!href || href.startsWith("#")) return;
+      if (link.dataset.categoryRoute) return;
       if (link.target && link.target !== "_self") return;
       if (link.hasAttribute("download")) return;
 
@@ -476,6 +498,7 @@ window.addEventListener("load", () => {
   setupRandomPortfolioSpotlights();
   setupHeroSlideshow();
   setupPortfolioRouting();
+  setupCategoryRoutes();
 });
 
 window.addEventListener("scroll", onScroll, { passive: true });
