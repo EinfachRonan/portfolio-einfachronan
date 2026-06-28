@@ -8,11 +8,18 @@ const modalImage = document.querySelector("[data-lightbox-image]");
 const modalClose = document.querySelector("[data-lightbox-close]");
 const modalPrev = document.querySelector("[data-lightbox-prev]");
 const modalNext = document.querySelector("[data-lightbox-next]");
+const portfolioOverview = document.querySelector("[data-portfolio-overview]");
+const portfolioDetail = document.querySelector("[data-portfolio-detail]");
 const portfolioHero = document.querySelector("[data-portfolio-hero]");
 const portfolioTitle = document.querySelector("[data-portfolio-title]");
 const portfolioCopy = document.querySelector("[data-portfolio-copy]");
 const portfolioHeroImage = document.querySelector("[data-portfolio-hero-image]");
+const filterLinks = Array.from(document.querySelectorAll("[data-filter-link]"));
 const parallaxMedia = Array.from(document.querySelectorAll("[data-parallax-media]"));
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+const isTouch = window.matchMedia("(pointer: coarse)").matches;
+const introDurationMs = reduceMotion ? 650 : 2200;
 
 const categories = {
   portrait: {
@@ -58,14 +65,12 @@ const hashAliases = {
   tiere: "animal",
 };
 
-const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-const isTouch = window.matchMedia("(pointer: coarse)").matches;
-
 let activeCategory = "portrait";
 let activeItems = [];
 let activeIndex = 0;
 let scrollTicking = false;
+let transitionLocked = false;
+let portfolioMode = "overview";
 
 function updateHeader() {
   if (!header) return;
@@ -78,7 +83,16 @@ function getInitialCategory() {
 
   if (query && categories[query]) return query;
   if (hashAliases[hash]) return hashAliases[hash];
-  return "portrait";
+  return null;
+}
+
+function updatePortfolioMode(category) {
+  if (!portfolioOverview || !portfolioDetail) return;
+
+  const hasCategory = Boolean(category && categories[category]);
+  portfolioMode = hasCategory ? "detail" : "overview";
+  portfolioOverview.hidden = hasCategory;
+  portfolioDetail.hidden = !hasCategory;
 }
 
 function syncHero(category) {
@@ -107,9 +121,16 @@ function refreshActiveItems() {
 
 function applyFilter(category, options = {}) {
   activeCategory = categories[category] ? category : "portrait";
+  updatePortfolioMode(activeCategory);
 
-  filters.forEach((filter) => {
-    filter.classList.toggle("is-active", filter.dataset.filter === activeCategory);
+  filterLinks.forEach((link) => {
+    const isActive = link.dataset.filterLink === activeCategory;
+    link.classList.toggle("is-active", isActive);
+    if (isActive) {
+      link.setAttribute("aria-current", "page");
+    } else {
+      link.removeAttribute("aria-current");
+    }
   });
 
   tiles.forEach((tile) => {
@@ -131,6 +152,20 @@ function applyFilter(category, options = {}) {
   if (options.scrollTop) {
     window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
   }
+}
+
+function showPortfolioOverview() {
+  updatePortfolioMode(null);
+
+  tiles.forEach((tile) => {
+    tile.classList.add("is-hidden");
+    tile.setAttribute("aria-hidden", "true");
+  });
+
+  filterLinks.forEach((link) => {
+    link.classList.remove("is-active");
+    link.removeAttribute("aria-current");
+  });
 }
 
 function renderLightboxImage(index) {
@@ -235,20 +270,74 @@ function onScroll() {
 }
 
 function runIntro() {
-  if (!document.body.classList.contains("home-page") || reduceMotion || !introScreen) {
+  if (!introScreen) {
     document.body.classList.add("is-intro-complete");
     document.documentElement.style.scrollBehavior = "smooth";
     return;
   }
 
+  introScreen.classList.remove("play");
+  void introScreen.offsetWidth;
+  introScreen.classList.add("play");
+  document.body.classList.remove("is-intro-complete");
+  document.body.classList.remove("is-transitioning");
   document.documentElement.style.scrollBehavior = "auto";
+  document.documentElement.style.setProperty("--intro-duration", `${introDurationMs}ms`);
   window.setTimeout(() => {
     document.body.classList.add("is-intro-complete");
     updateParallax();
     window.setTimeout(() => {
       document.documentElement.style.scrollBehavior = "smooth";
     }, 500);
-  }, 1000);
+  }, introDurationMs);
+}
+
+function isInternalNavigation(link) {
+  const href = link.getAttribute("href");
+  if (!href || href.startsWith("#")) return false;
+  if (link.target && link.target !== "_self") return false;
+  if (link.hasAttribute("download")) return false;
+
+  const url = new URL(href, window.location.href);
+  if (url.protocol.startsWith("http")) {
+    if (url.origin !== window.location.origin) return false;
+  } else if (url.protocol === "file:") {
+    if (window.location.protocol !== "file:") return false;
+  } else {
+    return false;
+  }
+
+  const currentBase = `${window.location.pathname}${window.location.search}`;
+  const nextBase = `${url.pathname}${url.search}`;
+  if (currentBase === nextBase && url.hash) return false;
+
+  return true;
+}
+
+function setupPageTransitions() {
+  document.querySelectorAll("a[href]").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      if (!isInternalNavigation(link)) return;
+      if (transitionLocked) {
+        event.preventDefault();
+        return;
+      }
+
+      transitionLocked = true;
+      event.preventDefault();
+      document.body.classList.add("is-transitioning");
+      document.body.classList.remove("is-intro-complete");
+      if (introScreen) {
+        introScreen.classList.remove("play");
+        void introScreen.offsetWidth;
+        introScreen.classList.add("play");
+      }
+
+      window.setTimeout(() => {
+        window.location.href = link.href;
+      }, Math.max(introDurationMs - 180, 420));
+    });
+  });
 }
 
 window.history.scrollRestoration = "manual";
@@ -262,12 +351,6 @@ window.addEventListener("load", () => {
 
 window.addEventListener("scroll", onScroll, { passive: true });
 window.addEventListener("resize", updateParallax, { passive: true });
-
-filters.forEach((filter) => {
-  filter.addEventListener("click", () => {
-    applyFilter(filter.dataset.filter, { updateUrl: true, scrollTop: true });
-  });
-});
 
 lightboxButtons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -292,10 +375,23 @@ window.addEventListener("keydown", (event) => {
 });
 
 if (filters.length && tiles.length) {
-  applyFilter(getInitialCategory());
+  const initialCategory = getInitialCategory();
+  if (initialCategory) {
+    applyFilter(initialCategory);
+  } else {
+    showPortfolioOverview();
+  }
+} else if (tiles.length && portfolioOverview && portfolioDetail) {
+  const initialCategory = getInitialCategory();
+  if (initialCategory) {
+    applyFilter(initialCategory);
+  } else {
+    showPortfolioOverview();
+  }
 }
 
 updateHeader();
 setupReveal();
 setupTilt();
 updateParallax();
+setupPageTransitions();
