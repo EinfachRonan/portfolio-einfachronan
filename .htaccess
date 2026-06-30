@@ -1,0 +1,9 @@
+DirectoryIndex index.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Leitet die explizite index.html der Startseite auf die Root-URL um.
+  RewriteCond %{THE_REQUEST} \s/+index\.html(?:[\s?]|$) [NC]
+  RewriteRule ^index\.html$ / [R=301,L]
+</IfModule>

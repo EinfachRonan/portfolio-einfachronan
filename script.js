@@ -19,6 +19,8 @@ const categoryCards = Array.from(document.querySelectorAll("[data-category-card]
 const portfolioSpotlights = Array.from(document.querySelectorAll("[data-spotlight]"));
 const categoryRouteLinks = Array.from(document.querySelectorAll("[data-category-route]"));
 const heroSlides = Array.from(document.querySelectorAll(".hero-slide"));
+const heroSection = document.querySelector(".hero-home");
+const heroCta = document.querySelector(".hero-cta");
 const ambientAudio = document.querySelector("[data-ambient-audio]");
 const musicToggle = document.querySelector("[data-music-toggle]");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -122,6 +124,52 @@ let heroSlideTimer = null;
 let musicReady = false;
 let musicPositionReady = false;
 let lastSavedMusicTime = 0;
+let musicToggleUnlocked = !document.body.classList.contains("home-page");
+
+function revealMusicToggle() {
+  if (!musicToggle) return;
+  if (musicToggleUnlocked) return;
+  musicToggleUnlocked = true;
+  musicToggle.hidden = false;
+  window.requestAnimationFrame(() => {
+    musicToggle.classList.add("is-visible");
+  });
+}
+
+function updateMusicToggleVisibility() {
+  if (!musicToggle) return;
+
+  if (!document.body.classList.contains("home-page")) {
+    musicToggleUnlocked = true;
+    musicToggle.hidden = false;
+    musicToggle.classList.add("is-visible");
+    return;
+  }
+
+  if (musicToggleUnlocked) {
+    musicToggle.hidden = false;
+    musicToggle.classList.add("is-visible");
+    return;
+  }
+
+  const hasScrolled = window.scrollY > 24;
+  const reachedHeroCta =
+    !!heroCta &&
+    hasScrolled &&
+    heroCta.getBoundingClientRect().top <= (window.innerHeight || 1) * 0.88;
+  const leftHero =
+    !!heroSection &&
+    hasScrolled &&
+    heroSection.getBoundingClientRect().bottom <= (window.innerHeight || 1) * 0.82;
+
+  if (reachedHeroCta || leftHero) {
+    revealMusicToggle();
+    return;
+  }
+
+  musicToggle.classList.remove("is-visible");
+  musicToggle.hidden = true;
+}
 
 function scrollPageTop() {
   window.scrollTo({ top: 0, left: 0, behavior: "auto" });
@@ -142,8 +190,6 @@ function updateHeader() {
 
 function setMusicButtonState(isPlaying) {
   if (!musicToggle) return;
-  musicToggle.hidden = false;
-  musicToggle.classList.add("is-visible");
   musicToggle.classList.toggle("is-playing", isPlaying);
   musicToggle.setAttribute("aria-pressed", String(isPlaying));
   musicToggle.setAttribute(
@@ -245,10 +291,34 @@ function setupAmbientAudio() {
   const savedState = readMusicState();
   const shouldAutoplay = savedState !== "off";
   setMusicButtonState(false);
+  updateMusicToggleVisibility();
+
+  let interactionResumeBound = false;
+  const bindInteractionResume = () => {
+    if (interactionResumeBound || !shouldAutoplay) return;
+    interactionResumeBound = true;
+
+    const resumePlayback = async () => {
+      if (!ambientAudio.paused || readMusicState() === "off") return;
+      restoreMusicTime();
+      const started = await tryPlayAmbientAudio();
+      if (started) {
+        document.removeEventListener("pointerdown", resumePlayback, true);
+        document.removeEventListener("keydown", resumePlayback, true);
+        document.removeEventListener("touchstart", resumePlayback, true);
+      }
+    };
+
+    document.addEventListener("pointerdown", resumePlayback, true);
+    document.addEventListener("keydown", resumePlayback, true);
+    document.addEventListener("touchstart", resumePlayback, true);
+  };
 
   if (shouldAutoplay) {
     window.requestAnimationFrame(() => {
-      void tryPlayAmbientAudio();
+      void tryPlayAmbientAudio().then((started) => {
+        if (!started) bindInteractionResume();
+      });
     });
   }
 
@@ -471,6 +541,7 @@ function updateParallax() {
 
 function onScroll() {
   updateHeader();
+  updateMusicToggleVisibility();
   if (scrollTicking) return;
   scrollTicking = true;
   window.requestAnimationFrame(updateParallax);
@@ -663,6 +734,7 @@ window.addEventListener("load", () => {
   document.body.classList.add("is-page-ready");
   document.body.classList.remove("is-page-leaving");
   updateHeader();
+  updateMusicToggleVisibility();
   updateParallax();
   setupRandomCategoryImages();
   setupRandomPortfolioSpotlights();
@@ -708,6 +780,7 @@ if (filters.length && tiles.length) {
 }
 
 updateHeader();
+updateMusicToggleVisibility();
 setupReveal();
 setupTilt();
 updateParallax();
