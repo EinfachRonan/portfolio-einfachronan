@@ -92,6 +92,18 @@ button {
   text-decoration: none;
 }
 
+.portfolio-page .brand {
+  display: none;
+}
+
+.portfolio-page .site-header {
+  justify-content: flex-end;
+}
+
+.portfolio-page .nav {
+  margin-left: auto;
+}
+
 .brand-logo {
   display: block;
   width: auto;
