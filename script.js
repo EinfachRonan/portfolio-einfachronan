@@ -19,10 +19,13 @@ const categoryCards = Array.from(document.querySelectorAll("[data-category-card]
 const portfolioSpotlights = Array.from(document.querySelectorAll("[data-spotlight]"));
 const categoryRouteLinks = Array.from(document.querySelectorAll("[data-category-route]"));
 const heroSlides = Array.from(document.querySelectorAll(".hero-slide"));
+const ambientAudio = document.querySelector("[data-ambient-audio]");
+const musicToggle = document.querySelector("[data-music-toggle]");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 const isTouch = window.matchMedia("(pointer: coarse)").matches;
 const pageFadeDurationMs = reduceMotion ? 0 : 240;
+const musicStorageKey = "einfachronan-music-enabled";
 
 const categories = {
   portrait: {
@@ -106,6 +109,7 @@ let activeIndex = 0;
 let scrollTicking = false;
 let transitionLocked = false;
 let heroSlideTimer = null;
+let musicReady = false;
 
 function scrollPageTop() {
   window.scrollTo({ top: 0, left: 0, behavior: "auto" });
@@ -121,6 +125,79 @@ function navigateToRoute(route) {
 function updateHeader() {
   if (!header) return;
   header.classList.toggle("is-scrolled", window.scrollY > 36);
+}
+
+function setMusicButtonState(isPlaying) {
+  if (!musicToggle) return;
+  musicToggle.hidden = false;
+  musicToggle.classList.add("is-visible");
+  musicToggle.classList.toggle("is-playing", isPlaying);
+  musicToggle.setAttribute("aria-pressed", String(isPlaying));
+  musicToggle.setAttribute(
+    "aria-label",
+    isPlaying ? "Hintergrundmusik pausieren" : "Hintergrundmusik starten",
+  );
+  const label = musicToggle.querySelector(".music-toggle-label");
+  if (label) label.textContent = isPlaying ? "Musik an" : "Musik aus";
+}
+
+function persistMusicState(isEnabled) {
+  try {
+    window.localStorage.setItem(musicStorageKey, isEnabled ? "on" : "off");
+  } catch {}
+}
+
+function readMusicState() {
+  try {
+    return window.localStorage.getItem(musicStorageKey);
+  } catch {
+    return null;
+  }
+}
+
+async function tryPlayAmbientAudio() {
+  if (!ambientAudio) return false;
+  try {
+    await ambientAudio.play();
+    setMusicButtonState(true);
+    persistMusicState(true);
+    return true;
+  } catch {
+    setMusicButtonState(false);
+    return false;
+  }
+}
+
+function setupAmbientAudio() {
+  if (!ambientAudio || !musicToggle || musicReady) return;
+  musicReady = true;
+  ambientAudio.volume = 0.3;
+  ambientAudio.loop = true;
+
+  const savedState = readMusicState();
+  const shouldAutoplay = savedState !== "off";
+  setMusicButtonState(false);
+
+  if (shouldAutoplay) {
+    window.requestAnimationFrame(() => {
+      void tryPlayAmbientAudio();
+    });
+  }
+
+  musicToggle.addEventListener("click", async () => {
+    if (ambientAudio.paused) {
+      const started = await tryPlayAmbientAudio();
+      if (!started) setMusicButtonState(false);
+      return;
+    }
+
+    ambientAudio.pause();
+    persistMusicState(false);
+    setMusicButtonState(false);
+  });
+
+  ambientAudio.addEventListener("play", () => setMusicButtonState(true));
+  ambientAudio.addEventListener("pause", () => setMusicButtonState(false));
 }
 
 function getInitialCategory() {
@@ -501,6 +578,7 @@ window.addEventListener("load", () => {
   setupHeroSlideshow();
   setupPortfolioRouting();
   setupCategoryRoutes();
+  setupAmbientAudio();
 });
 
 window.addEventListener("scroll", onScroll, { passive: true });
