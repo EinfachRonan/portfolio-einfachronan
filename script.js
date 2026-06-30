@@ -36,21 +36,21 @@ const categories = {
     alt: "Portrait in der Stadt",
     images: [
       { src: "assets/photos/portrait-city-smile.webp", alt: "Portrait in der Stadt" },
-      { src: "assets/photos/portrait-redhair-sun.webp", alt: "Rothaarige Frau im Sonnenlicht" },
+      { src: "assets/photos/portrait-urban-walk.webp", alt: "Portrait in der Stadt" },
       { src: "assets/photos/portrait-riverside-profile.webp", alt: "Profilportrait am Wasser" },
       { src: "assets/photos/portrait-white-shirt-outdoor.webp", alt: "Portrait draußen am Wasser" },
+      { src: "assets/photos/portrait-cap-outdoor.webp", alt: "Portrait mit weißer Cap" },
+      { src: "assets/photos/portrait-redhair-sun.webp", alt: "Rothaarige Frau im Sonnenlicht" },
+      { src: "assets/photos/IMG_4214.JPG", alt: "Portrait mit Sonnenbrille im warmen Licht" },
+      { src: "assets/photos/IMG_6190.JPG", alt: "Portrait mit Cap im Gegenlicht" },
       { src: "assets/photos/portrait-window-stripes.webp", alt: "Portrait vor hellem Fenster" },
       { src: "assets/photos/portrait-studio-beanie.webp", alt: "Studio Portrait mit Mütze" },
       { src: "assets/photos/portrait-blue-jacket-glasses.jpg", alt: "Portrait mit Brille" },
-      { src: "assets/photos/portrait-cap-outdoor.webp", alt: "Portrait mit weißer Cap" },
+      { src: "assets/photos/IMG_4051.JPG", alt: "Portrait im Sessel mit ruhigem Licht" },
+      { src: "assets/photos/IMG_7060.JPG", alt: "Portrait am Bahnhof bei kühlem Licht" },
       { src: "assets/photos/portrait-night-arcade.webp", alt: "Nachtportrait" },
-      { src: "assets/photos/portrait-urban-walk.webp", alt: "Portrait in der Stadt" },
       { src: "assets/photos/portrait-point-night.webp", alt: "Portrait bei Nacht" },
       { src: "assets/photos/portrait-leather-jacket-snow.webp", alt: "Portrait im Schnee" },
-      { src: "assets/photos/IMG_4051.JPG", alt: "Portrait im Sessel mit ruhigem Licht" },
-      { src: "assets/photos/IMG_4214.JPG", alt: "Portrait mit Sonnenbrille im warmen Licht" },
-      { src: "assets/photos/IMG_6190.JPG", alt: "Portrait mit Cap im Gegenlicht" },
-      { src: "assets/photos/IMG_7060.JPG", alt: "Portrait am Bahnhof bei kühlem Licht" },
       { src: "assets/photos/IMG_8490.JPG", alt: "Nachtportrait im Schnee" },
       { src: "assets/photos/IMG_9603.JPG", alt: "Portrait auf dem Parkdeck bei Nacht" },
       { src: "assets/photos/IMG_9677.JPG", alt: "Stehendes Nachtportrait auf dem Parkdeck" },
@@ -65,9 +65,9 @@ const categories = {
     images: [
       { src: "assets/photos/wedding-blue-bouquet.webp", alt: "Hände mit Eheringen auf Brautstrauß" },
       { src: "assets/photos/wedding-red-bouquet.webp", alt: "Hochzeitsringe und Brautstrauß" },
-      { src: "assets/photos/wedding-guest-toast.webp", alt: "Hochzeitsgast mit Glas" },
       { src: "assets/photos/wedding-table-flowers.webp", alt: "Blumen auf Hochzeitstisch" },
       { src: "assets/photos/wedding-table-detail.webp", alt: "Details auf Hochzeitstisch" },
+      { src: "assets/photos/wedding-guest-toast.webp", alt: "Hochzeitsgast mit Glas" },
     ],
   },
   club: {
@@ -95,9 +95,9 @@ const categories = {
     alt: "Katzen am Fenster",
     images: [
       { src: "assets/photos/animal-cats-window.webp", alt: "Zwei Katzen am Fenster" },
+      { src: "assets/photos/IMG_5413.JPG", alt: "Nahaufnahme einer Katze mit aufmerksamem Blick" },
       { src: "assets/photos/animal-cat-close.webp", alt: "Katze leckt ihre Pfote" },
       { src: "assets/photos/animal-dog-grass.webp", alt: "Hund auf einer Wiese" },
-      { src: "assets/photos/IMG_5413.JPG", alt: "Nahaufnahme einer Katze mit aufmerksamem Blick" },
     ],
   },
 };
@@ -160,16 +160,18 @@ function persistMusicState(isEnabled) {
   } catch {}
 }
 
-function persistMusicTime(time = ambientAudio?.currentTime ?? 0) {
+function persistMusicTime(time = ambientAudio?.currentTime ?? 0, force = false) {
   if (!ambientAudio || !Number.isFinite(time)) return;
 
   const safeTime = Math.max(0, time);
-  if (Math.abs(safeTime - lastSavedMusicTime) < 0.35) return;
+  if (!force && Math.abs(safeTime - lastSavedMusicTime) < 0.35) return;
 
   lastSavedMusicTime = safeTime;
 
   try {
-    window.sessionStorage.setItem(musicTimeStorageKey, safeTime.toFixed(3));
+    const storedTime = safeTime.toFixed(3);
+    window.localStorage.setItem(musicTimeStorageKey, storedTime);
+    window.sessionStorage.setItem(musicTimeStorageKey, storedTime);
   } catch {}
 }
 
@@ -183,7 +185,9 @@ function readMusicState() {
 
 function readMusicTime() {
   try {
-    const rawValue = window.sessionStorage.getItem(musicTimeStorageKey);
+    const rawValue =
+      window.localStorage.getItem(musicTimeStorageKey) ??
+      window.sessionStorage.getItem(musicTimeStorageKey);
     const parsedValue = Number.parseFloat(rawValue ?? "");
     return Number.isFinite(parsedValue) && parsedValue >= 0 ? parsedValue : 0;
   } catch {
@@ -250,11 +254,13 @@ function setupAmbientAudio() {
 
   musicToggle.addEventListener("click", async () => {
     if (ambientAudio.paused) {
+      restoreMusicTime();
       const started = await tryPlayAmbientAudio();
       if (!started) setMusicButtonState(false);
       return;
     }
 
+    persistMusicTime(undefined, true);
     ambientAudio.pause();
     persistMusicState(false);
     setMusicButtonState(false);
@@ -262,19 +268,22 @@ function setupAmbientAudio() {
 
   ambientAudio.addEventListener("play", () => {
     persistMusicState(true);
+    persistMusicTime(undefined, true);
     setMusicButtonState(true);
   });
   ambientAudio.addEventListener("pause", () => {
+    persistMusicTime(undefined, true);
     persistMusicState(false);
     setMusicButtonState(false);
   });
   ambientAudio.addEventListener("timeupdate", () => persistMusicTime());
-  ambientAudio.addEventListener("ended", () => persistMusicTime(0));
+  ambientAudio.addEventListener("seeked", () => persistMusicTime(undefined, true));
+  ambientAudio.addEventListener("ended", () => persistMusicTime(0, true));
 
-  window.addEventListener("pagehide", () => persistMusicTime(), { passive: true });
-  window.addEventListener("beforeunload", () => persistMusicTime());
+  window.addEventListener("pagehide", () => persistMusicTime(undefined, true), { passive: true });
+  window.addEventListener("beforeunload", () => persistMusicTime(undefined, true));
   document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "hidden") persistMusicTime();
+    if (document.visibilityState === "hidden") persistMusicTime(undefined, true);
   });
 }
 
