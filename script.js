@@ -286,6 +286,8 @@ function setupAmbientAudio() {
   musicReady = true;
   ambientAudio.volume = 0.3;
   ambientAudio.loop = true;
+  ambientAudio.preload = "auto";
+  ambientAudio.playsInline = true;
   restoreMusicTime();
 
   const savedState = readMusicState();
@@ -294,6 +296,13 @@ function setupAmbientAudio() {
   updateMusicToggleVisibility();
 
   let interactionResumeBound = false;
+  const interactionEvents = ["pointerdown", "pointerup", "click", "touchstart", "touchend", "keydown"];
+  const unbindInteractionResume = (handler) => {
+    interactionEvents.forEach((eventName) => {
+      document.removeEventListener(eventName, handler, true);
+    });
+  };
+
   const bindInteractionResume = () => {
     if (interactionResumeBound || !shouldAutoplay) return;
     interactionResumeBound = true;
@@ -301,26 +310,31 @@ function setupAmbientAudio() {
     const resumePlayback = async () => {
       if (!ambientAudio.paused || readMusicState() === "off") return;
       restoreMusicTime();
-      const started = await tryPlayAmbientAudio();
+      let started = await tryPlayAmbientAudio();
+      if (!started) {
+        await new Promise((resolve) => window.requestAnimationFrame(resolve));
+        started = await tryPlayAmbientAudio();
+      }
       if (started) {
-        document.removeEventListener("pointerdown", resumePlayback, true);
-        document.removeEventListener("keydown", resumePlayback, true);
-        document.removeEventListener("touchstart", resumePlayback, true);
+        unbindInteractionResume(resumePlayback);
       }
     };
 
-    document.addEventListener("pointerdown", resumePlayback, true);
-    document.addEventListener("keydown", resumePlayback, true);
-    document.addEventListener("touchstart", resumePlayback, true);
+    interactionEvents.forEach((eventName) => {
+      document.addEventListener(eventName, resumePlayback, true);
+    });
   };
 
-  if (shouldAutoplay) {
+  const attemptAutoplay = () => {
+    if (!shouldAutoplay) return;
     window.requestAnimationFrame(() => {
       void tryPlayAmbientAudio().then((started) => {
         if (!started) bindInteractionResume();
       });
     });
-  }
+  };
+
+  attemptAutoplay();
 
   musicToggle.addEventListener("click", async () => {
     if (ambientAudio.paused) {
@@ -352,6 +366,10 @@ function setupAmbientAudio() {
 
   window.addEventListener("pagehide", () => persistMusicTime(undefined, true), { passive: true });
   window.addEventListener("beforeunload", () => persistMusicTime(undefined, true));
+  window.addEventListener("pageshow", () => {
+    restoreMusicTime();
+    if (ambientAudio.paused) attemptAutoplay();
+  });
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "hidden") persistMusicTime(undefined, true);
   });
