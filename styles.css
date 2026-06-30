@@ -720,7 +720,7 @@ h2 {
 .portfolio-overview-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
+  gap: 20px;
 }
 
 .portfolio-overview-intro {
@@ -746,15 +746,16 @@ h2 {
 .category-spotlight {
   position: relative;
   display: grid;
-  grid-template-rows: minmax(240px, 0.94fr) auto;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
   min-height: 0;
   overflow: hidden;
   border: 1px solid var(--line);
-  background: linear-gradient(180deg, rgba(6, 10, 14, 0.84), rgba(4, 8, 12, 0.96));
-  box-shadow: var(--shadow);
+  background: #071014;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.24);
   isolation: isolate;
   cursor: pointer;
-  aspect-ratio: 4 / 4.8;
+  aspect-ratio: 4 / 4.65;
   transition:
     transform 240ms ease,
     border-color 240ms ease,
@@ -762,32 +763,19 @@ h2 {
     background 240ms ease;
 }
 
-.category-spotlight:nth-of-type(even) {
-  grid-template-rows: minmax(0, 1fr) auto;
-}
-
-.category-spotlight:nth-of-type(even) .category-spotlight-media {
-  order: 0;
-}
-
 .category-spotlight::before {
   position: absolute;
   inset: 0;
   content: "";
   background:
-    linear-gradient(180deg, rgba(4, 6, 8, 0.02), rgba(4, 6, 8, 0.14) 38%, rgba(4, 6, 8, 0.92)),
-    linear-gradient(90deg, rgba(105, 211, 207, 0.05), transparent 22%);
+    linear-gradient(180deg, rgba(4, 8, 12, 0.18), rgba(4, 8, 12, 0.18) 28%, rgba(4, 8, 12, 0.84) 72%, rgba(4, 8, 12, 0.96)),
+    linear-gradient(135deg, rgba(105, 211, 207, 0.08), transparent 34%);
   z-index: 1;
   pointer-events: none;
 }
 
-.category-spotlight:nth-of-type(even)::before {
-  background:
-    linear-gradient(180deg, rgba(4, 6, 8, 0.08), rgba(4, 6, 8, 0.22) 36%, rgba(4, 6, 8, 0.9)),
-    linear-gradient(90deg, rgba(105, 211, 207, 0.06), transparent 24%);
-}
-
 .category-spotlight-media {
+  grid-area: 1 / 1;
   position: relative;
   margin: 0;
   min-height: 100%;
@@ -798,52 +786,57 @@ h2 {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transform: scale(1.02) translate3d(0, var(--parallax-shift, 0px), 0);
-  filter: saturate(0.86) contrast(1.03) brightness(0.8);
+  transform: scale(1.01) translate3d(0, var(--parallax-shift, 0px), 0);
+  filter: saturate(0.88) contrast(1.02) brightness(0.76);
   transition: transform 900ms ease, filter 420ms ease;
 }
 
 .category-spotlight-copy {
+  grid-area: 1 / 1;
+  align-self: end;
   position: relative;
   z-index: 2;
   display: grid;
   align-content: end;
-  gap: 12px;
-  padding: 18px 20px 20px;
-  border-top: 1px solid rgba(247, 248, 246, 0.06);
+  gap: 10px;
+  padding: 22px 22px 22px;
 }
 
 .category-spotlight-copy h2 {
-  font-size: clamp(2rem, 3.1vw, 3rem);
-  line-height: 0.94;
+  font-size: clamp(1.85rem, 2vw, 2.5rem);
+  line-height: 0.98;
+  text-transform: uppercase;
 }
 
 .category-spotlight-copy p:not(.eyebrow) {
-  max-width: 25ch;
+  max-width: 29ch;
   margin-bottom: 0;
-  color: var(--muted);
-  font-size: 0.92rem;
-  line-height: 1.55;
+  color: rgba(247, 248, 246, 0.74);
+  font-size: 0.88rem;
+  line-height: 1.6;
 }
 
 .category-spotlight .button {
-  min-height: 44px;
-  padding-inline: 18px;
-  font-size: 0.7rem;
+  min-height: 40px;
+  width: fit-content;
+  padding-inline: 16px;
+  font-size: 0.66rem;
   letter-spacing: 0.16em;
+  background: rgba(4, 8, 12, 0.36);
+  backdrop-filter: blur(8px);
 }
 
 .category-spotlight:hover,
 .category-spotlight:focus-within {
-  border-color: rgba(105, 211, 207, 0.26);
-  box-shadow: 0 36px 92px rgba(0, 0, 0, 0.42);
-  transform: translateY(-4px);
+  border-color: rgba(105, 211, 207, 0.34);
+  box-shadow: 0 32px 78px rgba(0, 0, 0, 0.34);
+  transform: translateY(-5px);
 }
 
 .category-spotlight:hover .category-spotlight-media img,
 .category-spotlight:focus-within .category-spotlight-media img {
-  transform: scale(1.06) translate3d(0, var(--parallax-shift, 0px), 0);
-  filter: saturate(0.92) contrast(1.06) brightness(0.84);
+  transform: scale(1.07) translate3d(0, var(--parallax-shift, 0px), 0);
+  filter: saturate(0.94) contrast(1.04) brightness(0.82);
 }
 
 .portfolio-detail {
@@ -1322,6 +1315,7 @@ h2 {
 
   .portfolio-overview-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
   }
 }
 
@@ -1342,6 +1336,7 @@ h2 {
 
   .portfolio-overview-grid {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
 }
 
@@ -1487,16 +1482,16 @@ h2 {
 
   .portfolio-overview-intro h1,
   .category-spotlight-copy h2 {
-    font-size: clamp(2.8rem, 12vw, 4.2rem);
+    font-size: clamp(2.1rem, 9vw, 3rem);
   }
 
   .category-spotlight {
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 4 / 4.9;
   }
 
   .category-spotlight-copy {
-    padding: 24px 18px 22px;
-    gap: 14px;
+    padding: 20px 18px 18px;
+    gap: 10px;
   }
 
   .portfolio-back {
