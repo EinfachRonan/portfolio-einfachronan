@@ -279,7 +279,8 @@ button {
   position: relative;
   display: grid;
   align-items: end;
-  min-height: calc(100svh - var(--header));
+  min-height: 100vh;
+  height: 100vh;
   padding: clamp(28px, 5vw, 56px) 0;
   isolation: isolate;
 }
@@ -369,7 +370,7 @@ button {
 }
 
 .hero-media img {
-  min-height: calc(100svh - var(--header));
+  min-height: 100vh;
   object-position: center 24%;
 }
 
@@ -1409,7 +1410,8 @@ h2 {
   }
 
   .hero-home {
-    min-height: calc(100svh - var(--header));
+    min-height: 100vh;
+    height: 100vh;
     padding-block: 28px 42px;
   }
 
