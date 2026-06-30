@@ -10,7 +10,7 @@
   --accent-soft: rgba(105, 211, 207, 0.22);
   --shadow: 0 30px 80px rgba(0, 0, 0, 0.42);
   --max: 1380px;
-  --header: 92px;
+  --header: 104px;
 }
 
 * {
@@ -64,22 +64,19 @@ button {
   justify-content: space-between;
   min-height: var(--header);
   margin-bottom: calc(var(--header) * -1);
-  padding: 14px clamp(18px, 4vw, 46px);
+  padding: 16px clamp(18px, 4vw, 46px);
   border-bottom: 1px solid transparent;
   background: transparent;
   backdrop-filter: blur(0);
-  transition:
-    background 220ms ease,
-    border-color 220ms ease,
-    backdrop-filter 220ms ease,
-    box-shadow 220ms ease;
+  box-shadow: none;
+  transition: none;
 }
 
 .site-header.is-scrolled {
-  border-color: rgba(247, 248, 246, 0.08);
-  background: rgba(3, 5, 8, 0.48);
-  backdrop-filter: blur(18px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+  border-color: transparent;
+  background: transparent;
+  backdrop-filter: blur(0);
+  box-shadow: none;
 }
 
 .brand {
@@ -91,7 +88,7 @@ button {
 .brand-logo {
   display: block;
   width: auto;
-  height: 62px;
+  height: 74px;
   object-fit: contain;
 }
 
@@ -110,7 +107,7 @@ button {
   align-items: center;
   gap: 8px;
   padding: 6px 0;
-  color: rgba(247, 248, 246, 0.82);
+  color: rgba(247, 248, 246, 0.94);
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -1278,7 +1275,7 @@ h2 {
 
 @media (max-width: 1100px) {
   :root {
-    --header: 84px;
+    --header: 92px;
   }
 
   .hero-shell {
@@ -1343,13 +1340,13 @@ h2 {
 
 @media (max-width: 680px) {
   .site-header {
-    min-height: 84px;
-    margin-bottom: -84px;
+    min-height: 92px;
+    margin-bottom: -92px;
     padding-inline: 14px;
   }
 
   .brand-logo {
-    height: 48px;
+    height: 56px;
   }
 
   .nav {
