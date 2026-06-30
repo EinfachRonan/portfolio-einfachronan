@@ -715,6 +715,7 @@ h2 {
 }
 
 .portfolio-page main {
+  padding-top: calc(var(--header) + 18px);
   padding-bottom: 44px;
 }
 
@@ -1407,6 +1408,10 @@ h2 {
   .portfolio-overview,
   .portfolio-detail {
     width: min(calc(100% - 24px), var(--max));
+  }
+
+  .portfolio-page main {
+    padding-top: calc(var(--header) + 20px);
   }
 
   .hero-home {
