@@ -26,6 +26,7 @@ const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches
 const isTouch = window.matchMedia("(pointer: coarse)").matches;
 const pageFadeDurationMs = reduceMotion ? 0 : 240;
 const musicStorageKey = "einfachronan-music-enabled";
+const musicTimeStorageKey = "einfachronan-music-time";
 
 const categories = {
   portrait: {
@@ -110,6 +111,8 @@ let scrollTicking = false;
 let transitionLocked = false;
 let heroSlideTimer = null;
 let musicReady = false;
+let musicPositionReady = false;
+let lastSavedMusicTime = 0;
 
 function scrollPageTop() {
   window.scrollTo({ top: 0, left: 0, behavior: "auto" });
@@ -119,6 +122,7 @@ function scrollPageTop() {
 
 function navigateToRoute(route) {
   if (!route) return;
+  persistMusicTime();
   window.location.assign(route);
 }
 
@@ -147,12 +151,62 @@ function persistMusicState(isEnabled) {
   } catch {}
 }
 
+function persistMusicTime(time = ambientAudio?.currentTime ?? 0) {
+  if (!ambientAudio || !Number.isFinite(time)) return;
+
+  const safeTime = Math.max(0, time);
+  if (Math.abs(safeTime - lastSavedMusicTime) < 0.35) return;
+
+  lastSavedMusicTime = safeTime;
+
+  try {
+    window.sessionStorage.setItem(musicTimeStorageKey, safeTime.toFixed(3));
+  } catch {}
+}
+
 function readMusicState() {
   try {
     return window.localStorage.getItem(musicStorageKey);
   } catch {
     return null;
   }
+}
+
+function readMusicTime() {
+  try {
+    const rawValue = window.sessionStorage.getItem(musicTimeStorageKey);
+    const parsedValue = Number.parseFloat(rawValue ?? "");
+    return Number.isFinite(parsedValue) && parsedValue >= 0 ? parsedValue : 0;
+  } catch {
+    return 0;
+  }
+}
+
+function restoreMusicTime() {
+  if (!ambientAudio || musicPositionReady) return;
+
+  const savedTime = readMusicTime();
+  if (!savedTime) {
+    musicPositionReady = true;
+    return;
+  }
+
+  const applySavedTime = () => {
+    const maxTime =
+      Number.isFinite(ambientAudio.duration) && ambientAudio.duration > 0
+        ? Math.max(0, ambientAudio.duration - 0.25)
+        : savedTime;
+    ambientAudio.currentTime = Math.min(savedTime, maxTime);
+    lastSavedMusicTime = ambientAudio.currentTime;
+    musicPositionReady = true;
+  };
+
+  if (ambientAudio.readyState >= 1) {
+    applySavedTime();
+    return;
+  }
+
+  ambientAudio.addEventListener("loadedmetadata", applySavedTime, { once: true });
 }
 
 async function tryPlayAmbientAudio() {
@@ -173,6 +227,7 @@ function setupAmbientAudio() {
   musicReady = true;
   ambientAudio.volume = 0.3;
   ambientAudio.loop = true;
+  restoreMusicTime();
 
   const savedState = readMusicState();
   const shouldAutoplay = savedState !== "off";
@@ -196,8 +251,22 @@ function setupAmbientAudio() {
     setMusicButtonState(false);
   });
 
-  ambientAudio.addEventListener("play", () => setMusicButtonState(true));
-  ambientAudio.addEventListener("pause", () => setMusicButtonState(false));
+  ambientAudio.addEventListener("play", () => {
+    persistMusicState(true);
+    setMusicButtonState(true);
+  });
+  ambientAudio.addEventListener("pause", () => {
+    persistMusicState(false);
+    setMusicButtonState(false);
+  });
+  ambientAudio.addEventListener("timeupdate", () => persistMusicTime());
+  ambientAudio.addEventListener("ended", () => persistMusicTime(0));
+
+  window.addEventListener("pagehide", () => persistMusicTime(), { passive: true });
+  window.addEventListener("beforeunload", () => persistMusicTime());
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") persistMusicTime();
+  });
 }
 
 function getInitialCategory() {
@@ -546,6 +615,7 @@ function setupPageFade() {
       }
 
       transitionLocked = true;
+      persistMusicTime();
       event.preventDefault();
       document.body.classList.remove("is-page-ready");
       document.body.classList.add("is-page-leaving");
