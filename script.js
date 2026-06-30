@@ -47,6 +47,14 @@ const categories = {
       { src: "assets/photos/portrait-urban-walk.webp", alt: "Portrait in der Stadt" },
       { src: "assets/photos/portrait-point-night.webp", alt: "Portrait bei Nacht" },
       { src: "assets/photos/portrait-leather-jacket-snow.webp", alt: "Portrait im Schnee" },
+      { src: "assets/photos/IMG_4051.JPG", alt: "Portrait im Sessel mit ruhigem Licht" },
+      { src: "assets/photos/IMG_4214.JPG", alt: "Portrait mit Sonnenbrille im warmen Licht" },
+      { src: "assets/photos/IMG_6190.JPG", alt: "Portrait mit Cap im Gegenlicht" },
+      { src: "assets/photos/IMG_7060.JPG", alt: "Portrait am Bahnhof bei kühlem Licht" },
+      { src: "assets/photos/IMG_8490.JPG", alt: "Nachtportrait im Schnee" },
+      { src: "assets/photos/IMG_9603.JPG", alt: "Portrait auf dem Parkdeck bei Nacht" },
+      { src: "assets/photos/IMG_9677.JPG", alt: "Stehendes Nachtportrait auf dem Parkdeck" },
+      { src: "assets/photos/IMG_9686.JPG", alt: "Portrait vor dramatischem Nachthimmel" },
     ],
   },
   wedding: {
@@ -89,6 +97,7 @@ const categories = {
       { src: "assets/photos/animal-cats-window.webp", alt: "Zwei Katzen am Fenster" },
       { src: "assets/photos/animal-cat-close.webp", alt: "Katze leckt ihre Pfote" },
       { src: "assets/photos/animal-dog-grass.webp", alt: "Hund auf einer Wiese" },
+      { src: "assets/photos/IMG_5413.JPG", alt: "Nahaufnahme einer Katze mit aufmerksamem Blick" },
     ],
   },
 };
@@ -510,7 +519,10 @@ function getHeroSlideshowImages() {
   const ordered = [
     categories.auto.images[0],
     categories.animal.images[0],
+    categories.animal.images[3],
     categories.portrait.images[0],
+    categories.portrait.images[15],
+    categories.portrait.images[19],
     categories.club.images[1],
     categories.wedding.images[0],
     categories.portrait.images[9],
