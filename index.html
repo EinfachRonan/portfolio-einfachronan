@@ -24,7 +24,7 @@
       </a>
 
       <nav class="nav" aria-label="Hauptnavigation">
-        <a class="nav-link" href="portfolio.html?filter=portrait">Portfolio</a>
+        <a class="nav-link" href="portfolio.html">Portfolio</a>
         <a class="nav-link" href="#kontakt">Kontakt</a>
         <a class="instagram-link" href="https://www.instagram.com/einfach.ronan/" target="_blank" rel="noreferrer">
           <svg class="instagram-icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -51,6 +51,20 @@
             loading="eager"
             fetchpriority="high"
             decoding="async"
+            src="assets/photos/automotive-audi-night.webp"
+            alt="Auto bei Nacht"
+          />
+          <img
+            class="hero-slide"
+            loading="eager"
+            decoding="async"
+            src="assets/photos/animal-cats-window.webp"
+            alt="Zwei Katzen am Fenster"
+          />
+          <img
+            class="hero-slide"
+            loading="eager"
+            decoding="async"
             src="assets/photos/portrait-city-smile.webp"
             alt="Portrait in der Stadt"
           />
@@ -58,50 +72,78 @@
             class="hero-slide"
             loading="eager"
             decoding="async"
-            src="assets/photos/portrait-redhair-sun.webp"
-            alt="Portrait im Sonnenlicht"
+            src="assets/photos/club-dj-red-light.webp"
+            alt="DJ im Clublicht"
+          />
+          <img
+            class="hero-slide"
+            loading="eager"
+            decoding="async"
+            src="assets/photos/wedding-blue-bouquet.webp"
+            alt="Hochzeitsdetail mit Blumen und Ringen"
+          />
+          <img
+            class="hero-slide"
+            loading="eager"
+            decoding="async"
+            src="assets/photos/portrait-urban-walk.webp"
+            alt="Portrait in der Stadt"
           />
         </div>
 
-        <div class="hero-copy reveal">
-          <p>
-            Filmische Bildwelten f&uuml;r Portraits, Hochzeiten, Club, Autos und Tiere.
-            Ruhig inszeniert, emotional gef&uuml;hrt und mit einem klaren Blick f&uuml;r Atmosph&auml;re.
-          </p>
-          <a class="button button-primary hero-cta" href="portfolio.html?filter=portrait">Enter Portfolio</a>
+        <div class="hero-shell reveal">
+          <div class="hero-panel" aria-label="Hero Navigation">
+            <a class="button button-primary hero-cta" href="portfolio.html">Portfolio &ouml;ffnen</a>
+          </div>
         </div>
       </section>
 
       <section class="category-section" aria-labelledby="category-title">
         <div class="section-head reveal">
-          <p class="eyebrow">Portfolio</p>
-          <h2 id="category-title">Bereiche</h2>
+          <div>
+            <h2 id="category-title">Portfolio-Bereiche</h2>
+          </div>
         </div>
 
         <div class="category-grid">
           <a class="category-card tilt-card reveal" href="portfolio.html?filter=portrait" data-category-card="portrait" data-category-route="portfolio.html?filter=portrait">
             <img loading="lazy" decoding="async" src="assets/photos/portrait-redhair-sun.webp" alt="Portrait im Sonnenlicht" />
-            <span>Portrait</span>
+            <div class="category-card-copy">
+              <span>Portrait</span>
+              <p>Ruhige Portraits mit klaren Ausschnitten, nat&uuml;rlichem Licht und echter N&auml;he.</p>
+            </div>
           </a>
 
           <a class="category-card tilt-card reveal" href="portfolio.html?filter=wedding" data-category-card="wedding" data-category-route="portfolio.html?filter=wedding">
             <img loading="lazy" decoding="async" src="assets/photos/wedding-blue-bouquet.webp" alt="Hochzeitsdetail mit Ringen" />
-            <span>Hochzeit</span>
+            <div class="category-card-copy">
+              <span>Hochzeit</span>
+              <p>Details, Gesten und Begegnungen, die den Tag ruhig und hochwertig festhalten.</p>
+            </div>
           </a>
 
           <a class="category-card tilt-card reveal" href="portfolio.html?filter=club" data-category-card="club" data-category-route="portfolio.html?filter=club">
             <img loading="lazy" decoding="async" src="assets/photos/club-dj-red-light.webp" alt="DJ im Clublicht" />
-            <span>Club</span>
+            <div class="category-card-copy">
+              <span>Club</span>
+              <p>Nacht, Bewegung und Licht in einer dunklen, atmosph&auml;rischen Bildsprache.</p>
+            </div>
           </a>
 
           <a class="category-card category-card-wide tilt-card reveal" href="portfolio.html?filter=auto" data-category-card="auto" data-category-route="portfolio.html?filter=auto">
             <img loading="lazy" decoding="async" src="assets/photos/automotive-audi-night.webp" alt="Auto bei Nacht" />
-            <span>Autos</span>
+            <div class="category-card-copy">
+              <span>Autos</span>
+              <p>Reduzierte Kompositionen, saubere Linien und urbane Lichtstimmung.</p>
+            </div>
           </a>
 
           <a class="category-card category-card-wide tilt-card reveal" href="portfolio.html?filter=animal" data-category-card="animal" data-category-route="portfolio.html?filter=animal">
             <img loading="lazy" decoding="async" src="assets/photos/animal-cats-window.webp" alt="Katzen am Fenster" />
-            <span>Tiere</span>
+            <div class="category-card-copy">
+              <span>Tiere</span>
+              <p>Tierportraits mit Geduld, Ruhe und einem Blick f&uuml;r nat&uuml;rliche Momente.</p>
+            </div>
           </a>
         </div>
       </section>

@@ -355,17 +355,19 @@ function getHeroSlideshowImages() {
   if (window.innerWidth <= 680) {
     return [
       categories.portrait.images[0],
-      categories.portrait.images[1],
+      categories.wedding.images[0],
+      categories.animal.images[0],
+      categories.portrait.images[9],
     ].filter(Boolean);
   }
 
   const ordered = [
     categories.auto.images[0],
     categories.animal.images[0],
-    categories.club.images[0],
-    categories.club.images[2],
-    categories.auto.images[0],
-    categories.animal.images[0],
+    categories.portrait.images[0],
+    categories.club.images[1],
+    categories.wedding.images[0],
+    categories.portrait.images[9],
   ].filter(Boolean);
 
   const deduped = ordered.filter((item, index, list) => {
@@ -405,7 +407,7 @@ function setupHeroSlideshow() {
     nextSlide.classList.add("is-active");
     currentSlide.classList.remove("is-active");
     visibleLayer = nextLayer;
-  }, 5200);
+  }, 7000);
 }
 
 function setupPortfolioRouting() {
