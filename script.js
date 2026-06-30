@@ -197,7 +197,7 @@ function setMusicButtonState(isPlaying) {
     isPlaying ? "Hintergrundmusik pausieren" : "Hintergrundmusik starten",
   );
   const label = musicToggle.querySelector(".music-toggle-label");
-  if (label) label.textContent = isPlaying ? "Musik an" : "Musik aus";
+  if (label) label.textContent = isPlaying ? "Ambiente an" : "Ambiente aus";
 }
 
 function persistMusicState(isEnabled) {
