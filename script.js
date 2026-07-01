@@ -290,8 +290,6 @@ function setupAmbientAudio() {
   ambientAudio.playsInline = true;
   restoreMusicTime();
 
-  const savedState = readMusicState();
-  const shouldAutoplay = savedState !== "off";
   setMusicButtonState(false);
   updateMusicToggleVisibility();
 
@@ -304,11 +302,11 @@ function setupAmbientAudio() {
   };
 
   const bindInteractionResume = () => {
-    if (interactionResumeBound || !shouldAutoplay) return;
+    if (interactionResumeBound) return;
     interactionResumeBound = true;
 
     const resumePlayback = async () => {
-      if (!ambientAudio.paused || readMusicState() === "off") return;
+      if (!ambientAudio.paused) return;
       restoreMusicTime();
       let started = await tryPlayAmbientAudio();
       if (!started) {
@@ -326,11 +324,8 @@ function setupAmbientAudio() {
   };
 
   const attemptAutoplay = () => {
-    if (!shouldAutoplay) return;
-    window.requestAnimationFrame(() => {
-      void tryPlayAmbientAudio().then((started) => {
-        if (!started) bindInteractionResume();
-      });
+    void tryPlayAmbientAudio().then((started) => {
+      if (!started) bindInteractionResume();
     });
   };
 
@@ -759,7 +754,6 @@ window.addEventListener("load", () => {
   setupHeroSlideshow();
   setupPortfolioRouting();
   setupCategoryRoutes();
-  setupAmbientAudio();
 });
 
 window.addEventListener("scroll", onScroll, { passive: true });
@@ -797,6 +791,7 @@ if (filters.length && tiles.length) {
   else showPortfolioOverview();
 }
 
+setupAmbientAudio();
 updateHeader();
 updateMusicToggleVisibility();
 setupReveal();
