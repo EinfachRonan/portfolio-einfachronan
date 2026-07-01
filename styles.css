@@ -1180,31 +1180,29 @@ h2 {
 
 @media (min-width: 921px) {
   .portfolio-detail .photo-tile button {
-    display: grid;
-    place-items: center;
-    max-height: 90vh;
-    padding: 14px;
+    display: block;
+    max-height: none;
+    padding: 0;
     overflow: hidden;
-    background:
-      radial-gradient(circle at top, rgba(105, 211, 207, 0.04), transparent 42%),
-      rgba(6, 10, 14, 0.92);
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
   }
 
   .portfolio-detail .photo-tile img {
-    width: auto;
+    width: 100%;
     max-width: 100%;
-    max-height: calc(90vh - 28px);
+    max-height: 90vh;
     min-height: 0;
     height: auto;
     object-fit: contain;
-    margin-inline: auto;
     transform: scale(1);
-    background: rgba(4, 6, 8, 0.88);
+    background: transparent;
   }
 
   .portfolio-detail .photo-tile button:hover img,
   .portfolio-detail .photo-tile button:focus-visible img {
-    transform: scale(1.02);
+    transform: scale(1.01);
   }
 }
 
