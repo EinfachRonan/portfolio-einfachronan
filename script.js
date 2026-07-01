@@ -30,6 +30,7 @@ const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches
 const isTouch = window.matchMedia("(pointer: coarse)").matches;
 const pageFadeDurationMs = reduceMotion ? 0 : 240;
 const categoryTransitionDurationMs = reduceMotion ? 0 : 380;
+const heroTransitionDurationMs = reduceMotion ? 0 : 2200;
 const musicStorageKey = "einfachronan-music-enabled";
 const musicTimeStorageKey = "einfachronan-music-time";
 
@@ -714,6 +715,53 @@ function getHeroSlideshowImages() {
   return deduped.slice(0, 6);
 }
 
+function applyHeroMotion(slide, index = 0) {
+  if (!slide) return;
+
+  const motionPresets = [
+    {
+      startX: "-1.2%",
+      endX: "0.9%",
+      startY: "4px",
+      endY: "-10px",
+      zoomStart: "1.045",
+      zoomEnd: "1.105",
+    },
+    {
+      startX: "0.9%",
+      endX: "-0.75%",
+      startY: "-4px",
+      endY: "8px",
+      zoomStart: "1.05",
+      zoomEnd: "1.115",
+    },
+    {
+      startX: "-0.6%",
+      endX: "0.65%",
+      startY: "2px",
+      endY: "-12px",
+      zoomStart: "1.04",
+      zoomEnd: "1.1",
+    },
+    {
+      startX: "0.7%",
+      endX: "-0.5%",
+      startY: "6px",
+      endY: "-8px",
+      zoomStart: "1.05",
+      zoomEnd: "1.108",
+    },
+  ];
+
+  const preset = motionPresets[index % motionPresets.length];
+  slide.style.setProperty("--hero-pan-start-x", preset.startX);
+  slide.style.setProperty("--hero-pan-end-x", preset.endX);
+  slide.style.setProperty("--hero-pan-start-y", preset.startY);
+  slide.style.setProperty("--hero-pan-end-y", preset.endY);
+  slide.style.setProperty("--hero-zoom-start", preset.zoomStart);
+  slide.style.setProperty("--hero-zoom-end", preset.zoomEnd);
+}
+
 function setupHeroSlideshow() {
   if (heroSlides.length < 2) return;
 
@@ -727,6 +775,8 @@ function setupHeroSlideshow() {
     const image = slides[index % slides.length];
     slide.src = image.src;
     slide.alt = image.alt;
+    applyHeroMotion(slide, index);
+    slide.classList.remove("is-exiting");
     slide.classList.toggle("is-active", index === 0);
   });
 
@@ -739,11 +789,21 @@ function setupHeroSlideshow() {
     const nextSlide = heroSlides[nextLayer];
     const currentSlide = heroSlides[visibleLayer];
 
+    if (heroMedia) heroMedia.classList.add("is-transitioning");
+
     nextSlide.src = nextImage.src;
     nextSlide.alt = nextImage.alt;
+    applyHeroMotion(nextSlide, activeSlideIndex);
+    nextSlide.classList.remove("is-exiting");
     nextSlide.classList.add("is-active");
     currentSlide.classList.remove("is-active");
+    currentSlide.classList.add("is-exiting");
     visibleLayer = nextLayer;
+
+    window.setTimeout(() => {
+      currentSlide.classList.remove("is-exiting");
+      if (heroMedia) heroMedia.classList.remove("is-transitioning");
+    }, heroTransitionDurationMs);
   }, 7000);
 }
 
