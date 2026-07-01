@@ -20,6 +20,8 @@ const portfolioSpotlights = Array.from(document.querySelectorAll("[data-spotligh
 const categoryRouteLinks = Array.from(document.querySelectorAll("[data-category-route]"));
 const heroSlides = Array.from(document.querySelectorAll(".hero-slide"));
 const heroSection = document.querySelector(".hero-home");
+const heroMedia = document.querySelector(".hero-media");
+const heroShell = document.querySelector(".hero-shell");
 const heroCta = document.querySelector(".hero-cta");
 const ambientAudio = document.querySelector("[data-ambient-audio]");
 const musicToggle = document.querySelector("[data-music-toggle]");
@@ -522,10 +524,21 @@ function renderLightboxImage(index) {
 function openLightbox(index) {
   if (!modal || !activeItems[index]) return;
   activeIndex = index;
+  modal.classList.remove("is-flashing");
   renderLightboxImage(activeIndex);
   modal.classList.add("is-open");
   modal.setAttribute("aria-hidden", "false");
   document.body.classList.add("is-locked");
+
+  if (!reduceMotion) {
+    window.requestAnimationFrame(() => {
+      modal.classList.add("is-flashing");
+      window.setTimeout(() => {
+        modal.classList.remove("is-flashing");
+      }, 110);
+    });
+  }
+
   modalClose?.focus();
 }
 
@@ -589,7 +602,35 @@ function setupTilt() {
 
 function updateParallax() {
   scrollTicking = false;
-  if (reduceMotion || isTouch) return;
+  if (reduceMotion) return;
+
+  if (heroSection && heroMedia) {
+    const heroHeight = heroSection.offsetHeight || window.innerHeight || 1;
+    const heroProgress = Math.max(0, Math.min(window.scrollY / heroHeight, 1.2));
+    const heroDepthShift = Math.min(heroProgress * 28, 28);
+    const heroForegroundShift = Math.min(heroProgress * -10, 0);
+    const heroOverlayDim = Math.min(heroProgress * 0.08, 0.08);
+
+    heroMedia.style.setProperty("--hero-depth-shift", `${heroDepthShift.toFixed(2)}px`);
+    heroMedia.style.setProperty("--hero-overlay-dim", heroOverlayDim.toFixed(3));
+    if (heroShell) {
+      heroShell.style.setProperty("--hero-foreground-shift", `${heroForegroundShift.toFixed(2)}px`);
+    }
+  }
+
+  if (document.body.classList.contains("home-page")) {
+    const homeDepthItems = document.querySelectorAll(".home-page .category-section, .home-page .contact-section");
+    const viewport = window.innerHeight || 1;
+
+    homeDepthItems.forEach((block, index) => {
+      const rect = block.getBoundingClientRect();
+      const progress = (rect.top + rect.height * 0.5 - viewport * 0.55) / viewport;
+      const shift = Math.max(Math.min(progress * -(index === 0 ? 10 : 7), 10), -10);
+      block.style.setProperty("--section-depth-shift", `${shift.toFixed(2)}px`);
+    });
+  }
+
+  if (isTouch) return;
 
   const viewport = window.innerHeight || 1;
   parallaxMedia.forEach((block) => {
@@ -660,13 +701,10 @@ function getHeroSlideshowImages() {
   const ordered = [
     categories.auto.images[0],
     categories.animal.images[0],
-    categories.animal.images[3],
-    categories.portrait.images[0],
-    categories.portrait.images[15],
+    categories.animal.images[1],
+    categories.portrait.images[12],
     categories.portrait.images[19],
-    categories.club.images[1],
-    categories.wedding.images[0],
-    categories.portrait.images[9],
+    categories.club.images[0],
   ].filter(Boolean);
 
   const deduped = ordered.filter((item, index, list) => {
