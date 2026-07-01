@@ -1114,6 +1114,97 @@ h2 {
   padding-top: 28px;
 }
 
+.portfolio-page .portfolio-detail,
+.portfolio-page .portfolio-detail .portfolio-back,
+.portfolio-page .portfolio-detail .portfolio-hero,
+.portfolio-page .portfolio-detail .portfolio-category-nav,
+.portfolio-page .portfolio-detail .gallery {
+  transition:
+    opacity 380ms ease,
+    transform 420ms ease,
+    filter 420ms ease;
+  will-change: opacity, transform;
+}
+
+.portfolio-page .portfolio-detail [data-portfolio-title],
+.portfolio-page .portfolio-detail [data-portfolio-copy],
+.portfolio-page .portfolio-detail .portfolio-hero-image,
+.portfolio-page .portfolio-detail .gallery .photo-tile {
+  transition:
+    opacity 440ms ease,
+    transform 460ms ease,
+    filter 460ms ease;
+  will-change: opacity, transform;
+}
+
+.portfolio-page.is-category-leaving .portfolio-detail {
+  opacity: 0;
+  transform: translateY(12px);
+  filter: saturate(0.94);
+}
+
+.portfolio-page.is-category-leaving .portfolio-detail [data-portfolio-title],
+.portfolio-page.is-category-leaving .portfolio-detail [data-portfolio-copy],
+.portfolio-page.is-category-leaving .portfolio-detail .portfolio-hero-image,
+.portfolio-page.is-category-leaving .portfolio-detail .gallery .photo-tile {
+  opacity: 0;
+  transform: translateY(22px);
+}
+
+.portfolio-page.is-category-entering .portfolio-detail [data-portfolio-title],
+.portfolio-page.is-category-entering .portfolio-detail [data-portfolio-copy],
+.portfolio-page.is-category-entering .portfolio-detail .portfolio-hero-image,
+.portfolio-page.is-category-entering .portfolio-detail .gallery .photo-tile {
+  opacity: 0;
+}
+
+.portfolio-page.is-category-entering .portfolio-detail [data-portfolio-title],
+.portfolio-page.is-category-entering .portfolio-detail [data-portfolio-copy] {
+  transform: translateY(18px);
+}
+
+.portfolio-page.is-category-entering .portfolio-detail .portfolio-hero-image {
+  transform: translateY(16px);
+}
+
+.portfolio-page.is-category-entering .portfolio-detail .gallery .photo-tile {
+  transform: translateY(22px);
+}
+
+.portfolio-page.is-category-entered .portfolio-detail [data-portfolio-title] {
+  transition-delay: 40ms;
+}
+
+.portfolio-page.is-category-entered .portfolio-detail [data-portfolio-copy] {
+  transition-delay: 110ms;
+}
+
+.portfolio-page.is-category-entered .portfolio-detail .portfolio-hero-image {
+  transition-delay: 90ms;
+}
+
+.portfolio-page.is-category-entered .portfolio-detail .gallery .photo-tile:nth-child(1),
+.portfolio-page.is-category-entered .portfolio-detail .gallery .photo-tile:nth-child(2),
+.portfolio-page.is-category-entered .portfolio-detail .gallery .photo-tile:nth-child(3),
+.portfolio-page.is-category-entered .portfolio-detail .gallery .photo-tile:nth-child(4),
+.portfolio-page.is-category-entered .portfolio-detail .gallery .photo-tile:nth-child(5),
+.portfolio-page.is-category-entered .portfolio-detail .gallery .photo-tile:nth-child(6) {
+  transition-delay: 140ms;
+}
+
+.portfolio-page.is-category-entered .portfolio-detail .gallery .photo-tile:nth-child(7),
+.portfolio-page.is-category-entered .portfolio-detail .gallery .photo-tile:nth-child(8),
+.portfolio-page.is-category-entered .portfolio-detail .gallery .photo-tile:nth-child(9),
+.portfolio-page.is-category-entered .portfolio-detail .gallery .photo-tile:nth-child(10),
+.portfolio-page.is-category-entered .portfolio-detail .gallery .photo-tile:nth-child(11),
+.portfolio-page.is-category-entered .portfolio-detail .gallery .photo-tile:nth-child(12) {
+  transition-delay: 220ms;
+}
+
+.portfolio-page.is-category-entered .portfolio-detail .gallery .photo-tile:nth-child(n + 13) {
+  transition-delay: 300ms;
+}
+
 .portfolio-detail .photo-tile button::after {
   background:
     linear-gradient(180deg, transparent 40%, rgba(4, 6, 8, 0.08) 68%, rgba(4, 6, 8, 0.4)),

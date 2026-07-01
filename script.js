@@ -27,6 +27,7 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
 const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 const isTouch = window.matchMedia("(pointer: coarse)").matches;
 const pageFadeDurationMs = reduceMotion ? 0 : 240;
+const categoryTransitionDurationMs = reduceMotion ? 0 : 380;
 const musicStorageKey = "einfachronan-music-enabled";
 const musicTimeStorageKey = "einfachronan-music-time";
 
@@ -177,8 +178,55 @@ function scrollPageTop() {
   document.body.scrollTop = 0;
 }
 
+function isCategoryRoute(route) {
+  if (!route) return false;
+
+  try {
+    const url = new URL(route, window.location.href);
+    return (
+      /portfolio\.html$/i.test(url.pathname) &&
+      Boolean(url.searchParams.get("filter")) &&
+      categories[url.searchParams.get("filter")]
+    );
+  } catch {
+    return false;
+  }
+}
+
+function startCategoryEntryTransition() {
+  if (!document.body.classList.contains("portfolio-page")) return;
+  if (!getInitialCategory()) return;
+
+  document.body.classList.add("is-category-entering");
+  document.body.classList.remove("is-category-entered");
+
+  window.requestAnimationFrame(() => {
+    window.requestAnimationFrame(() => {
+      document.body.classList.add("is-category-entered");
+    });
+  });
+
+  window.setTimeout(() => {
+    document.body.classList.remove("is-category-entering");
+  }, Math.max(categoryTransitionDurationMs + 220, 520));
+}
+
 function navigateToRoute(route) {
   if (!route) return;
+  if (transitionLocked) return;
+
+  if (document.body.classList.contains("portfolio-page") && isCategoryRoute(route)) {
+    transitionLocked = true;
+    persistMusicTime();
+    document.body.classList.remove("is-category-entered");
+    document.body.classList.add("is-category-leaving");
+
+    window.setTimeout(() => {
+      window.location.assign(route);
+    }, categoryTransitionDurationMs);
+    return;
+  }
+
   persistMusicTime();
   window.location.assign(route);
 }
@@ -737,8 +785,10 @@ window.history.scrollRestoration = "manual";
 window.addEventListener("pageshow", () => {
   document.body.classList.add("is-page-ready");
   document.body.classList.remove("is-page-leaving");
+  document.body.classList.remove("is-category-leaving");
   if (getInitialCategory()) {
     scrollPageTop();
+    startCategoryEntryTransition();
   }
 });
 
@@ -746,6 +796,7 @@ window.addEventListener("load", () => {
   scrollPageTop();
   document.body.classList.add("is-page-ready");
   document.body.classList.remove("is-page-leaving");
+  document.body.classList.remove("is-category-leaving");
   updateHeader();
   updateMusicToggleVisibility();
   updateParallax();
@@ -754,6 +805,7 @@ window.addEventListener("load", () => {
   setupHeroSlideshow();
   setupPortfolioRouting();
   setupCategoryRoutes();
+  startCategoryEntryTransition();
 });
 
 window.addEventListener("scroll", onScroll, { passive: true });
