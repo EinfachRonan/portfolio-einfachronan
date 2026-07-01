@@ -692,20 +692,106 @@ function setupRandomPortfolioSpotlights() {
 function getHeroSlideshowImages() {
   if (window.innerWidth <= 680) {
     return [
-      categories.portrait.images[0],
-      categories.wedding.images[0],
-      categories.animal.images[0],
-      categories.portrait.images[9],
+      {
+        src: "assets/photos/IMG_4051.JPG",
+        alt: "Portrait im Sessel mit ruhigem Licht",
+        position: "center 28%",
+        brightness: "0.74",
+        contrast: "1.05",
+        saturate: "0.78",
+      },
+      {
+        src: "assets/photos/IMG_4214.JPG",
+        alt: "Portrait mit Sonnenbrille im warmen Licht",
+        position: "center 18%",
+        brightness: "0.78",
+        contrast: "1.04",
+        saturate: "0.82",
+      },
+      {
+        src: "assets/photos/IMG_6190.JPG",
+        alt: "Portrait mit Cap im Gegenlicht",
+        position: "center 18%",
+        brightness: "0.76",
+        contrast: "1.04",
+        saturate: "0.78",
+      },
+      {
+        src: "assets/photos/IMG_9603.JPG",
+        alt: "Portrait auf dem Parkdeck bei Nacht",
+        position: "center 24%",
+        brightness: "0.72",
+        contrast: "1.06",
+        saturate: "0.74",
+      },
+      {
+        src: "assets/photos/IMG_8490.JPG",
+        alt: "Nachtportrait im Schnee",
+        position: "center 24%",
+        brightness: "0.7",
+        contrast: "1.05",
+        saturate: "0.72",
+      },
+      {
+        src: "assets/photos/portrait-blue-jacket-glasses.jpg",
+        alt: "Portrait mit Brille",
+        position: "center 22%",
+        brightness: "0.73",
+        contrast: "1.05",
+        saturate: "0.77",
+      },
     ].filter(Boolean);
   }
 
   const ordered = [
-    categories.auto.images[0],
-    categories.animal.images[0],
-    categories.animal.images[1],
-    categories.portrait.images[12],
-    categories.portrait.images[19],
-    categories.club.images[0],
+    {
+      src: "assets/photos/automotive-audi-night.webp",
+      alt: "Auto bei Nacht",
+      position: "center 38%",
+      brightness: "0.68",
+      contrast: "1.08",
+      saturate: "0.74",
+    },
+    {
+      src: "assets/photos/IMG_5413.JPG",
+      alt: "Nahaufnahme einer Katze",
+      position: "center 42%",
+      brightness: "0.76",
+      contrast: "1.04",
+      saturate: "0.78",
+    },
+    {
+      src: "assets/photos/IMG_7060.JPG",
+      alt: "Portrait am Bahnhof",
+      position: "center 34%",
+      brightness: "0.74",
+      contrast: "1.05",
+      saturate: "0.76",
+    },
+    {
+      src: "assets/photos/IMG_9686.JPG",
+      alt: "Portrait vor dramatischem Nachthimmel",
+      position: "center 28%",
+      brightness: "0.69",
+      contrast: "1.08",
+      saturate: "0.72",
+    },
+    {
+      src: "assets/photos/club-dj-profile-dark.webp",
+      alt: "DJ im dunklen Raum",
+      position: "center 34%",
+      brightness: "0.67",
+      contrast: "1.08",
+      saturate: "0.74",
+    },
+    {
+      src: "assets/photos/animal-cats-window.webp",
+      alt: "Zwei Katzen am Fenster",
+      position: "center 34%",
+      brightness: "0.75",
+      contrast: "1.03",
+      saturate: "0.75",
+    },
   ].filter(Boolean);
 
   const deduped = ordered.filter((item, index, list) => {
@@ -713,6 +799,15 @@ function getHeroSlideshowImages() {
   });
 
   return deduped.slice(0, 6);
+}
+
+function applyHeroImageTone(slide, image) {
+  if (!slide || !image) return;
+
+  slide.style.objectPosition = image.position ?? "";
+  slide.style.setProperty("--hero-brightness", image.brightness ?? "0.74");
+  slide.style.setProperty("--hero-contrast", image.contrast ?? "1.06");
+  slide.style.setProperty("--hero-saturate", image.saturate ?? "0.78");
 }
 
 function applyHeroMotion(slide, index = 0) {
@@ -775,6 +870,7 @@ function setupHeroSlideshow() {
     const image = slides[index % slides.length];
     slide.src = image.src;
     slide.alt = image.alt;
+    applyHeroImageTone(slide, image);
     applyHeroMotion(slide, index);
     slide.classList.remove("is-exiting");
     slide.classList.toggle("is-active", index === 0);
@@ -793,6 +889,7 @@ function setupHeroSlideshow() {
 
     nextSlide.src = nextImage.src;
     nextSlide.alt = nextImage.alt;
+    applyHeroImageTone(nextSlide, nextImage);
     applyHeroMotion(nextSlide, activeSlideIndex);
     nextSlide.classList.remove("is-exiting");
     nextSlide.classList.add("is-active");

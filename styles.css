@@ -360,10 +360,10 @@ button {
   content: "";
   pointer-events: none;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 34%),
-    radial-gradient(circle at center, transparent 44%, rgba(0, 0, 0, 0.24));
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 26%, rgba(2, 4, 6, 0.12) 78%, rgba(2, 4, 6, 0.24)),
+    radial-gradient(circle at center, transparent 38%, rgba(0, 0, 0, 0.28) 74%, rgba(0, 0, 0, 0.46));
   mix-blend-mode: screen;
-  opacity: 0.5;
+  opacity: 0.56;
 }
 
 .hero-media img,
@@ -374,7 +374,11 @@ button {
   transform:
     scale(var(--hero-scale, 1.08))
     translate3d(0, calc(var(--parallax-shift, 0px) + var(--hero-depth-shift, 0px)), 0);
-  filter: saturate(0.78) contrast(1.06) brightness(0.72) blur(var(--focus-blur, 0px));
+  filter:
+    saturate(var(--hero-saturate, 0.78))
+    contrast(var(--hero-contrast, 1.06))
+    brightness(var(--hero-brightness, 0.74))
+    blur(var(--focus-blur, 0px));
   transition: transform 1400ms ease, filter 1400ms ease;
   will-change: transform;
 }
@@ -416,11 +420,14 @@ button {
       calc(var(--parallax-shift, 0px) + var(--hero-depth-shift, 0px) + var(--hero-pan-start-y, 0px)),
       0
     );
-  filter: saturate(0.74) contrast(1.02) brightness(0.64);
+  filter:
+    saturate(calc(var(--hero-saturate, 0.78) - 0.06))
+    contrast(calc(var(--hero-contrast, 1.06) - 0.03))
+    brightness(calc(var(--hero-brightness, 0.74) - 0.08));
   transition:
-    opacity 2200ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 7600ms cubic-bezier(0.22, 1, 0.36, 1),
-    filter 2200ms cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 2600ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 8800ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 2600ms cubic-bezier(0.22, 1, 0.36, 1);
   will-change: opacity, transform, filter;
 }
 
@@ -433,7 +440,10 @@ button {
       calc(var(--parallax-shift, 0px) + var(--hero-depth-shift, 0px) + var(--hero-pan-end-y, -8px)),
       0
     );
-  filter: saturate(0.8) contrast(1.07) brightness(0.74);
+  filter:
+    saturate(var(--hero-saturate, 0.78))
+    contrast(var(--hero-contrast, 1.06))
+    brightness(var(--hero-brightness, 0.74));
 }
 
 .hero-slide.is-exiting {
@@ -445,7 +455,10 @@ button {
       calc(var(--parallax-shift, 0px) + var(--hero-depth-shift, 0px) + var(--hero-pan-end-y, -8px) - 4px),
       0
     );
-  filter: saturate(0.72) contrast(1) brightness(0.6);
+  filter:
+    saturate(calc(var(--hero-saturate, 0.78) - 0.08))
+    contrast(calc(var(--hero-contrast, 1.06) - 0.05))
+    brightness(calc(var(--hero-brightness, 0.74) - 0.12));
 }
 
 .hero-shell {
