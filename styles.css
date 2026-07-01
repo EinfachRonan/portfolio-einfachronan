@@ -1165,6 +1165,36 @@ h2 {
   padding-top: 28px;
 }
 
+@media (min-width: 921px) {
+  .portfolio-detail .photo-tile button {
+    display: grid;
+    place-items: center;
+    max-height: 90vh;
+    padding: 14px;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at top, rgba(105, 211, 207, 0.04), transparent 42%),
+      rgba(6, 10, 14, 0.92);
+  }
+
+  .portfolio-detail .photo-tile img {
+    width: auto;
+    max-width: 100%;
+    max-height: calc(90vh - 28px);
+    min-height: 0;
+    height: auto;
+    object-fit: contain;
+    margin-inline: auto;
+    transform: scale(1);
+    background: rgba(4, 6, 8, 0.88);
+  }
+
+  .portfolio-detail .photo-tile button:hover img,
+  .portfolio-detail .photo-tile button:focus-visible img {
+    transform: scale(1.02);
+  }
+}
+
 .portfolio-page .portfolio-detail,
 .portfolio-page .portfolio-detail .portfolio-back,
 .portfolio-page .portfolio-detail .portfolio-hero,
