@@ -38,8 +38,8 @@ const categories = {
   portrait: {
     title: "Portrait",
     copy: "Ruhige Portraits, klares Licht und natürliche Momente.",
-    hero: "assets/photos/portrait-city-smile.webp",
-    alt: "Portrait in der Stadt",
+    hero: "assets/photos/portrait-rural-man-field.jpg",
+    alt: "Portrait auf dem Feld bei warmem Licht",
     images: [
       { src: "assets/photos/portrait-city-smile.webp", alt: "Portrait in der Stadt" },
       { src: "assets/photos/portrait-urban-walk.webp", alt: "Portrait in der Stadt" },
@@ -49,6 +49,10 @@ const categories = {
       { src: "assets/photos/portrait-redhair-sun.webp", alt: "Rothaarige Frau im Sonnenlicht" },
       { src: "assets/photos/IMG_4214.JPG", alt: "Portrait mit Sonnenbrille im warmen Licht" },
       { src: "assets/photos/IMG_6190.JPG", alt: "Portrait mit Cap im Gegenlicht" },
+      { src: "assets/photos/portrait-rural-man-field.jpg", alt: "Portrait auf dem Feld bei warmem Licht" },
+      { src: "assets/photos/portrait-rural-man-field-close.jpg", alt: "Portrait im Kornfeld" },
+      { src: "assets/photos/portrait-rural-man-village.jpg", alt: "Stehendes Portrait im Dorf" },
+      { src: "assets/photos/portrait-rural-man-dog-road.jpg", alt: "Portrait mit Hund auf einer LandstraÃŸe" },
       { src: "assets/photos/portrait-window-stripes.webp", alt: "Portrait vor hellem Fenster" },
       { src: "assets/photos/portrait-studio-beanie.webp", alt: "Studio Portrait mit Mütze" },
       { src: "assets/photos/portrait-blue-jacket-glasses.jpg", alt: "Portrait mit Brille" },
@@ -97,13 +101,19 @@ const categories = {
   animal: {
     title: "Tiere",
     copy: "Natürliche Tierbilder mit Ruhe und Nähe.",
-    hero: "assets/photos/animal-cats-window.webp",
-    alt: "Katzen am Fenster",
+    hero: "assets/photos/animal-boxer-road-sit.jpg",
+    alt: "Boxer sitzt auf einer LandstraÃŸe",
     images: [
       { src: "assets/photos/animal-cats-window.webp", alt: "Zwei Katzen am Fenster" },
       { src: "assets/photos/IMG_5413.JPG", alt: "Nahaufnahme einer Katze mit aufmerksamem Blick" },
       { src: "assets/photos/animal-cat-close.webp", alt: "Katze leckt ihre Pfote" },
       { src: "assets/photos/animal-dog-grass.webp", alt: "Hund auf einer Wiese" },
+      { src: "assets/photos/animal-boxer-run-road.jpg", alt: "Boxer lÃ¤uft auf einer LandstraÃŸe" },
+      { src: "assets/photos/animal-boxer-road-sit.jpg", alt: "Boxer sitzt auf einer LandstraÃŸe" },
+      { src: "assets/photos/animal-boxer-road-sit-2.jpg", alt: "Boxer sitzt zentral auf einer LandstraÃŸe" },
+      { src: "assets/photos/animal-boxer-close-1.jpg", alt: "Nahes Boxerportrait im warmen Licht" },
+      { src: "assets/photos/animal-boxer-close-2.jpg", alt: "Boxer Nahaufnahme von oben" },
+      { src: "assets/photos/animal-boxer-close-under.jpg", alt: "Boxer Nahaufnahme zwischen den Beinen einer Person" },
     ],
   },
 };
@@ -767,6 +777,14 @@ function getHeroSlideshowImages() {
       brightness: "0.74",
       contrast: "1.05",
       saturate: "0.76",
+    },
+    {
+      src: "assets/photos/portrait-rural-man-field.jpg",
+      alt: "Portrait auf dem Feld bei warmem Licht",
+      position: "center 42%",
+      brightness: "0.76",
+      contrast: "1.04",
+      saturate: "0.78",
     },
     {
       src: "assets/photos/IMG_9686.JPG",
