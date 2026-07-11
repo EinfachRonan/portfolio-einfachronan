@@ -265,7 +265,7 @@ button {
   text-transform: uppercase;
 }
 
-.hero,
+.hero:not(.hero-home),
 .portfolio-hero,
 .category-section,
 .contact-section,
@@ -275,18 +275,27 @@ button {
   margin-inline: auto;
 }
 
+.home-page .site-header {
+  position: fixed;
+  right: 0;
+  left: 0;
+  width: 100%;
+  margin-bottom: 0;
+}
+
 .hero-home {
   position: relative;
   display: grid;
   align-items: end;
-  width: 100%;
+  width: 100vw;
+  max-width: none;
   min-height: 100vh;
   min-height: 100svh;
   min-height: 100dvh;
   height: 100vh;
   height: 100svh;
   height: 100dvh;
-  margin-inline: 0;
+  margin-inline: calc(50% - 50vw);
   padding: 0;
   isolation: isolate;
   overflow: clip;
@@ -1447,6 +1456,13 @@ h2 {
   transform: translateY(0) scale(1);
 }
 
+.hero-home .reveal,
+.hero-home .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
 @keyframes drift {
   0%,
   100% {
@@ -1632,7 +1648,7 @@ h2 {
     display: none;
   }
 
-  .hero,
+  .hero:not(.hero-home),
   .portfolio-hero,
   .category-section,
   .contact-section,
