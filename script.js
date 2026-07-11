@@ -711,12 +711,12 @@ function getHeroSlideshowImages() {
         saturate: "0.78",
       },
       {
-        src: "assets/photos/IMG_4214.JPG",
-        alt: "Portrait mit Sonnenbrille im warmen Licht",
-        position: "center 18%",
-        brightness: "0.78",
+        src: "assets/photos/animal-boxer-close-1.jpg",
+        alt: "Boxerportrait im warmen Licht",
+        position: "center 24%",
+        brightness: "0.76",
         contrast: "1.04",
-        saturate: "0.82",
+        saturate: "0.8",
       },
       {
         src: "assets/photos/IMG_6190.JPG",
@@ -727,12 +727,12 @@ function getHeroSlideshowImages() {
         saturate: "0.78",
       },
       {
-        src: "assets/photos/IMG_9603.JPG",
-        alt: "Portrait auf dem Parkdeck bei Nacht",
-        position: "center 24%",
-        brightness: "0.72",
-        contrast: "1.06",
-        saturate: "0.74",
+        src: "assets/photos/portrait-rural-man-village.jpg",
+        alt: "Stehendes Portrait im Dorf",
+        position: "center 18%",
+        brightness: "0.76",
+        contrast: "1.04",
+        saturate: "0.78",
       },
       {
         src: "assets/photos/IMG_8490.JPG",
@@ -749,6 +749,14 @@ function getHeroSlideshowImages() {
         brightness: "0.73",
         contrast: "1.05",
         saturate: "0.77",
+      },
+      {
+        src: "assets/photos/IMG_9603.JPG",
+        alt: "Portrait auf dem Parkdeck bei Nacht",
+        position: "center 24%",
+        brightness: "0.72",
+        contrast: "1.06",
+        saturate: "0.74",
       },
     ].filter(Boolean);
   }
@@ -795,20 +803,20 @@ function getHeroSlideshowImages() {
       saturate: "0.72",
     },
     {
-      src: "assets/photos/club-dj-profile-dark.webp",
-      alt: "DJ im dunklen Raum",
-      position: "center 34%",
-      brightness: "0.67",
-      contrast: "1.08",
-      saturate: "0.74",
-    },
-    {
       src: "assets/photos/animal-cats-window.webp",
       alt: "Zwei Katzen am Fenster",
       position: "center 34%",
       brightness: "0.75",
       contrast: "1.03",
       saturate: "0.75",
+    },
+    {
+      src: "assets/photos/club-dj-profile-dark.webp",
+      alt: "DJ im dunklen Raum",
+      position: "center 34%",
+      brightness: "0.67",
+      contrast: "1.08",
+      saturate: "0.74",
     },
   ].filter(Boolean);
 
