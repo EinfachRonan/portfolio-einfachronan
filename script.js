@@ -13,11 +13,14 @@ const portfolioHero = document.querySelector("[data-portfolio-hero]");
 const portfolioTitle = document.querySelector("[data-portfolio-title]");
 const portfolioCopy = document.querySelector("[data-portfolio-copy]");
 const portfolioHeroImage = document.querySelector("[data-portfolio-hero-image]");
+const portfolioEyebrow = document.querySelector("[data-portfolio-eyebrow]");
+const portfolioCount = document.querySelector("[data-portfolio-count]");
 const filterLinks = Array.from(document.querySelectorAll("[data-filter-link]"));
 const parallaxMedia = Array.from(document.querySelectorAll("[data-parallax-media]"));
 const categoryCards = Array.from(document.querySelectorAll("[data-category-card]"));
 const portfolioSpotlights = Array.from(document.querySelectorAll("[data-spotlight]"));
 const categoryRouteLinks = Array.from(document.querySelectorAll("[data-category-route]"));
+const categoryCountLabels = Array.from(document.querySelectorAll("[data-category-count]"));
 const heroSlides = Array.from(document.querySelectorAll(".hero-slide"));
 const heroSection = document.querySelector(".hero-home");
 const heroMedia = document.querySelector(".hero-media");
@@ -40,6 +43,8 @@ const categories = {
     copy: "Ruhige Portraits, klares Licht und natürliche Momente.",
     hero: "assets/photos/portrait-rural-man-field.jpg",
     alt: "Portrait auf dem Feld bei warmem Licht",
+    eyebrow: "Menschen",
+    heroPosition: "center 34%",
     images: [
       { src: "assets/photos/portrait-city-smile.webp", alt: "Portrait in der Stadt" },
       { src: "assets/photos/portrait-urban-walk.webp", alt: "Portrait in der Stadt" },
@@ -72,6 +77,8 @@ const categories = {
     copy: "Details, Menschen und echte Augenblicke vom Hochzeitstag.",
     hero: "assets/photos/wedding-blue-bouquet.webp",
     alt: "Hochzeitsdetail mit Ringen",
+    eyebrow: "Reportage",
+    heroPosition: "center 34%",
     images: [
       { src: "assets/photos/wedding-blue-bouquet.webp", alt: "Hände mit Eheringen auf Brautstrauß" },
       { src: "assets/photos/wedding-red-bouquet.webp", alt: "Hochzeitsringe und Brautstrauß" },
@@ -85,6 +92,8 @@ const categories = {
     copy: "Licht, Bewegung und Atmosphäre aus der Nacht.",
     hero: "assets/photos/club-dj-red-light.webp",
     alt: "DJ im Clublicht",
+    eyebrow: "Nightlife",
+    heroPosition: "center 42%",
     images: [
       { src: "assets/photos/club-dj-profile-dark.webp", alt: "DJ im dunklen Raum" },
       { src: "assets/photos/club-dj-red-light.webp", alt: "DJ am Mischpult mit rotem Licht" },
@@ -96,6 +105,8 @@ const categories = {
     copy: "Klare Linien, dunkle Stimmung und urbanes Licht.",
     hero: "assets/photos/automotive-audi-night.webp",
     alt: "Auto bei Nacht",
+    eyebrow: "Automotive",
+    heroPosition: "center 50%",
     images: [{ src: "assets/photos/automotive-audi-night.webp", alt: "Audi bei Nacht" }],
   },
   animal: {
@@ -451,12 +462,28 @@ function updatePortfolioMode(category) {
 function syncHero(category) {
   const data = categories[category] ?? categories.portrait;
   if (portfolioHero) portfolioHero.dataset.category = category;
+  if (portfolioEyebrow) portfolioEyebrow.textContent = data.eyebrow ?? "Kuratiert";
   if (portfolioTitle) portfolioTitle.textContent = data.title;
   if (portfolioCopy) portfolioCopy.textContent = data.copy;
+  if (portfolioCount) {
+    const imageCount = data.images?.length ?? 0;
+    portfolioCount.textContent = `${imageCount} Bild${imageCount === 1 ? "" : "er"}`;
+  }
   if (portfolioHeroImage) {
     portfolioHeroImage.src = data.hero;
     portfolioHeroImage.alt = data.alt;
+    portfolioHeroImage.style.objectPosition = data.heroPosition ?? "center center";
   }
+}
+
+function syncCategoryCounts() {
+  if (!categoryCountLabels.length) return;
+
+  categoryCountLabels.forEach((label) => {
+    const category = label.dataset.categoryCount;
+    const count = categories[category]?.images?.length ?? 0;
+    label.textContent = `${count} Bild${count === 1 ? "" : "er"}`;
+  });
 }
 
 function refreshActiveItems() {
@@ -696,6 +723,42 @@ function setupRandomPortfolioSpotlights() {
     const selected = pool[Math.floor(Math.random() * pool.length)];
     image.src = selected.src;
     image.alt = selected.alt;
+  });
+}
+
+function classifyGalleryTile(tile, index) {
+  const image = tile.querySelector("img");
+  if (!image) return;
+
+  const width = image.naturalWidth || image.width || 1;
+  const height = image.naturalHeight || image.height || 1;
+  const ratio = width / height;
+
+  tile.classList.remove("is-portrait", "is-landscape", "is-featured");
+
+  if (ratio >= 1.18) tile.classList.add("is-landscape");
+  else if (ratio <= 0.82) tile.classList.add("is-portrait");
+
+  if ((ratio >= 1 && index % 6 === 0) || (ratio <= 0.82 && index % 5 === 1)) {
+    tile.classList.add("is-featured");
+  }
+}
+
+function setupGallerySizing() {
+  if (!tiles.length) return;
+
+  Object.keys(categories).forEach((categoryKey) => {
+    const categoryTiles = tiles.filter((tile) => tile.dataset.category === categoryKey);
+
+    categoryTiles.forEach((tile, index) => {
+      const image = tile.querySelector("img");
+      if (!image) return;
+
+      if (image.complete) classifyGalleryTile(tile, index);
+      else {
+        image.addEventListener("load", () => classifyGalleryTile(tile, index), { once: true });
+      }
+    });
   });
 }
 
@@ -1023,6 +1086,8 @@ window.addEventListener("load", () => {
   updateParallax();
   setupRandomCategoryImages();
   setupRandomPortfolioSpotlights();
+  setupGallerySizing();
+  syncCategoryCounts();
   setupHeroSlideshow();
   setupPortfolioRouting();
   setupCategoryRoutes();
