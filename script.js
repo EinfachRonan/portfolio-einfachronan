@@ -14,13 +14,11 @@ const portfolioTitle = document.querySelector("[data-portfolio-title]");
 const portfolioCopy = document.querySelector("[data-portfolio-copy]");
 const portfolioHeroImage = document.querySelector("[data-portfolio-hero-image]");
 const portfolioEyebrow = document.querySelector("[data-portfolio-eyebrow]");
-const portfolioCount = document.querySelector("[data-portfolio-count]");
 const filterLinks = Array.from(document.querySelectorAll("[data-filter-link]"));
 const parallaxMedia = Array.from(document.querySelectorAll("[data-parallax-media]"));
 const categoryCards = Array.from(document.querySelectorAll("[data-category-card]"));
 const portfolioSpotlights = Array.from(document.querySelectorAll("[data-spotlight]"));
 const categoryRouteLinks = Array.from(document.querySelectorAll("[data-category-route]"));
-const categoryCountLabels = Array.from(document.querySelectorAll("[data-category-count]"));
 const heroSlides = Array.from(document.querySelectorAll(".hero-slide"));
 const heroSection = document.querySelector(".hero-home");
 const heroMedia = document.querySelector(".hero-media");
@@ -473,25 +471,11 @@ function syncHero(category) {
   }
   if (portfolioTitle) portfolioTitle.textContent = data.title;
   if (portfolioCopy) portfolioCopy.textContent = data.copy;
-  if (portfolioCount) {
-    const imageCount = data.images?.length ?? 0;
-    portfolioCount.textContent = `${imageCount} Bild${imageCount === 1 ? "" : "er"}`;
-  }
   if (portfolioHeroImage) {
     portfolioHeroImage.src = data.hero;
     portfolioHeroImage.alt = data.alt;
     portfolioHeroImage.style.objectPosition = data.heroPosition ?? positionFallbacks[category] ?? "center center";
   }
-}
-
-function syncCategoryCounts() {
-  if (!categoryCountLabels.length) return;
-
-  categoryCountLabels.forEach((label) => {
-    const category = label.dataset.categoryCount;
-    const count = categories[category]?.images?.length ?? 0;
-    label.textContent = `${count} Bild${count === 1 ? "" : "er"}`;
-  });
 }
 
 function refreshActiveItems() {
@@ -1095,7 +1079,6 @@ window.addEventListener("load", () => {
   setupRandomCategoryImages();
   setupRandomPortfolioSpotlights();
   setupGallerySizing();
-  syncCategoryCounts();
   setupHeroSlideshow();
   setupPortfolioRouting();
   setupCategoryRoutes();
