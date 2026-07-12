@@ -461,8 +461,16 @@ function updatePortfolioMode(category) {
 
 function syncHero(category) {
   const data = categories[category] ?? categories.portrait;
+  const eyebrowFallbacks = {
+    animal: "Tiere",
+  };
+  const positionFallbacks = {
+    animal: "center 42%",
+  };
   if (portfolioHero) portfolioHero.dataset.category = category;
-  if (portfolioEyebrow) portfolioEyebrow.textContent = data.eyebrow ?? "Kuratiert";
+  if (portfolioEyebrow) {
+    portfolioEyebrow.textContent = data.eyebrow ?? eyebrowFallbacks[category] ?? "Kuratiert";
+  }
   if (portfolioTitle) portfolioTitle.textContent = data.title;
   if (portfolioCopy) portfolioCopy.textContent = data.copy;
   if (portfolioCount) {
@@ -472,7 +480,7 @@ function syncHero(category) {
   if (portfolioHeroImage) {
     portfolioHeroImage.src = data.hero;
     portfolioHeroImage.alt = data.alt;
-    portfolioHeroImage.style.objectPosition = data.heroPosition ?? "center center";
+    portfolioHeroImage.style.objectPosition = data.heroPosition ?? positionFallbacks[category] ?? "center center";
   }
 }
 
