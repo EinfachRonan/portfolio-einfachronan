@@ -42,9 +42,6 @@
         <div class="portfolio-overview-intro reveal">
           <p class="eyebrow">Portfolio</p>
           <h1>Portfolio</h1>
-          <p>
-            F&uuml;nf Kategorien mit klarer Bildsprache, eigener Stimmung und einer kuratierten Auswahl aus meinem Portfolio.
-          </p>
         </div>
 
         <div class="portfolio-showcase-list">
@@ -61,7 +58,6 @@
             <div class="category-showcase-copy">
               <p class="eyebrow">01 / Portrait</p>
               <h2>Portrait</h2>
-              <p>Nat&uuml;rliche Portraits mit klaren Ausschnitten, ruhigem Licht und echter N&auml;he zur Person.</p>
               <a class="category-showcase-link" href="portfolio.html?filter=portrait" data-category-route="portfolio.html?filter=portrait">Ansehen</a>
             </div>
           </article>
@@ -78,7 +74,6 @@
             <div class="category-showcase-copy">
               <p class="eyebrow">02 / Hochzeit</p>
               <h2>Hochzeit</h2>
-              <p>Details, Begegnungen und echte Augenblicke, die einen Tag emotional und zeitlos festhalten.</p>
               <a class="category-showcase-link" href="portfolio.html?filter=wedding" data-category-route="portfolio.html?filter=wedding">Ansehen</a>
             </div>
           </article>
@@ -95,7 +90,6 @@
             <div class="category-showcase-copy">
               <p class="eyebrow">03 / Club</p>
               <h2>Club</h2>
-              <p>Nacht, Bewegung und Lichtstimmung verdichtet zu Bildern mit Energie und Tiefe.</p>
               <a class="category-showcase-link" href="portfolio.html?filter=club" data-category-route="portfolio.html?filter=club">Ansehen</a>
             </div>
           </article>
@@ -112,7 +106,6 @@
             <div class="category-showcase-copy">
               <p class="eyebrow">04 / Autos</p>
               <h2>Autos</h2>
-              <p>Reduzierte Kompositionen, dunkle Fl&auml;chen und Kontraste, die Form und Charakter sichtbar machen.</p>
               <a class="category-showcase-link" href="portfolio.html?filter=auto" data-category-route="portfolio.html?filter=auto">Ansehen</a>
             </div>
           </article>
@@ -129,7 +122,6 @@
             <div class="category-showcase-copy">
               <p class="eyebrow">05 / Tiere</p>
               <h2>Tiere</h2>
-              <p>Ruhige Tierportraits mit Geduld, nat&uuml;rlichem Ausdruck und einer klaren, unaufgeregten Bildsprache.</p>
               <a class="category-showcase-link" href="portfolio.html?filter=animal" data-category-route="portfolio.html?filter=animal">Ansehen</a>
             </div>
           </article>
@@ -140,9 +132,18 @@
         <section class="portfolio-hero reveal" data-portfolio-hero>
           <figure class="portfolio-hero-image" data-parallax-media>
             <img
-              data-portfolio-hero-image
+              class="portfolio-hero-slide is-active"
+              data-portfolio-hero-image-primary
               loading="eager"
               fetchpriority="high"
+              decoding="async"
+              src="assets/photos/portrait-city-smile.webp"
+              alt="Portrait in der Stadt"
+            />
+            <img
+              class="portfolio-hero-slide"
+              data-portfolio-hero-image-secondary
+              loading="lazy"
               decoding="async"
               src="assets/photos/portrait-city-smile.webp"
               alt="Portrait in der Stadt"

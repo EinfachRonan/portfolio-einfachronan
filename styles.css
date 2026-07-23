@@ -36,6 +36,10 @@ body {
   overflow-x: hidden;
 }
 
+body.portfolio-overview-mode {
+  scroll-snap-type: y mandatory;
+}
+
 body.is-locked {
   overflow: hidden;
 }
@@ -853,56 +857,66 @@ h2 {
 }
 
 .portfolio-overview {
+  position: relative;
   display: grid;
-  gap: clamp(28px, 3vw, 38px);
-  padding: clamp(10px, 2vw, 24px) 0 120px;
-  scroll-snap-type: y proximity;
+  gap: 0;
+  padding: 0 0 80px;
 }
 
 .portfolio-overview-intro {
+  position: absolute;
+  top: calc(var(--header) + 28px);
+  left: clamp(22px, 4vw, 42px);
+  z-index: 6;
   display: grid;
-  gap: 14px;
-  max-width: 700px;
-  padding: clamp(16px, 2vw, 24px) 0 10px;
+  gap: 10px;
+  max-width: 420px;
+  pointer-events: none;
 }
 
 .portfolio-overview-intro h1 {
-  font-size: clamp(3.1rem, 6vw, 5.2rem);
-  line-height: 0.94;
+  font-size: clamp(2.8rem, 5vw, 4.8rem);
+  line-height: 0.92;
   text-transform: uppercase;
-}
-
-.portfolio-overview-intro p:not(.eyebrow) {
-  max-width: 620px;
-  margin-bottom: 0;
-  color: var(--muted);
-  font-size: 1.04rem;
-  line-height: 1.75;
 }
 
 .portfolio-showcase-list {
   display: grid;
-  gap: 22px;
+  gap: 0;
 }
 
 .category-showcase {
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
-  min-height: min(74vh, 760px);
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
   overflow: hidden;
-  border: 1px solid rgba(247, 248, 246, 0.08);
-  border-radius: 30px;
+  border-top: 1px solid rgba(247, 248, 246, 0.06);
+  border-bottom: 1px solid rgba(247, 248, 246, 0.04);
+  border-left: 0;
+  border-right: 0;
+  border-radius: 0;
   background: #071014;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.24);
+  box-shadow: none;
   isolation: isolate;
   cursor: pointer;
   scroll-snap-align: start;
+  scroll-snap-stop: always;
+  opacity: 0.74;
+  transform: scale(0.988);
   transition:
+    opacity 420ms var(--micro-ease),
     transform var(--micro-duration) var(--micro-ease),
     border-color var(--micro-duration) var(--micro-ease),
     box-shadow var(--micro-duration) var(--micro-ease),
     background var(--micro-duration) var(--micro-ease);
+}
+
+.category-showcase.is-current {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .category-showcase::before {
@@ -952,22 +966,14 @@ h2 {
   z-index: 2;
   display: grid;
   align-content: center;
-  gap: 18px;
-  padding: clamp(30px, 4vw, 54px);
+  gap: 14px;
+  padding: clamp(38px, 5vw, 76px);
 }
 
 .category-showcase-copy h2 {
   font-size: clamp(2.6rem, 5vw, 4.8rem);
   line-height: 0.92;
   text-transform: uppercase;
-}
-
-.category-showcase-copy p:not(.eyebrow) {
-  max-width: 28ch;
-  margin-bottom: 0;
-  color: rgba(247, 248, 246, 0.74);
-  font-size: 1rem;
-  line-height: 1.72;
 }
 
 .category-showcase-link {
@@ -998,8 +1004,7 @@ h2 {
 .category-showcase:hover,
 .category-showcase:focus-within {
   border-color: rgba(105, 211, 207, 0.34);
-  box-shadow: 0 32px 78px rgba(0, 0, 0, 0.34);
-  transform: translate3d(0, -4px, 0);
+  box-shadow: none;
 }
 
 .category-showcase:hover .category-spotlight-media img,
@@ -1024,12 +1029,14 @@ h2 {
   position: relative;
   display: grid;
   align-items: end;
-  min-height: min(66vh, 680px);
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
   overflow: hidden;
   background: linear-gradient(180deg, #05090d 0%, #071014 100%);
-  border: 1px solid rgba(247, 248, 246, 0.08);
-  border-radius: 22px;
-  box-shadow: 0 24px 72px rgba(0, 0, 0, 0.28);
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .portfolio-hero::before {
@@ -1051,7 +1058,7 @@ h2 {
   display: grid;
   align-content: space-between;
   min-height: inherit;
-  padding: clamp(20px, 2.8vw, 34px);
+  padding: clamp(20px, 2.8vw, 38px);
 }
 
 .portfolio-hero-copy {
@@ -1094,10 +1101,23 @@ h2 {
   height: 100%;
   object-fit: cover;
   object-position: center 36%;
-  transform:
-    scale(1.02)
-    translate3d(0, var(--parallax-shift, 0px), 0);
+  transform: scale(1.03) translate3d(0, var(--parallax-shift, 0px), 0);
   filter: saturate(0.88) contrast(1.04) brightness(0.78);
+}
+
+.portfolio-hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition:
+    opacity 1400ms ease,
+    transform 8200ms ease,
+    filter 1400ms ease;
+}
+
+.portfolio-hero-slide.is-active {
+  opacity: 1;
+  transform: scale(1.08) translate3d(0, var(--parallax-shift, 0px), 0);
 }
 
 .portfolio-back {
@@ -1127,7 +1147,7 @@ h2 {
 .portfolio-category-nav {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 18px;
   padding: 0;
 }
 
@@ -1136,18 +1156,15 @@ h2 {
   display: inline-flex;
   align-items: center;
   min-width: 0;
-  padding: 10px 14px;
-  border: 1px solid rgba(247, 248, 246, 0.08);
-  border-radius: 999px;
+  padding: 4px 0 8px;
+  border: 0;
+  border-radius: 0;
   color: rgba(247, 248, 246, 0.66);
   text-decoration: none;
-  background: rgba(7, 11, 15, 0.42);
+  background: transparent;
   transition:
     color var(--micro-duration) var(--micro-ease),
-    transform var(--micro-duration) var(--micro-ease),
-    border-color var(--micro-duration) var(--micro-ease),
-    background var(--micro-duration) var(--micro-ease),
-    box-shadow var(--micro-duration) var(--micro-ease);
+    transform var(--micro-duration) var(--micro-ease);
 }
 
 .portfolio-category-link::after {
@@ -1173,9 +1190,6 @@ h2 {
 .portfolio-category-link.is-active {
   color: var(--ink);
   transform: translateY(-1px);
-  border-color: rgba(105, 211, 207, 0.26);
-  background: rgba(8, 13, 18, 0.74);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
 }
 
 .portfolio-category-link:hover::after,
@@ -1318,10 +1332,10 @@ h2 {
   padding: 0;
   overflow: hidden;
   border: 0;
-  border-radius: 18px;
+  border-radius: 10px;
   color: inherit;
-  background: rgba(7, 11, 15, 0.78);
-  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.2);
+  background: transparent;
+  box-shadow: none;
   cursor: zoom-in;
   transform:
     rotateX(var(--tilt-x, 0deg))
@@ -1355,7 +1369,7 @@ h2 {
     display: block;
     padding: 0;
     overflow: hidden;
-    background: rgba(7, 11, 15, 0.78);
+    background: transparent;
   }
 
   .portfolio-detail .photo-tile img {
@@ -1732,7 +1746,9 @@ h2 {
   .category-showcase,
   .category-showcase:nth-child(even) {
     grid-template-columns: minmax(0, 1fr);
-    min-height: 620px;
+    min-height: 100vh;
+    min-height: 100svh;
+    min-height: 100dvh;
   }
 
   .category-showcase:nth-child(even) .category-spotlight-media,
@@ -1777,7 +1793,9 @@ h2 {
 
   .category-showcase,
   .category-showcase:nth-child(even) {
-    min-height: 560px;
+    min-height: 100vh;
+    min-height: 100svh;
+    min-height: 100dvh;
   }
 
   .category-showcase-copy {
@@ -1914,7 +1932,9 @@ h2 {
   }
 
   .portfolio-overview-intro {
-    padding-top: 12px;
+    top: calc(var(--header) + 18px);
+    left: 14px;
+    max-width: 280px;
   }
 
   .portfolio-overview-intro h1,
@@ -1928,12 +1948,13 @@ h2 {
 
   .category-showcase,
   .category-showcase:nth-child(even) {
-    min-height: 0;
-    border-radius: 24px;
+    min-height: 100vh;
+    min-height: 100svh;
+    min-height: 100dvh;
   }
 
   .category-spotlight-media {
-    min-height: 320px;
+    min-height: 42vh;
   }
 
   .category-showcase-copy {
@@ -1951,8 +1972,9 @@ h2 {
   }
 
   .portfolio-hero {
-    min-height: 58svh;
-    border-radius: 22px;
+    min-height: 100svh;
+    min-height: 100dvh;
+    border-radius: 0;
   }
 
   .portfolio-hero-overlay {
@@ -1972,8 +1994,8 @@ h2 {
   }
 
   .portfolio-category-nav {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: 10px;
     overflow-x: visible;
   }
@@ -1981,7 +2003,7 @@ h2 {
   .portfolio-category-link {
     min-width: 0;
     min-height: 0;
-    padding: 12px 14px;
+    padding: 4px 0 8px;
   }
 
   .portfolio-category-link-title {

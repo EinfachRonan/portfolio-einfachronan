@@ -12,7 +12,8 @@ const portfolioDetail = document.querySelector("[data-portfolio-detail]");
 const portfolioHero = document.querySelector("[data-portfolio-hero]");
 const portfolioTitle = document.querySelector("[data-portfolio-title]");
 const portfolioCopy = document.querySelector("[data-portfolio-copy]");
-const portfolioHeroImage = document.querySelector("[data-portfolio-hero-image]");
+const portfolioHeroImagePrimary = document.querySelector("[data-portfolio-hero-image-primary]");
+const portfolioHeroImageSecondary = document.querySelector("[data-portfolio-hero-image-secondary]");
 const portfolioEyebrow = document.querySelector("[data-portfolio-eyebrow]");
 const filterLinks = Array.from(document.querySelectorAll("[data-filter-link]"));
 const parallaxMedia = Array.from(document.querySelectorAll("[data-parallax-media]"));
@@ -24,6 +25,7 @@ const heroSection = document.querySelector(".hero-home");
 const heroMedia = document.querySelector(".hero-media");
 const heroShell = document.querySelector(".hero-shell");
 const heroCta = document.querySelector(".hero-cta");
+const showcaseSections = Array.from(document.querySelectorAll(".category-showcase"));
 const ambientAudio = document.querySelector("[data-ambient-audio]");
 const musicToggle = document.querySelector("[data-music-toggle]");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -144,6 +146,9 @@ let activeIndex = 0;
 let scrollTicking = false;
 let transitionLocked = false;
 let heroSlideTimer = null;
+let portfolioHeroTimer = null;
+let portfolioHeroIndex = 0;
+let portfolioHeroVisibleLayer = 0;
 let musicReady = false;
 let musicPositionReady = false;
 let lastSavedMusicTime = 0;
@@ -455,6 +460,8 @@ function updatePortfolioMode(category) {
   const hasCategory = Boolean(category && categories[category]);
   portfolioOverview.toggleAttribute("hidden", hasCategory);
   portfolioDetail.toggleAttribute("hidden", !hasCategory);
+  document.body.classList.toggle("portfolio-overview-mode", !hasCategory);
+  document.body.classList.toggle("portfolio-detail-mode", hasCategory);
 }
 
 function syncHero(category) {
@@ -471,16 +478,29 @@ function syncHero(category) {
   }
   if (portfolioTitle) portfolioTitle.textContent = data.title;
   if (portfolioCopy) portfolioCopy.textContent = data.copy;
-  if (portfolioHeroImage) {
-    portfolioHeroImage.src = data.hero;
-    portfolioHeroImage.alt = data.alt;
-    portfolioHeroImage.style.objectPosition = data.heroPosition ?? positionFallbacks[category] ?? "center center";
-  }
+  const heroPosition = data.heroPosition ?? positionFallbacks[category] ?? "center center";
+  [portfolioHeroImagePrimary, portfolioHeroImageSecondary].forEach((image) => {
+    if (!image) return;
+    image.style.objectPosition = heroPosition;
+  });
+
+  setupPortfolioHeroSlideshow(category, { reset: true });
 }
 
 function refreshActiveItems() {
   activeItems = lightboxButtons
-    .filter((button) => button.closest("[data-category]")?.dataset.category === activeCategory)
+    .filter((button) => {
+      const tile = button.closest("[data-category]");
+      return tile?.dataset.category === activeCategory && !tile.classList.contains("is-hidden");
+    })
+    .sort((buttonA, buttonB) => {
+      const rectA = buttonA.getBoundingClientRect();
+      const rectB = buttonB.getBoundingClientRect();
+      const topDelta = Math.abs(rectA.top - rectB.top);
+
+      if (topDelta > 18) return rectA.top - rectB.top;
+      return rectA.left - rectB.left;
+    })
     .map((button) => {
       const image = button.querySelector("img");
       return {
@@ -1005,6 +1025,102 @@ function setupPortfolioRouting() {
   });
 }
 
+function getPortfolioHeroSlides(category) {
+  const data = categories[category] ?? categories.portrait;
+  const deduped = [];
+  const seen = new Set();
+  const heroPool = [
+    { src: data.hero, alt: data.alt },
+    ...(data.images ?? []),
+  ];
+
+  heroPool.forEach((item) => {
+    if (!item?.src || seen.has(item.src)) return;
+    seen.add(item.src);
+    deduped.push(item);
+  });
+
+  return deduped;
+}
+
+function applyPortfolioHeroSlide(imageElement, slide, category) {
+  if (!imageElement || !slide) return;
+
+  const data = categories[category] ?? categories.portrait;
+  const fallbackPositions = {
+    portrait: "center 28%",
+    wedding: "center 34%",
+    club: "center 42%",
+    auto: "center 50%",
+    animal: "center 38%",
+  };
+
+  imageElement.src = slide.src;
+  imageElement.alt = slide.alt;
+  imageElement.style.objectPosition = data.heroPosition ?? fallbackPositions[category] ?? "center center";
+}
+
+function setupPortfolioHeroSlideshow(category, options = {}) {
+  if (!portfolioHeroImagePrimary || !portfolioHeroImageSecondary) return;
+
+  const slides = getPortfolioHeroSlides(category);
+  if (!slides.length) return;
+
+  if (portfolioHeroTimer) {
+    window.clearInterval(portfolioHeroTimer);
+    portfolioHeroTimer = null;
+  }
+
+  if (options.reset || portfolioHeroIndex >= slides.length) {
+    portfolioHeroIndex = Math.floor(Math.random() * slides.length);
+    portfolioHeroVisibleLayer = 0;
+  }
+
+  applyPortfolioHeroSlide(portfolioHeroImagePrimary, slides[portfolioHeroIndex], category);
+  applyPortfolioHeroSlide(portfolioHeroImageSecondary, slides[portfolioHeroIndex], category);
+  portfolioHeroImagePrimary.classList.add("is-active");
+  portfolioHeroImageSecondary.classList.remove("is-active");
+
+  if (reduceMotion || slides.length < 2) return;
+
+  portfolioHeroTimer = window.setInterval(() => {
+    portfolioHeroIndex = (portfolioHeroIndex + 1) % slides.length;
+    const nextImage = slides[portfolioHeroIndex];
+    const nextLayer = portfolioHeroVisibleLayer === 0 ? portfolioHeroImageSecondary : portfolioHeroImagePrimary;
+    const currentLayer = portfolioHeroVisibleLayer === 0 ? portfolioHeroImagePrimary : portfolioHeroImageSecondary;
+
+    applyPortfolioHeroSlide(nextLayer, nextImage, category);
+    nextLayer.classList.add("is-active");
+    currentLayer.classList.remove("is-active");
+    portfolioHeroVisibleLayer = portfolioHeroVisibleLayer === 0 ? 1 : 0;
+  }, 8200);
+}
+
+function setupPortfolioShowcaseObserver() {
+  if (!showcaseSections.length || !("IntersectionObserver" in window)) {
+    if (showcaseSections[0]) showcaseSections[0].classList.add("is-current");
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        showcaseSections.forEach((section) => {
+          section.classList.toggle("is-current", section === entry.target);
+        });
+      });
+    },
+    {
+      threshold: 0.55,
+      rootMargin: "-8% 0px -8% 0px",
+    },
+  );
+
+  showcaseSections.forEach((section) => observer.observe(section));
+}
+
 function setupCategoryRoutes() {
   if (!categoryRouteLinks.length) return;
 
@@ -1081,6 +1197,7 @@ window.addEventListener("load", () => {
   setupGallerySizing();
   setupHeroSlideshow();
   setupPortfolioRouting();
+  setupPortfolioShowcaseObserver();
   setupCategoryRoutes();
   startCategoryEntryTransition();
 });
