@@ -37,97 +37,168 @@
       </nav>
     </header>
 
-    <main id="start" class="home-main">
-      <section class="home-stage">
-        <section class="hero hero-home" aria-label="EinfachRonan Startseite">
-          <div class="hero-atmosphere" aria-hidden="true">
-            <span class="mist mist-one"></span>
-            <span class="mist mist-two"></span>
-            <span class="mist mist-three"></span>
+    <main id="start">
+      <section class="hero hero-home" aria-label="EinfachRonan Startseite">
+        <div class="hero-atmosphere" aria-hidden="true">
+          <span class="mist mist-one"></span>
+          <span class="mist mist-two"></span>
+          <span class="mist mist-three"></span>
+        </div>
+
+        <div class="hero-media reveal" data-parallax-media>
+          <img
+            class="hero-slide is-active"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            src="assets/photos/automotive-audi-night.webp"
+            alt="Auto bei Nacht"
+          />
+          <img
+            class="hero-slide"
+            loading="eager"
+            decoding="async"
+            src="assets/photos/club-dj-profile-dark.webp"
+            alt="DJ im dunklen Raum"
+          />
+        </div>
+
+        <div class="hero-shell reveal">
+          <div class="hero-content">
+            <p class="eyebrow">Capturing Moments.</p>
+            <h1>Telling Stories.</h1>
+            <p class="hero-lead">
+              Fotografie mit Atmosph&auml;re, Ruhe und einem klaren Blick f&uuml;r Menschen, Licht und echte Momente.
+            </p>
+            <div class="hero-actions" aria-label="Hero Navigation">
+              <a class="button button-primary hero-cta" href="portfolio.html">Mein Portfolio</a>
+              <a class="button button-ghost" href="#kontakt">Kontakt</a>
+            </div>
           </div>
 
-          <div class="hero-media reveal" data-parallax-media>
-            <img
-              class="hero-slide is-active"
-              loading="eager"
-              fetchpriority="high"
-              decoding="async"
-              src="assets/photos/animal-boxer-road-sit.jpg"
-              alt="Boxer Portrait"
-            />
-            <img
-              class="hero-slide"
-              loading="eager"
-              decoding="async"
-              src="assets/photos/portrait-rural-man-field.jpg"
-              alt="Portrait im warmen Licht"
-            />
-          </div>
+          <aside class="hero-side-card">
+            <span class="hero-side-label">EinfachRonan</span>
+            <p>Portrait, Hochzeit, Club, Automotive und Tiere in einer klaren, modernen Bildsprache.</p>
+          </aside>
+        </div>
+      </section>
 
-          <div class="hero-shell reveal">
-            <div class="hero-content">
-              <h1>Telling<br />Stories.</h1>
-              <p class="hero-lead">
-                Fotografie mit Atmosph&auml;re, Ruhe und einem klaren Blick f&uuml;r echte Momente.
+      <section class="home-highlights" aria-labelledby="highlights-title">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow">Ausgew&auml;hlte Arbeiten</p>
+            <h2 id="highlights-title">Bilder mit Ruhe, Licht und Charakter.</h2>
+          </div>
+          <p class="section-lead">
+            Eine kuratierte Vorschau aus verschiedenen Bereichen meines Portfolios. Reduziert, bildstark und direkt auf die Motive fokussiert.
+          </p>
+        </div>
+
+        <div class="highlights-grid">
+          <article class="highlight-feature reveal">
+            <figure class="highlight-feature-media" data-parallax-media>
+              <img loading="lazy" decoding="async" src="assets/photos/IMG_7060.JPG" alt="Portrait am Bahnhof" />
+            </figure>
+            <div class="highlight-feature-copy">
+              <p class="eyebrow">Editorial Preview</p>
+              <h3>Fotografie, die nicht laut sein muss.</h3>
+              <p>
+                Klare Komposition, kontrolliertes Licht und ein ruhiger Blick auf Menschen, Orte und Details.
               </p>
-              <div class="hero-actions" aria-label="Hero Navigation">
-                <a class="button button-primary hero-cta" href="portfolio.html">Mein Portfolio</a>
-                <a class="button button-ghost" href="#kontakt">Kontakt</a>
-              </div>
+              <a class="button button-secondary" href="portfolio.html">Portfolio ansehen</a>
             </div>
-          </div>
-        </section>
+          </article>
 
-        <section class="category-section home-portfolio-section" aria-labelledby="category-title">
-          <div class="section-head reveal section-head-compact">
-            <div>
-              <h2 id="category-title">Bereiche</h2>
+          <aside class="highlight-stack reveal">
+            <div class="highlight-stack-copy">
+              <p class="eyebrow">Aus dem Portfolio</p>
+              <h3>Von stillen Portraits bis zu dunklen Nachtmomenten.</h3>
+              <p>Jede Kategorie bleibt eigenst&auml;ndig, folgt aber derselben fotografischen Handschrift.</p>
             </div>
+
+            <figure class="highlight-tile highlight-tile-wide" data-parallax-media>
+              <img loading="lazy" decoding="async" src="assets/photos/club-dj-red-light.webp" alt="Clubszene mit DJ" />
+            </figure>
+
+            <div class="highlight-tile-pair">
+              <figure class="highlight-tile" data-parallax-media>
+                <img loading="lazy" decoding="async" src="assets/photos/wedding-blue-bouquet.webp" alt="Hochzeitsdetail mit Blumen und Ringen" />
+              </figure>
+              <figure class="highlight-tile" data-parallax-media>
+                <img loading="lazy" decoding="async" src="assets/photos/animal-cats-window.webp" alt="Zwei Katzen am Fenster" />
+              </figure>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="category-section" aria-labelledby="category-title">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow">Portfolio</p>
+            <h2 id="category-title">Portfolio-Bereiche</h2>
           </div>
+          <p class="section-lead">
+            F&uuml;nf klare Bereiche mit eigener Stimmung, passender Bildauswahl und direktem Zugang zu den Galerien.
+          </p>
+        </div>
 
-          <div class="category-grid category-grid-home">
-            <a class="category-card tilt-card reveal" href="portfolio.html?filter=portrait" data-category-card="portrait" data-category-route="portfolio.html?filter=portrait">
-              <img loading="lazy" decoding="async" src="assets/photos/portrait-redhair-sun.webp" alt="Portrait im Sonnenlicht" />
-              <div class="category-card-copy">
-                <strong>Portrait</strong>
-              </div>
-            </a>
-
-            <a class="category-card tilt-card reveal" href="portfolio.html?filter=wedding" data-category-card="wedding" data-category-route="portfolio.html?filter=wedding">
-              <img loading="lazy" decoding="async" src="assets/photos/wedding-blue-bouquet.webp" alt="Hochzeitsdetail mit Ringen" />
-              <div class="category-card-copy">
-                <strong>Hochzeit</strong>
-              </div>
-            </a>
-
-            <a class="category-card tilt-card reveal" href="portfolio.html?filter=club" data-category-card="club" data-category-route="portfolio.html?filter=club">
-              <img loading="lazy" decoding="async" src="assets/photos/club-dj-red-light.webp" alt="DJ im Clublicht" />
-              <div class="category-card-copy">
-                <strong>Club</strong>
-              </div>
-            </a>
-
-            <a class="category-card tilt-card reveal" href="portfolio.html?filter=auto" data-category-card="auto" data-category-route="portfolio.html?filter=auto">
-              <img loading="lazy" decoding="async" src="assets/photos/automotive-audi-night.webp" alt="Auto bei Nacht" />
-              <div class="category-card-copy">
-                <strong>Autos</strong>
-              </div>
-            </a>
-
-            <a class="category-card tilt-card reveal" href="portfolio.html?filter=animal" data-category-card="animal" data-category-route="portfolio.html?filter=animal">
-              <img loading="lazy" decoding="async" src="assets/photos/animal-cats-window.webp" alt="Katzen am Fenster" />
-              <div class="category-card-copy">
-                <strong>Tiere</strong>
-              </div>
-            </a>
-          </div>
-        </section>
-
-        <footer class="site-footer home-footer" id="kontakt" aria-label="Footer">
-          <a class="site-footer-brand" href="/" aria-label="EinfachRonan Startseite">
-            <img class="site-footer-logo" decoding="async" src="assets/logo-einfachronan.png" alt="EinfachRonan" />
+        <div class="category-grid">
+          <a class="category-card tilt-card reveal" href="portfolio.html?filter=portrait" data-category-card="portrait" data-category-route="portfolio.html?filter=portrait">
+            <img loading="lazy" decoding="async" src="assets/photos/portrait-redhair-sun.webp" alt="Portrait im Sonnenlicht" />
+            <div class="category-card-copy">
+              <span>Portrait</span>
+              <p>Ruhige Portraits mit klaren Ausschnitten, nat&uuml;rlichem Licht und echter N&auml;he.</p>
+            </div>
           </a>
-          <a class="site-footer-social" href="https://www.instagram.com/einfach.ronan/" target="_blank" rel="noreferrer">
+
+          <a class="category-card tilt-card reveal" href="portfolio.html?filter=wedding" data-category-card="wedding" data-category-route="portfolio.html?filter=wedding">
+            <img loading="lazy" decoding="async" src="assets/photos/wedding-blue-bouquet.webp" alt="Hochzeitsdetail mit Ringen" />
+            <div class="category-card-copy">
+              <span>Hochzeit</span>
+              <p>Details, Gesten und Begegnungen, die den Tag ruhig und hochwertig festhalten.</p>
+            </div>
+          </a>
+
+          <a class="category-card tilt-card reveal" href="portfolio.html?filter=club" data-category-card="club" data-category-route="portfolio.html?filter=club">
+            <img loading="lazy" decoding="async" src="assets/photos/club-dj-red-light.webp" alt="DJ im Clublicht" />
+            <div class="category-card-copy">
+              <span>Club</span>
+              <p>Nacht, Bewegung und Licht in einer dunklen, atmosph&auml;rischen Bildsprache.</p>
+            </div>
+          </a>
+
+          <a class="category-card tilt-card reveal" href="portfolio.html?filter=auto" data-category-card="auto" data-category-route="portfolio.html?filter=auto">
+            <img loading="lazy" decoding="async" src="assets/photos/automotive-audi-night.webp" alt="Auto bei Nacht" />
+            <div class="category-card-copy">
+              <span>Autos</span>
+              <p>Reduzierte Kompositionen, saubere Linien und urbane Lichtstimmung.</p>
+            </div>
+          </a>
+
+          <a class="category-card tilt-card reveal" href="portfolio.html?filter=animal" data-category-card="animal" data-category-route="portfolio.html?filter=animal">
+            <img loading="lazy" decoding="async" src="assets/photos/animal-cats-window.webp" alt="Katzen am Fenster" />
+            <div class="category-card-copy">
+              <span>Tiere</span>
+              <p>Tierportraits mit Geduld, Ruhe und einem Blick f&uuml;r nat&uuml;rliche Momente.</p>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section class="contact-section reveal" id="kontakt" aria-labelledby="contact-title">
+        <figure class="contact-media" data-parallax-media>
+          <img loading="lazy" decoding="async" src="assets/photos/portrait-rural-man-field.jpg" alt="Portrait auf einem Feld" />
+        </figure>
+        <div class="contact-copy">
+          <div>
+            <p class="eyebrow">Kontakt</p>
+            <h2 id="contact-title">Lass uns gemeinsam etwas Besonderes schaffen.</h2>
+            <p class="section-lead">
+              F&uuml;r Anfragen, Shootings oder gemeinsame Projekte erreichst du mich direkt &uuml;ber Instagram.
+            </p>
+          </div>
+          <a class="button button-secondary" href="https://www.instagram.com/einfach.ronan/" target="_blank" rel="noreferrer">
             <svg class="instagram-icon" viewBox="0 0 24 24" aria-hidden="true">
               <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
               <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
@@ -135,7 +206,7 @@
             </svg>
             <span>@einfach.ronan</span>
           </a>
-        </footer>
+        </div>
       </section>
     </main>
 
