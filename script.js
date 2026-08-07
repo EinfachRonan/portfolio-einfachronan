@@ -41,7 +41,7 @@ const categories = {
   portrait: {
     title: "Portrait",
     copy: "Ruhige Portraits, klares Licht und natürliche Momente.",
-    hero: "assets/photos/portrait-rural-man-field.jpg",
+    hero: "assets/photos/portrait-rural-man-field.webp",
     alt: "Portrait auf dem Feld bei warmem Licht",
     eyebrow: "Menschen",
     heroPosition: "center 34%",
@@ -52,24 +52,24 @@ const categories = {
       { src: "assets/photos/portrait-white-shirt-outdoor.webp", alt: "Portrait draußen am Wasser" },
       { src: "assets/photos/portrait-cap-outdoor.webp", alt: "Portrait mit weißer Cap" },
       { src: "assets/photos/portrait-redhair-sun.webp", alt: "Rothaarige Frau im Sonnenlicht" },
-      { src: "assets/photos/IMG_4214.JPG", alt: "Portrait mit Sonnenbrille im warmen Licht" },
-      { src: "assets/photos/IMG_6190.JPG", alt: "Portrait mit Cap im Gegenlicht" },
-      { src: "assets/photos/portrait-rural-man-field.jpg", alt: "Portrait auf dem Feld bei warmem Licht" },
-      { src: "assets/photos/portrait-rural-man-field-close.jpg", alt: "Portrait im Kornfeld" },
-      { src: "assets/photos/portrait-rural-man-village.jpg", alt: "Stehendes Portrait im Dorf" },
-      { src: "assets/photos/portrait-rural-man-dog-road.jpg", alt: "Portrait mit Hund auf einer Landstraße" },
+      { src: "assets/photos/portrait-sunglasses-warm.webp", alt: "Portrait mit Sonnenbrille im warmen Licht" },
+      { src: "assets/photos/portrait-cap-backlight.webp", alt: "Portrait mit Cap im Gegenlicht" },
+      { src: "assets/photos/portrait-rural-man-field.webp", alt: "Portrait auf dem Feld bei warmem Licht" },
+      { src: "assets/photos/portrait-rural-man-field-close.webp", alt: "Portrait im Kornfeld" },
+      { src: "assets/photos/portrait-rural-man-village.webp", alt: "Stehendes Portrait im Dorf" },
+      { src: "assets/photos/portrait-rural-man-dog-road.webp", alt: "Portrait mit Hund auf einer Landstraße" },
       { src: "assets/photos/portrait-window-stripes.webp", alt: "Portrait vor hellem Fenster" },
       { src: "assets/photos/portrait-studio-beanie.webp", alt: "Studio Portrait mit Mütze" },
-      { src: "assets/photos/portrait-blue-jacket-glasses.jpg", alt: "Portrait mit Brille" },
-      { src: "assets/photos/IMG_4051.JPG", alt: "Portrait im Sessel mit ruhigem Licht" },
-      { src: "assets/photos/IMG_7060.JPG", alt: "Portrait am Bahnhof bei kühlem Licht" },
+      { src: "assets/photos/portrait-blue-jacket-glasses.webp", alt: "Portrait mit Brille" },
+      { src: "assets/photos/portrait-armchair-calm.webp", alt: "Portrait im Sessel mit ruhigem Licht" },
+      { src: "assets/photos/portrait-station-cool.webp", alt: "Portrait am Bahnhof bei kühlem Licht" },
       { src: "assets/photos/portrait-night-arcade.webp", alt: "Nachtportrait" },
       { src: "assets/photos/portrait-point-night.webp", alt: "Portrait bei Nacht" },
       { src: "assets/photos/portrait-leather-jacket-snow.webp", alt: "Portrait im Schnee" },
-      { src: "assets/photos/IMG_8490.JPG", alt: "Nachtportrait im Schnee" },
-      { src: "assets/photos/IMG_9603.JPG", alt: "Portrait auf dem Parkdeck bei Nacht" },
-      { src: "assets/photos/IMG_9677.JPG", alt: "Stehendes Nachtportrait auf dem Parkdeck" },
-      { src: "assets/photos/IMG_9686.JPG", alt: "Portrait vor dramatischem Nachthimmel" },
+      { src: "assets/photos/portrait-snow-night.webp", alt: "Nachtportrait im Schnee" },
+      { src: "assets/photos/portrait-parkdeck-night.webp", alt: "Portrait auf dem Parkdeck bei Nacht" },
+      { src: "assets/photos/portrait-parkdeck-standing.webp", alt: "Stehendes Nachtportrait auf dem Parkdeck" },
+      { src: "assets/photos/portrait-nightsky-dramatic.webp", alt: "Portrait vor dramatischem Nachthimmel" },
     ],
   },
   wedding: {
@@ -112,19 +112,19 @@ const categories = {
   animal: {
     title: "Tiere",
     copy: "Natürliche Tierbilder mit Ruhe und Nähe.",
-    hero: "assets/photos/animal-boxer-road-sit.jpg",
+    hero: "assets/photos/animal-boxer-road-sit.webp",
     alt: "Boxer sitzt auf einer Landstraße",
     images: [
       { src: "assets/photos/animal-cats-window.webp", alt: "Zwei Katzen am Fenster" },
-      { src: "assets/photos/IMG_5413.JPG", alt: "Nahaufnahme einer Katze mit aufmerksamem Blick" },
+      { src: "assets/photos/animal-cat-portrait-close.webp", alt: "Nahaufnahme einer Katze mit aufmerksamem Blick" },
       { src: "assets/photos/animal-cat-close.webp", alt: "Katze leckt ihre Pfote" },
       { src: "assets/photos/animal-dog-grass.webp", alt: "Hund auf einer Wiese" },
-      { src: "assets/photos/animal-boxer-run-road.jpg", alt: "Boxer läuft auf einer Landstraße" },
-      { src: "assets/photos/animal-boxer-road-sit.jpg", alt: "Boxer sitzt auf einer Landstraße" },
-      { src: "assets/photos/animal-boxer-road-sit-2.jpg", alt: "Boxer sitzt zentral auf einer Landstraße" },
-      { src: "assets/photos/animal-boxer-close-1.jpg", alt: "Nahes Boxerportrait im warmen Licht" },
-      { src: "assets/photos/animal-boxer-close-2.jpg", alt: "Boxer Nahaufnahme von oben" },
-      { src: "assets/photos/animal-boxer-close-under.jpg", alt: "Boxer Nahaufnahme zwischen den Beinen einer Person" },
+      { src: "assets/photos/animal-boxer-run-road.webp", alt: "Boxer läuft auf einer Landstraße" },
+      { src: "assets/photos/animal-boxer-road-sit.webp", alt: "Boxer sitzt auf einer Landstraße" },
+      { src: "assets/photos/animal-boxer-road-sit-2.webp", alt: "Boxer sitzt zentral auf einer Landstraße" },
+      { src: "assets/photos/animal-boxer-close-1.webp", alt: "Nahes Boxerportrait im warmen Licht" },
+      { src: "assets/photos/animal-boxer-close-2.webp", alt: "Boxer Nahaufnahme von oben" },
+      { src: "assets/photos/animal-boxer-close-under.webp", alt: "Boxer Nahaufnahme zwischen den Beinen einer Person" },
     ],
   },
 };
@@ -361,51 +361,14 @@ function setupAmbientAudio() {
   musicReady = true;
   ambientAudio.volume = 0.3;
   ambientAudio.loop = true;
-  ambientAudio.preload = "auto";
   ambientAudio.playsInline = true;
   restoreMusicTime();
 
   setMusicButtonState(false);
   updateMusicToggleVisibility();
 
-  let interactionResumeBound = false;
-  const interactionEvents = ["pointerdown", "pointerup", "click", "touchstart", "touchend", "keydown"];
-  const unbindInteractionResume = (handler) => {
-    interactionEvents.forEach((eventName) => {
-      document.removeEventListener(eventName, handler, true);
-    });
-  };
-
-  const bindInteractionResume = () => {
-    if (interactionResumeBound) return;
-    interactionResumeBound = true;
-
-    const resumePlayback = async () => {
-      if (!ambientAudio.paused) return;
-      restoreMusicTime();
-      let started = await tryPlayAmbientAudio();
-      if (!started) {
-        await new Promise((resolve) => window.requestAnimationFrame(resolve));
-        started = await tryPlayAmbientAudio();
-      }
-      if (started) {
-        unbindInteractionResume(resumePlayback);
-      }
-    };
-
-    interactionEvents.forEach((eventName) => {
-      document.addEventListener(eventName, resumePlayback, true);
-    });
-  };
-
-  const attemptAutoplay = () => {
-    void tryPlayAmbientAudio().then((started) => {
-      if (!started) bindInteractionResume();
-    });
-  };
-
-  attemptAutoplay();
-
+  // Kein Autoplay-Versuch: preload bleibt "none", die Audiodatei wird erst
+  // geladen, wenn jemand aktiv den Ambiente-Button drueckt.
   musicToggle.addEventListener("click", async () => {
     if (ambientAudio.paused) {
       restoreMusicTime();
@@ -438,7 +401,6 @@ function setupAmbientAudio() {
   window.addEventListener("beforeunload", () => persistMusicTime(undefined, true));
   window.addEventListener("pageshow", () => {
     restoreMusicTime();
-    if (ambientAudio.paused) attemptAutoplay();
   });
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "hidden") persistMusicTime(undefined, true);
@@ -778,7 +740,7 @@ function getHeroSlideshowImages() {
   if (window.innerWidth <= 680) {
     return [
       {
-        src: "assets/photos/IMG_4051.JPG",
+        src: "assets/photos/portrait-armchair-calm.webp",
         alt: "Portrait im Sessel mit ruhigem Licht",
         position: "center 28%",
         brightness: "0.74",
@@ -786,7 +748,7 @@ function getHeroSlideshowImages() {
         saturate: "0.78",
       },
       {
-        src: "assets/photos/animal-boxer-close-1.jpg",
+        src: "assets/photos/animal-boxer-close-1.webp",
         alt: "Boxerportrait im warmen Licht",
         position: "center 24%",
         brightness: "0.76",
@@ -794,7 +756,7 @@ function getHeroSlideshowImages() {
         saturate: "0.8",
       },
       {
-        src: "assets/photos/IMG_6190.JPG",
+        src: "assets/photos/portrait-cap-backlight.webp",
         alt: "Portrait mit Cap im Gegenlicht",
         position: "center 18%",
         brightness: "0.76",
@@ -802,7 +764,7 @@ function getHeroSlideshowImages() {
         saturate: "0.78",
       },
       {
-        src: "assets/photos/portrait-rural-man-village.jpg",
+        src: "assets/photos/portrait-rural-man-village.webp",
         alt: "Stehendes Portrait im Dorf",
         position: "center 18%",
         brightness: "0.76",
@@ -810,7 +772,7 @@ function getHeroSlideshowImages() {
         saturate: "0.78",
       },
       {
-        src: "assets/photos/IMG_8490.JPG",
+        src: "assets/photos/portrait-snow-night.webp",
         alt: "Nachtportrait im Schnee",
         position: "center 24%",
         brightness: "0.7",
@@ -818,7 +780,7 @@ function getHeroSlideshowImages() {
         saturate: "0.72",
       },
       {
-        src: "assets/photos/portrait-blue-jacket-glasses.jpg",
+        src: "assets/photos/portrait-blue-jacket-glasses.webp",
         alt: "Portrait mit Brille",
         position: "center 22%",
         brightness: "0.73",
@@ -826,7 +788,7 @@ function getHeroSlideshowImages() {
         saturate: "0.77",
       },
       {
-        src: "assets/photos/IMG_9603.JPG",
+        src: "assets/photos/portrait-parkdeck-night.webp",
         alt: "Portrait auf dem Parkdeck bei Nacht",
         position: "center 24%",
         brightness: "0.72",
@@ -846,7 +808,7 @@ function getHeroSlideshowImages() {
       saturate: "0.74",
     },
     {
-      src: "assets/photos/IMG_5413.JPG",
+      src: "assets/photos/animal-cat-portrait-close.webp",
       alt: "Nahaufnahme einer Katze",
       position: "center 42%",
       brightness: "0.76",
@@ -854,7 +816,7 @@ function getHeroSlideshowImages() {
       saturate: "0.78",
     },
     {
-      src: "assets/photos/IMG_7060.JPG",
+      src: "assets/photos/portrait-station-cool.webp",
       alt: "Portrait am Bahnhof",
       position: "center 34%",
       brightness: "0.74",
@@ -862,7 +824,7 @@ function getHeroSlideshowImages() {
       saturate: "0.76",
     },
     {
-      src: "assets/photos/portrait-rural-man-field.jpg",
+      src: "assets/photos/portrait-rural-man-field.webp",
       alt: "Portrait auf dem Feld bei warmem Licht",
       position: "center 42%",
       brightness: "0.76",
@@ -870,7 +832,7 @@ function getHeroSlideshowImages() {
       saturate: "0.78",
     },
     {
-      src: "assets/photos/IMG_9686.JPG",
+      src: "assets/photos/portrait-nightsky-dramatic.webp",
       alt: "Portrait vor dramatischem Nachthimmel",
       position: "center 28%",
       brightness: "0.69",
