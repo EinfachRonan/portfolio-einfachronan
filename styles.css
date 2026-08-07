@@ -36,10 +36,6 @@ body {
   overflow-x: hidden;
 }
 
-body.portfolio-overview-mode {
-  scroll-snap-type: y mandatory;
-}
-
 body.is-locked {
   overflow: hidden;
 }
@@ -859,19 +855,14 @@ h2 {
 .portfolio-overview {
   position: relative;
   display: grid;
-  gap: 0;
+  gap: clamp(28px, 4vw, 48px);
   padding: 0 0 80px;
 }
 
 .portfolio-overview-intro {
-  position: absolute;
-  top: calc(var(--header) + 28px);
-  left: clamp(22px, 4vw, 42px);
-  z-index: 6;
   display: grid;
   gap: 10px;
   max-width: 420px;
-  pointer-events: none;
 }
 
 .portfolio-overview-intro h1 {
@@ -880,141 +871,180 @@ h2 {
   text-transform: uppercase;
 }
 
-.portfolio-showcase-list {
+.portfolio-bento {
   display: grid;
-  gap: 0;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-rows: minmax(280px, 40vh) minmax(280px, 40vh) minmax(220px, 28vh);
+  grid-template-areas:
+    "portrait portrait portrait portrait portrait portrait portrait wedding wedding wedding wedding wedding"
+    "portrait portrait portrait portrait portrait portrait portrait club club club club club"
+    "autos autos autos autos autos autos animal animal animal animal animal animal";
+  gap: 18px;
+  perspective: 1400px;
 }
 
-.category-showcase {
+.portfolio-bento-card {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
-  min-height: 100vh;
-  min-height: 100svh;
-  min-height: 100dvh;
   overflow: hidden;
-  border-top: 1px solid rgba(247, 248, 246, 0.06);
-  border-bottom: 1px solid rgba(247, 248, 246, 0.04);
-  border-left: 0;
-  border-right: 0;
-  border-radius: 0;
+  border: 1px solid rgba(247, 248, 246, 0.08);
+  border-radius: 24px;
+  color: var(--ink);
   background: #071014;
-  box-shadow: none;
-  isolation: isolate;
+  box-shadow: 0 24px 62px rgba(0, 0, 0, 0.3);
+  text-decoration: none;
   cursor: pointer;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  opacity: 0.74;
-  transform: scale(0.988);
+  isolation: isolate;
+  transform:
+    rotateX(var(--tilt-x, 0deg))
+    rotateY(var(--tilt-y, 0deg))
+    translateY(0);
+  transform-style: preserve-3d;
   transition:
-    opacity 420ms var(--micro-ease),
     transform var(--micro-duration) var(--micro-ease),
     border-color var(--micro-duration) var(--micro-ease),
-    box-shadow var(--micro-duration) var(--micro-ease),
-    background var(--micro-duration) var(--micro-ease);
+    box-shadow var(--micro-duration) var(--micro-ease);
 }
 
-.category-showcase.is-current {
-  opacity: 1;
-  transform: scale(1);
+.portfolio-bento-card[data-spotlight="portrait"] {
+  grid-area: portrait;
 }
 
-.category-showcase::before {
+.portfolio-bento-card[data-spotlight="wedding"] {
+  grid-area: wedding;
+}
+
+.portfolio-bento-card[data-spotlight="club"] {
+  grid-area: club;
+}
+
+.portfolio-bento-card[data-spotlight="auto"] {
+  grid-area: autos;
+}
+
+.portfolio-bento-card[data-spotlight="animal"] {
+  grid-area: animal;
+}
+
+.portfolio-bento-card::before {
+  position: absolute;
+  top: 20px;
+  left: 22px;
+  z-index: 2;
+  color: var(--accent);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  content: attr(data-index);
+}
+
+.portfolio-bento-card::after {
   position: absolute;
   inset: 0;
-  content: "";
-  background:
-    linear-gradient(90deg, rgba(4, 8, 12, 0.08), rgba(4, 8, 12, 0.16) 34%, rgba(4, 8, 12, 0.82) 74%, rgba(4, 8, 12, 0.96)),
-    linear-gradient(135deg, rgba(105, 211, 207, 0.08), transparent 36%);
   z-index: 1;
+  content: "";
   pointer-events: none;
+  background:
+    linear-gradient(180deg, transparent 38%, rgba(4, 6, 8, 0.2) 60%, rgba(4, 6, 8, 0.94)),
+    linear-gradient(90deg, rgba(105, 211, 207, 0.1), transparent 30%);
 }
 
-.category-showcase:nth-child(even) {
-  grid-template-columns: minmax(320px, 0.85fr) minmax(0, 1.15fr);
-}
-
-.category-showcase:nth-child(even) .category-spotlight-media {
-  order: 2;
-}
-
-.category-showcase:nth-child(even) .category-showcase-copy {
-  order: 1;
-}
-
-.category-spotlight-media {
-  position: relative;
-  margin: 0;
-  overflow: hidden;
-  min-height: 100%;
-}
-
-.category-spotlight-media img {
+.portfolio-bento-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center center;
-  transform: scale(1.02) translate3d(0, var(--parallax-shift, 0px), 0);
-  filter: saturate(0.88) contrast(1.02) brightness(0.78);
+  transform: scale(1.03);
+  filter: saturate(0.88) contrast(1.02) brightness(0.8);
   transition:
     transform var(--micro-duration) var(--micro-ease),
     filter var(--micro-duration) var(--micro-ease);
 }
 
-.category-showcase-copy {
-  position: relative;
-  z-index: 2;
-  display: grid;
-  align-content: center;
-  gap: 14px;
-  padding: clamp(38px, 5vw, 76px);
+.portfolio-bento-card[data-spotlight="portrait"] img {
+  object-position: center 20%;
 }
 
-.category-showcase-copy h2 {
-  font-size: clamp(2.6rem, 5vw, 4.8rem);
-  line-height: 0.92;
+.portfolio-bento-card[data-spotlight="wedding"] img {
+  object-position: center 30%;
+}
+
+.portfolio-bento-card[data-spotlight="club"] img {
+  object-position: center 38%;
+}
+
+.portfolio-bento-card[data-spotlight="auto"] img {
+  object-position: center 55%;
+}
+
+.portfolio-bento-card[data-spotlight="animal"] img {
+  object-position: center 40%;
+}
+
+.portfolio-bento-copy {
+  position: relative;
+  z-index: 2;
+  align-self: end;
+  display: grid;
+  gap: 8px;
+  padding: clamp(20px, 2.4vw, 30px) clamp(22px, 2.6vw, 32px);
+}
+
+.portfolio-bento-copy .eyebrow {
+  opacity: 0.86;
+}
+
+.portfolio-bento-copy h2 {
+  font-size: clamp(1.7rem, 2.1vw, 2.4rem);
+  line-height: 0.98;
   text-transform: uppercase;
 }
 
-.category-showcase-link {
+.portfolio-bento-card[data-spotlight="portrait"] .portfolio-bento-copy h2 {
+  font-size: clamp(2.4rem, 3.4vw, 3.6rem);
+}
+
+.portfolio-bento-link {
   display: inline-flex;
   align-items: center;
   width: fit-content;
-  margin-top: 4px;
-  color: rgba(247, 248, 246, 0.92);
-  font-size: 0.76rem;
+  margin-top: 2px;
+  color: rgba(247, 248, 246, 0.9);
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   line-height: 1;
-  text-decoration: none;
   text-transform: uppercase;
   transition:
     transform var(--micro-duration) var(--micro-ease),
-    color var(--micro-duration) var(--micro-ease),
-    opacity var(--micro-duration) var(--micro-ease);
-  padding-bottom: 6px;
+    color var(--micro-duration) var(--micro-ease);
 }
 
-.category-showcase-link::after {
+.portfolio-bento-link::after {
   content: "→";
   margin-left: 10px;
   font-size: 0.92em;
 }
 
-.category-showcase:hover,
-.category-showcase:focus-within {
-  border-color: rgba(105, 211, 207, 0.34);
-  box-shadow: none;
+.portfolio-bento-card.reveal:hover,
+.portfolio-bento-card.reveal:focus-visible {
+  border-color: rgba(105, 211, 207, 0.4);
+  box-shadow: 0 34px 96px rgba(0, 0, 0, 0.5);
+  transform:
+    rotateX(var(--tilt-x, 0deg))
+    rotateY(var(--tilt-y, 0deg))
+    translate3d(0, -6px, 0);
 }
 
-.category-showcase:hover .category-spotlight-media img,
-.category-showcase:focus-within .category-spotlight-media img {
-  transform: scale(1.045) translate3d(0, var(--parallax-shift, 0px), 0);
-  filter: saturate(0.94) contrast(1.04) brightness(0.82);
+.portfolio-bento-card:hover img,
+.portfolio-bento-card:focus-visible img {
+  transform: scale(1.06);
+  filter: saturate(0.96) contrast(1.05) brightness(0.86);
 }
 
-.category-showcase:hover .category-showcase-link,
-.category-showcase:focus-within .category-showcase-link {
+.portfolio-bento-card:hover .portfolio-bento-link,
+.portfolio-bento-card:focus-visible .portfolio-bento-link {
   color: var(--accent);
   transform: translate3d(6px, 0, 0);
 }
@@ -1618,6 +1648,21 @@ h2 {
   grid-column: 3;
 }
 
+.lightbox-counter {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: start;
+  align-self: start;
+  margin: 0;
+  padding: 0 4px;
+  color: rgba(247, 248, 246, 0.62);
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.16em;
+  line-height: 42px;
+}
+
 .reveal {
   opacity: 0;
   transform: translate3d(0, 22px, 0);
@@ -1743,17 +1788,13 @@ h2 {
     grid-column: span 3;
   }
 
-  .category-showcase,
-  .category-showcase:nth-child(even) {
-    grid-template-columns: minmax(0, 1fr);
-    min-height: 100vh;
-    min-height: 100svh;
-    min-height: 100dvh;
-  }
-
-  .category-showcase:nth-child(even) .category-spotlight-media,
-  .category-showcase:nth-child(even) .category-showcase-copy {
-    order: initial;
+  .portfolio-bento {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: minmax(320px, 46vh) minmax(200px, 26vh) minmax(200px, 26vh);
+    grid-template-areas:
+      "portrait portrait"
+      "wedding club"
+      "autos animal";
   }
 
   .contact-section {
@@ -1791,15 +1832,12 @@ h2 {
     grid-row: span 1;
   }
 
-  .category-showcase,
-  .category-showcase:nth-child(even) {
-    min-height: 100vh;
-    min-height: 100svh;
-    min-height: 100dvh;
+  .portfolio-bento {
+    grid-template-rows: minmax(280px, 42vh) minmax(180px, 24vh) minmax(180px, 24vh);
   }
 
-  .category-showcase-copy {
-    padding: 26px 24px 28px;
+  .portfolio-bento-copy {
+    padding: 20px 20px 22px;
   }
 }
 
@@ -1932,39 +1970,36 @@ h2 {
   }
 
   .portfolio-overview-intro {
-    top: calc(var(--header) + 18px);
-    left: 14px;
     max-width: 280px;
   }
 
-  .portfolio-overview-intro h1,
-  .category-showcase-copy h2 {
+  .portfolio-overview-intro h1 {
     font-size: clamp(2.1rem, 9vw, 3rem);
   }
 
-  .portfolio-showcase-list {
-    gap: 16px;
-  }
-
-  .category-showcase,
-  .category-showcase:nth-child(even) {
-    min-height: 100vh;
-    min-height: 100svh;
-    min-height: 100dvh;
-  }
-
-  .category-spotlight-media {
-    min-height: 42vh;
-  }
-
-  .category-showcase-copy {
+  .portfolio-bento {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    grid-template-areas:
+      "portrait"
+      "wedding"
+      "club"
+      "autos"
+      "animal";
     gap: 14px;
-    padding: 22px 18px 24px;
   }
 
-  .category-showcase-copy p:not(.eyebrow) {
-    font-size: 0.94rem;
-    line-height: 1.64;
+  .portfolio-bento-card {
+    height: 300px;
+  }
+
+  .portfolio-bento-card[data-spotlight="portrait"] {
+    height: 380px;
+  }
+
+  .portfolio-bento-copy {
+    gap: 8px;
+    padding: 20px 18px 22px;
   }
 
   .portfolio-back {
@@ -2033,6 +2068,11 @@ h2 {
   }
 
   .lightbox-close {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  .lightbox-counter {
     grid-column: 1 / -1;
     grid-row: 1;
   }

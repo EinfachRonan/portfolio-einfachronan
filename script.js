@@ -7,6 +7,7 @@ const modalImage = document.querySelector("[data-lightbox-image]");
 const modalClose = document.querySelector("[data-lightbox-close]");
 const modalPrev = document.querySelector("[data-lightbox-prev]");
 const modalNext = document.querySelector("[data-lightbox-next]");
+const modalCounter = document.querySelector("[data-lightbox-counter]");
 const portfolioOverview = document.querySelector("[data-portfolio-overview]");
 const portfolioDetail = document.querySelector("[data-portfolio-detail]");
 const portfolioHero = document.querySelector("[data-portfolio-hero]");
@@ -25,7 +26,6 @@ const heroSection = document.querySelector(".hero-home");
 const heroMedia = document.querySelector(".hero-media");
 const heroShell = document.querySelector(".hero-shell");
 const heroCta = document.querySelector(".hero-cta");
-const showcaseSections = Array.from(document.querySelectorAll(".category-showcase"));
 const ambientAudio = document.querySelector("[data-ambient-audio]");
 const musicToggle = document.querySelector("[data-music-toggle]");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -525,6 +525,10 @@ function renderLightboxImage(index) {
   modalImage.style.opacity = "0";
   modalImage.style.transform = "scale(0.985)";
 
+  if (modalCounter) {
+    modalCounter.textContent = `${index + 1} / ${activeItems.length}`;
+  }
+
   window.setTimeout(() => {
     modalImage.src = activeItems[index].src;
     modalImage.alt = activeItems[index].alt;
@@ -967,26 +971,6 @@ function setupHeroSlideshow() {
   }, 7000);
 }
 
-function setupPortfolioRouting() {
-  if (!portfolioSpotlights.length) return;
-
-  portfolioSpotlights.forEach((spotlight) => {
-    const target = spotlight.dataset.categoryRoute;
-    if (!target) return;
-
-    spotlight.addEventListener("click", (event) => {
-      if (event.target.closest("a, button")) return;
-      navigateToRoute(target);
-    });
-
-    spotlight.addEventListener("keydown", (event) => {
-      if (event.key !== "Enter" && event.key !== " ") return;
-      event.preventDefault();
-      navigateToRoute(target);
-    });
-  });
-}
-
 function getPortfolioHeroSlides(category) {
   const data = categories[category] ?? categories.portrait;
   const deduped = [];
@@ -1056,31 +1040,6 @@ function setupPortfolioHeroSlideshow(category, options = {}) {
     currentLayer.classList.remove("is-active");
     portfolioHeroVisibleLayer = portfolioHeroVisibleLayer === 0 ? 1 : 0;
   }, 8200);
-}
-
-function setupPortfolioShowcaseObserver() {
-  if (!showcaseSections.length || !("IntersectionObserver" in window)) {
-    if (showcaseSections[0]) showcaseSections[0].classList.add("is-current");
-    return;
-  }
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-
-        showcaseSections.forEach((section) => {
-          section.classList.toggle("is-current", section === entry.target);
-        });
-      });
-    },
-    {
-      threshold: 0.55,
-      rootMargin: "-8% 0px -8% 0px",
-    },
-  );
-
-  showcaseSections.forEach((section) => observer.observe(section));
 }
 
 function setupCategoryRoutes() {
@@ -1158,8 +1117,6 @@ window.addEventListener("load", () => {
   setupRandomPortfolioSpotlights();
   setupGallerySizing();
   setupHeroSlideshow();
-  setupPortfolioRouting();
-  setupPortfolioShowcaseObserver();
   setupCategoryRoutes();
   startCategoryEntryTransition();
 });
