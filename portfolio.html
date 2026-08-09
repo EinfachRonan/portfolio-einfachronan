@@ -7,18 +7,18 @@
       name="description"
       content="Portfolio von EinfachRonan: kuratierte Fotografie aus Portrait, Hochzeit, Club, Autos und Tieren &ndash; aufgenommen im Schwarzwald und dar&uuml;ber hinaus."
     />
-    <meta name="theme-color" content="#0b0b0d" />
+    <meta name="theme-color" content="#0b0b0c" />
     <title>Portfolio | Fotograf im Schwarzwald | EinfachRonan</title>
     <link rel="canonical" href="https://einfachronan.de/portfolio.html" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="icon" type="image/png" href="assets/favicon.png" />
     <link rel="apple-touch-icon" href="assets/logo-einfachronan.png" />
-    <link rel="stylesheet" href="styles.css?v=bento-portfolio-1" />
+    <link rel="stylesheet" href="styles.css?v=redesign-2" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="EinfachRonan" />
@@ -61,135 +61,83 @@
     </header>
 
     <main>
-      <section class="portfolio-overview" data-portfolio-overview aria-label="Portfolio Kategorien">
+      <section class="wrap portfolio-overview" data-portfolio-overview aria-label="Portfolio Kategorien">
         <div class="portfolio-overview-intro reveal">
           <p class="eyebrow">Portfolio</p>
           <h1>Portfolio</h1>
         </div>
 
-        <div class="portfolio-bento">
-          <a class="portfolio-bento-card tilt-card reveal" data-spotlight="portrait" data-index="01" href="portfolio.html?filter=portrait" data-category-route="portfolio.html?filter=portrait">
-            <img
-              loading="eager"
-              fetchpriority="high"
-              decoding="async"
-              width="1000" height="1500" src="assets/photos/portrait-city-smile.webp"
-              alt="Portrait in der Stadt"
-            />
-            <div class="portfolio-bento-copy">
-              <p class="eyebrow">Menschen</p>
-              <h2>Portrait</h2>
-              <span class="portfolio-bento-link">Ansehen</span>
-            </div>
+        <div class="category-index">
+          <a class="category-row reveal" data-spotlight="portrait" href="portfolio.html?filter=portrait">
+            <span class="category-row-index">01</span>
+            <span class="category-row-text">
+              <span class="category-row-name">Portrait</span>
+              <span class="category-row-desc">Ruhige Portraits, klares Licht und nat&uuml;rliche Momente.</span>
+            </span>
+            <span class="category-row-thumb">
+              <img loading="eager" fetchpriority="high" decoding="async" width="1000" height="1500" src="assets/photos/portrait-city-smile.webp" alt="Portrait in der Stadt" />
+            </span>
+            <span class="category-row-arrow" aria-hidden="true">&rarr;</span>
           </a>
 
-          <a class="portfolio-bento-card tilt-card reveal" data-spotlight="wedding" data-index="02" href="portfolio.html?filter=wedding" data-category-route="portfolio.html?filter=wedding">
-            <img
-              loading="lazy"
-              decoding="async"
-              width="1000" height="1500" src="assets/photos/wedding-blue-bouquet.webp"
-              alt="Hochzeitsdetail mit Blumen und Ringen"
-            />
-            <div class="portfolio-bento-copy">
-              <p class="eyebrow">Reportage</p>
-              <h2>Hochzeit</h2>
-              <span class="portfolio-bento-link">Ansehen</span>
-            </div>
+          <a class="category-row reveal" data-spotlight="wedding" href="portfolio.html?filter=wedding">
+            <span class="category-row-index">02</span>
+            <span class="category-row-text">
+              <span class="category-row-name">Hochzeit</span>
+              <span class="category-row-desc">Details, Menschen und echte Augenblicke vom Hochzeitstag.</span>
+            </span>
+            <span class="category-row-thumb">
+              <img loading="lazy" decoding="async" width="1000" height="1500" src="assets/photos/wedding-blue-bouquet.webp" alt="Hochzeitsdetail mit Blumen und Ringen" />
+            </span>
+            <span class="category-row-arrow" aria-hidden="true">&rarr;</span>
           </a>
 
-          <a class="portfolio-bento-card tilt-card reveal" data-spotlight="club" data-index="03" href="portfolio.html?filter=club" data-category-route="portfolio.html?filter=club">
-            <img
-              loading="lazy"
-              decoding="async"
-              width="957" height="1700" src="assets/photos/club-dj-red-light.webp"
-              alt="DJ am Mischpult mit rotem Licht"
-            />
-            <div class="portfolio-bento-copy">
-              <p class="eyebrow">Nightlife</p>
-              <h2>Club</h2>
-              <span class="portfolio-bento-link">Ansehen</span>
-            </div>
+          <a class="category-row reveal" data-spotlight="club" href="portfolio.html?filter=club">
+            <span class="category-row-index">03</span>
+            <span class="category-row-text">
+              <span class="category-row-name">Club</span>
+              <span class="category-row-desc">Licht, Bewegung und Atmosph&auml;re aus der Nacht.</span>
+            </span>
+            <span class="category-row-thumb">
+              <img loading="lazy" decoding="async" width="957" height="1700" src="assets/photos/club-dj-red-light.webp" alt="DJ am Mischpult mit rotem Licht" />
+            </span>
+            <span class="category-row-arrow" aria-hidden="true">&rarr;</span>
           </a>
 
-          <a class="portfolio-bento-card tilt-card reveal" data-spotlight="auto" data-index="04" href="portfolio.html?filter=auto" data-category-route="portfolio.html?filter=auto">
-            <img
-              loading="lazy"
-              decoding="async"
-              width="1800" height="1200" src="assets/photos/automotive-audi-night.webp"
-              alt="Audi bei Nacht"
-            />
-            <div class="portfolio-bento-copy">
-              <p class="eyebrow">Automotive</p>
-              <h2>Autos</h2>
-              <span class="portfolio-bento-link">Ansehen</span>
-            </div>
+          <a class="category-row reveal" data-spotlight="auto" href="portfolio.html?filter=auto">
+            <span class="category-row-index">04</span>
+            <span class="category-row-text">
+              <span class="category-row-name">Autos</span>
+              <span class="category-row-desc">Klare Linien, dunkle Stimmung und urbanes Licht.</span>
+            </span>
+            <span class="category-row-thumb">
+              <img loading="lazy" decoding="async" width="1800" height="1200" src="assets/photos/automotive-audi-night.webp" alt="Audi bei Nacht" />
+            </span>
+            <span class="category-row-arrow" aria-hidden="true">&rarr;</span>
           </a>
 
-          <a class="portfolio-bento-card tilt-card reveal" data-spotlight="animal" data-index="05" href="portfolio.html?filter=animal" data-category-route="portfolio.html?filter=animal">
-            <img
-              loading="lazy"
-              decoding="async"
-              width="1600" height="1067" src="assets/photos/animal-cats-window.webp"
-              alt="Zwei Katzen am Fenster"
-            />
-            <div class="portfolio-bento-copy">
-              <p class="eyebrow">Tiere</p>
-              <h2>Tiere</h2>
-              <span class="portfolio-bento-link">Ansehen</span>
-            </div>
+          <a class="category-row reveal" data-spotlight="animal" href="portfolio.html?filter=animal">
+            <span class="category-row-index">05</span>
+            <span class="category-row-text">
+              <span class="category-row-name">Tiere</span>
+              <span class="category-row-desc">Nat&uuml;rliche Tierbilder mit Ruhe und N&auml;he.</span>
+            </span>
+            <span class="category-row-thumb">
+              <img loading="lazy" decoding="async" width="1600" height="1067" src="assets/photos/animal-cats-window.webp" alt="Zwei Katzen am Fenster" />
+            </span>
+            <span class="category-row-arrow" aria-hidden="true">&rarr;</span>
           </a>
         </div>
       </section>
 
-      <section class="portfolio-detail" data-portfolio-detail hidden aria-label="Kategorieansicht">
-        <section class="portfolio-hero reveal" data-portfolio-hero>
-          <figure class="portfolio-hero-image" data-parallax-media>
-            <img
-              class="portfolio-hero-slide is-active"
-              data-portfolio-hero-image-primary
-              loading="eager"
-              fetchpriority="high"
-              decoding="async"
-              width="1000" height="1500" src="assets/photos/portrait-city-smile.webp"
-              alt="Portrait in der Stadt"
-            />
-            <img
-              class="portfolio-hero-slide"
-              data-portfolio-hero-image-secondary
-              loading="lazy"
-              decoding="async"
-              width="1000" height="1500" src="assets/photos/portrait-city-smile.webp"
-              alt="Portrait in der Stadt"
-            />
-          </figure>
-          <div class="portfolio-hero-overlay" aria-hidden="true"></div>
-          <div class="portfolio-hero-content">
-            <a class="portfolio-back" href="portfolio.html">Zur&uuml;ck zur &Uuml;bersicht</a>
-            <div class="portfolio-hero-copy">
-              <p class="eyebrow" data-portfolio-eyebrow>Kuratiert</p>
-              <h1 data-portfolio-title>Portrait</h1>
-              <p data-portfolio-copy>Ruhige Portraits, klares Licht und nat&uuml;rliche Momente.</p>
-            </div>
-          </div>
-        </section>
+      <section class="wrap portfolio-detail" data-portfolio-detail hidden aria-label="Kategorieansicht">
+        <a class="portfolio-back reveal" href="portfolio.html">Zur&uuml;ck zur &Uuml;bersicht</a>
 
-        <nav class="portfolio-category-nav reveal" aria-label="Kategorien wechseln">
-          <a class="portfolio-category-link is-active" href="portfolio.html?filter=portrait" data-filter-link="portrait" data-category-route="portfolio.html?filter=portrait">
-            <span class="portfolio-category-link-title">Portrait</span>
-          </a>
-          <a class="portfolio-category-link" href="portfolio.html?filter=wedding" data-filter-link="wedding" data-category-route="portfolio.html?filter=wedding">
-            <span class="portfolio-category-link-title">Hochzeit</span>
-          </a>
-          <a class="portfolio-category-link" href="portfolio.html?filter=club" data-filter-link="club" data-category-route="portfolio.html?filter=club">
-            <span class="portfolio-category-link-title">Club</span>
-          </a>
-          <a class="portfolio-category-link" href="portfolio.html?filter=auto" data-filter-link="auto" data-category-route="portfolio.html?filter=auto">
-            <span class="portfolio-category-link-title">Autos</span>
-          </a>
-          <a class="portfolio-category-link" href="portfolio.html?filter=animal" data-filter-link="animal" data-category-route="portfolio.html?filter=animal">
-            <span class="portfolio-category-link-title">Tiere</span>
-          </a>
-        </nav>
+        <div class="portfolio-detail-head reveal">
+          <p class="eyebrow" data-portfolio-eyebrow>Kuratiert</p>
+          <h1 data-portfolio-title>Portrait</h1>
+          <p data-portfolio-copy>Ruhige Portraits, klares Licht und nat&uuml;rliche Momente.</p>
+        </div>
 
         <section class="gallery" aria-label="Portfolio Galerie">
           <article class="photo-tile reveal" data-category="portrait">
@@ -415,7 +363,7 @@
       </section>
     </main>
 
-    <footer class="site-footer site-footer-minimal" aria-label="Footer">
+    <footer class="wrap site-footer" aria-label="Footer">
       <a class="site-footer-brand" href="/" aria-label="EinfachRonan Startseite">
         <img class="site-footer-logo" decoding="async" width="400" height="321" src="assets/logo-einfachronan.png" alt="EinfachRonan" />
       </a>
@@ -465,6 +413,6 @@
       <span class="music-toggle-label">Ambiente</span>
     </button>
 
-    <script src="script.js?v=bento-portfolio-1"></script>
+    <script src="script.js?v=redesign-2"></script>
   </body>
 </html>
