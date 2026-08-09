@@ -319,7 +319,10 @@ p {
 
 .hero-media {
   position: absolute;
-  inset: 0;
+  inset: -30px;
+  transform: translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), 0);
+  transition: transform 650ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: transform;
 }
 
 .hero-slide {
@@ -879,6 +882,40 @@ p {
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.1em;
+}
+
+/* ---------- film grain ---------- */
+
+.grain-overlay {
+  position: fixed;
+  inset: -60px;
+  z-index: 90;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  animation: grainShift 1s steps(8) infinite;
+  pointer-events: none;
+}
+
+@keyframes grainShift {
+  0% { transform: translate3d(0, 0, 0); }
+  10% { transform: translate3d(-4%, -8%, 0); }
+  20% { transform: translate3d(-12%, 4%, 0); }
+  30% { transform: translate3d(6%, -20%, 0); }
+  40% { transform: translate3d(-4%, 20%, 0); }
+  50% { transform: translate3d(-12%, 8%, 0); }
+  60% { transform: translate3d(12%, 0%, 0); }
+  70% { transform: translate3d(0%, 12%, 0); }
+  80% { transform: translate3d(3%, 28%, 0); }
+  90% { transform: translate3d(-8%, 8%, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain-overlay {
+    animation: none;
+  }
 }
 
 /* ---------- reveal on scroll ---------- */

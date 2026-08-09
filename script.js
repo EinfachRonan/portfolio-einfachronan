@@ -493,6 +493,42 @@ function setupHeroSlideshow() {
   }, 6500);
 }
 
+function setupHeroParallax() {
+  const heroSection = document.querySelector(".hero-home");
+  const heroMedia = document.querySelector("[data-hero-media]");
+  if (!heroSection || !heroMedia) return;
+
+  const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  if (!canHover || reduceMotion) return;
+
+  const maxShiftX = 20;
+  const maxShiftY = 12;
+  let ticking = false;
+  let lastEvent = null;
+
+  function apply() {
+    ticking = false;
+    if (!lastEvent) return;
+    const rect = heroSection.getBoundingClientRect();
+    const x = (lastEvent.clientX - rect.left) / rect.width - 0.5;
+    const y = (lastEvent.clientY - rect.top) / rect.height - 0.5;
+    heroMedia.style.setProperty("--parallax-x", `${(-x * maxShiftX).toFixed(2)}px`);
+    heroMedia.style.setProperty("--parallax-y", `${(-y * maxShiftY).toFixed(2)}px`);
+  }
+
+  heroSection.addEventListener("pointermove", (event) => {
+    lastEvent = event;
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(apply);
+  });
+
+  heroSection.addEventListener("pointerleave", () => {
+    heroMedia.style.setProperty("--parallax-x", "0px");
+    heroMedia.style.setProperty("--parallax-y", "0px");
+  });
+}
+
 function setupAutoplayFallback() {
   if (!ambientAudio || !document.body.classList.contains("home-page")) return;
 
@@ -574,6 +610,7 @@ if (tiles.length && portfolioOverview && portfolioDetail) {
 
 setupAmbientAudio();
 setupHeroSlideshow();
+setupHeroParallax();
 setupAutoplayFallback();
 runIntro();
 updateHeader();
