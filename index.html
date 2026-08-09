@@ -18,7 +18,7 @@
     />
     <link rel="icon" type="image/png" href="assets/favicon.png" />
     <link rel="apple-touch-icon" href="assets/logo-einfachronan.png" />
-    <link rel="stylesheet" href="styles.css?v=redesign-2" />
+    <link rel="stylesheet" href="styles.css?v=redesign-3" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="EinfachRonan" />
@@ -70,6 +70,10 @@
     </script>
   </head>
   <body class="home-page">
+    <div class="intro-loader" data-intro-loader aria-hidden="true">
+      <img class="intro-logo" src="assets/logo-einfachronan.png" alt="" width="400" height="321" decoding="async" fetchpriority="high" />
+    </div>
+
     <header class="site-header" data-header>
       <a class="brand" href="/" aria-label="EinfachRonan Startseite">
         <img class="brand-logo" decoding="async" width="400" height="321" src="assets/logo-einfachronan.png" alt="EinfachRonan" />
@@ -91,7 +95,26 @@
 
     <main id="start">
       <section class="hero-home" aria-label="EinfachRonan Startseite">
-        <div class="wrap">
+        <div class="hero-media" data-hero-media>
+          <img
+            class="hero-slide is-active"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            width="1800" height="1200" src="assets/photos/automotive-audi-night.webp"
+            alt="Auto bei Nacht"
+          />
+          <img
+            class="hero-slide"
+            loading="lazy"
+            decoding="async"
+            width="1800" height="1200" src="assets/photos/club-dj-profile-dark.webp"
+            alt="DJ im dunklen Raum"
+          />
+        </div>
+        <div class="hero-media-overlay" aria-hidden="true"></div>
+
+        <div class="wrap hero-shell">
           <div class="hero-content reveal">
             <p class="eyebrow">Fotografie im Schwarzwald</p>
             <h1>Telling Stories.</h1>
@@ -101,16 +124,6 @@
             </p>
             <a class="button hero-cta" href="#portfolio">Portfolio ansehen</a>
           </div>
-
-          <figure class="hero-frame reveal">
-            <img
-              loading="eager"
-              fetchpriority="high"
-              decoding="async"
-              width="1800" height="1200" src="assets/photos/automotive-audi-night.webp"
-              alt="Auto bei Nacht"
-            />
-          </figure>
         </div>
       </section>
 
@@ -225,7 +238,7 @@
 
     <audio
       data-ambient-audio
-      preload="none"
+      preload="auto"
       loop
       playsinline
       src="assets/leberch-ethereal-cinematic-512569.mp3"
@@ -243,6 +256,6 @@
       <span class="music-toggle-label">Ambiente</span>
     </button>
 
-    <script src="script.js?v=redesign-2"></script>
+    <script src="script.js?v=redesign-3"></script>
   </body>
 </html>

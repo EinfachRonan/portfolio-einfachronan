@@ -16,6 +16,8 @@ const categoryCards = Array.from(document.querySelectorAll("[data-category-card]
 const portfolioSpotlights = Array.from(document.querySelectorAll("[data-spotlight]"));
 const ambientAudio = document.querySelector("[data-ambient-audio]");
 const musicToggle = document.querySelector("[data-music-toggle]");
+const introLoader = document.querySelector("[data-intro-loader]");
+const heroSlides = Array.from(document.querySelectorAll(".hero-slide"));
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const musicStorageKey = "einfachronan-music-enabled";
 const musicTimeStorageKey = "einfachronan-music-time";
@@ -137,7 +139,7 @@ function updateMusicToggleVisibility() {
     return;
   }
 
-  if (window.scrollY > window.innerHeight * 0.6) {
+  if (window.scrollY > 48) {
     revealMusicToggle();
   }
 }
@@ -448,6 +450,83 @@ function setupRandomPortfolioSpotlights() {
   });
 }
 
+function getHeroSlideshowImages() {
+  return [
+    { src: "assets/photos/automotive-audi-night.webp", alt: "Auto bei Nacht", position: "center 38%" },
+    { src: "assets/photos/portrait-rural-man-field.webp", alt: "Portrait auf dem Feld bei warmem Licht", position: "center 30%" },
+    { src: "assets/photos/club-dj-profile-dark.webp", alt: "DJ im dunklen Raum", position: "center 34%" },
+    { src: "assets/photos/animal-cats-window.webp", alt: "Zwei Katzen am Fenster", position: "center 34%" },
+    { src: "assets/photos/wedding-blue-bouquet.webp", alt: "Hochzeitsdetail mit Ringen", position: "center 30%" },
+    { src: "assets/photos/portrait-nightsky-dramatic.webp", alt: "Portrait vor dramatischem Nachthimmel", position: "center 28%" },
+  ];
+}
+
+function setupHeroSlideshow() {
+  if (heroSlides.length < 2) return;
+
+  const images = getHeroSlideshowImages();
+  let activeIndexHero = 0;
+  let visibleLayer = 0;
+
+  heroSlides.forEach((slide, index) => {
+    const image = images[index % images.length];
+    slide.src = image.src;
+    slide.alt = image.alt;
+    slide.style.objectPosition = image.position;
+    slide.classList.toggle("is-active", index === 0);
+  });
+
+  if (reduceMotion || images.length < 2) return;
+
+  window.setInterval(() => {
+    const nextLayer = visibleLayer === 0 ? 1 : 0;
+    activeIndexHero = (activeIndexHero + 1) % images.length;
+    const image = images[activeIndexHero];
+    const nextSlide = heroSlides[nextLayer];
+
+    nextSlide.src = image.src;
+    nextSlide.alt = image.alt;
+    nextSlide.style.objectPosition = image.position;
+    nextSlide.classList.add("is-active");
+    heroSlides[visibleLayer].classList.remove("is-active");
+    visibleLayer = nextLayer;
+  }, 6500);
+}
+
+function setupAutoplayFallback() {
+  if (!ambientAudio || !document.body.classList.contains("home-page")) return;
+
+  const interactionEvents = ["pointerdown", "keydown", "touchstart", "wheel"];
+  const retry = async () => {
+    if (!ambientAudio.paused) {
+      interactionEvents.forEach((eventName) => window.removeEventListener(eventName, retry));
+      return;
+    }
+    const started = await tryPlayAmbientAudio();
+    if (started) {
+      interactionEvents.forEach((eventName) => window.removeEventListener(eventName, retry));
+    }
+  };
+
+  interactionEvents.forEach((eventName) => window.addEventListener(eventName, retry, { passive: true }));
+}
+
+function runIntro() {
+  if (!introLoader) return;
+
+  if (reduceMotion) {
+    introLoader.remove();
+    tryPlayAmbientAudio();
+    return;
+  }
+
+  window.setTimeout(() => {
+    introLoader.classList.add("is-leaving");
+    tryPlayAmbientAudio();
+    window.setTimeout(() => introLoader.remove(), 750);
+  }, 900);
+}
+
 function onScroll() {
   updateHeader();
   updateMusicToggleVisibility();
@@ -494,6 +573,9 @@ if (tiles.length && portfolioOverview && portfolioDetail) {
 }
 
 setupAmbientAudio();
+setupHeroSlideshow();
+setupAutoplayFallback();
+runIntro();
 updateHeader();
 updateMusicToggleVisibility();
 setupReveal();
