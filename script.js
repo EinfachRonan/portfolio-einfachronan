@@ -1,5 +1,62 @@
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const categories = {
+  portrait: {
+    title: "Portrait",
+    eyebrow: "Menschen",
+    copy: "Ruhige Portraits mit klarem Licht und echter Nähe.",
+    mood: "light",
+    hero: "assets/photos/portrait-redhair-sun.webp",
+    heroAlt: "Portrait im Sonnenlicht",
+    heroPosition: "center 30%",
+  },
+  wedding: {
+    title: "Hochzeit",
+    eyebrow: "Reportage",
+    copy: "Details und Gesten, die den Tag festhalten.",
+    mood: "light",
+    hero: "assets/photos/wedding-blue-bouquet.webp",
+    heroAlt: "Hochzeitsdetail mit Ringen",
+    heroPosition: "center 38%",
+  },
+  animal: {
+    title: "Tiere",
+    eyebrow: "Tiere",
+    copy: "Geduldige Tierportraits im natürlichen Licht.",
+    mood: "light",
+    hero: "assets/photos/animal-cats-window.webp",
+    heroAlt: "Katzen am Fenster",
+    heroPosition: "center 40%",
+  },
+  club: {
+    title: "Club",
+    eyebrow: "Nightlife",
+    copy: "Bewegung und Atmosphäre aus der Nacht.",
+    mood: "dark",
+    hero: "assets/photos/club-dj-red-light.webp",
+    heroAlt: "DJ im Clublicht",
+    heroPosition: "center 42%",
+  },
+  auto: {
+    title: "Autos",
+    eyebrow: "Automotive",
+    copy: "Klare Linien und urbane Lichtstimmung.",
+    mood: "dark",
+    hero: "assets/photos/automotive-audi-night.webp",
+    heroAlt: "Auto bei Nacht",
+    heroPosition: "center 50%",
+  },
+};
+
 const header = document.querySelector("[data-header]");
-const filters = Array.from(document.querySelectorAll("[data-filter]"));
+const portfolioOverview = document.querySelector("[data-portfolio-overview]");
+const portfolioDetail = document.querySelector("[data-portfolio-detail]");
+const categoryHeroImage = document.querySelector("[data-category-hero-image]");
+const categoryEyebrow = document.querySelector("[data-category-eyebrow]");
+const categoryTitle = document.querySelector("[data-category-title]");
+const categoryCopy = document.querySelector("[data-category-copy]");
+const filterLinks = Array.from(document.querySelectorAll("[data-filter-link]"));
+const routeLinks = Array.from(document.querySelectorAll("[data-category-route]"));
 const tiles = Array.from(document.querySelectorAll("[data-category]"));
 const lightboxButtons = Array.from(document.querySelectorAll("[data-lightbox]"));
 const modal = document.querySelector("[data-lightbox-modal]");
@@ -7,499 +64,49 @@ const modalImage = document.querySelector("[data-lightbox-image]");
 const modalClose = document.querySelector("[data-lightbox-close]");
 const modalPrev = document.querySelector("[data-lightbox-prev]");
 const modalNext = document.querySelector("[data-lightbox-next]");
-const portfolioOverview = document.querySelector("[data-portfolio-overview]");
-const portfolioDetail = document.querySelector("[data-portfolio-detail]");
-const portfolioHero = document.querySelector("[data-portfolio-hero]");
-const portfolioTitle = document.querySelector("[data-portfolio-title]");
-const portfolioCopy = document.querySelector("[data-portfolio-copy]");
-const portfolioHeroImagePrimary = document.querySelector("[data-portfolio-hero-image-primary]");
-const portfolioHeroImageSecondary = document.querySelector("[data-portfolio-hero-image-secondary]");
-const portfolioEyebrow = document.querySelector("[data-portfolio-eyebrow]");
-const filterLinks = Array.from(document.querySelectorAll("[data-filter-link]"));
-const parallaxMedia = Array.from(document.querySelectorAll("[data-parallax-media]"));
-const categoryCards = Array.from(document.querySelectorAll("[data-category-card]"));
-const portfolioSpotlights = Array.from(document.querySelectorAll("[data-spotlight]"));
-const categoryRouteLinks = Array.from(document.querySelectorAll("[data-category-route]"));
-const heroSlides = Array.from(document.querySelectorAll(".hero-slide"));
-const heroSection = document.querySelector(".hero-home");
-const heroMedia = document.querySelector(".hero-media");
-const heroShell = document.querySelector(".hero-shell");
-const heroCta = document.querySelector(".hero-cta");
-const showcaseSections = Array.from(document.querySelectorAll(".category-showcase"));
-const ambientAudio = document.querySelector("[data-ambient-audio]");
-const musicToggle = document.querySelector("[data-music-toggle]");
-const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-const isTouch = window.matchMedia("(pointer: coarse)").matches;
-const pageFadeDurationMs = reduceMotion ? 0 : 240;
-const categoryTransitionDurationMs = reduceMotion ? 0 : 380;
-const heroTransitionDurationMs = reduceMotion ? 0 : 2200;
-const musicStorageKey = "einfachronan-music-enabled";
-const musicTimeStorageKey = "einfachronan-music-time";
 
-const categories = {
-  portrait: {
-    title: "Portrait",
-    copy: "Ruhige Portraits, klares Licht und natürliche Momente.",
-    hero: "assets/photos/portrait-rural-man-field.jpg",
-    alt: "Portrait auf dem Feld bei warmem Licht",
-    eyebrow: "Menschen",
-    heroPosition: "center 34%",
-    images: [
-      { src: "assets/photos/portrait-city-smile.webp", alt: "Portrait in der Stadt" },
-      { src: "assets/photos/portrait-urban-walk.webp", alt: "Portrait in der Stadt" },
-      { src: "assets/photos/portrait-riverside-profile.webp", alt: "Profilportrait am Wasser" },
-      { src: "assets/photos/portrait-white-shirt-outdoor.webp", alt: "Portrait draußen am Wasser" },
-      { src: "assets/photos/portrait-cap-outdoor.webp", alt: "Portrait mit weißer Cap" },
-      { src: "assets/photos/portrait-redhair-sun.webp", alt: "Rothaarige Frau im Sonnenlicht" },
-      { src: "assets/photos/IMG_4214.JPG", alt: "Portrait mit Sonnenbrille im warmen Licht" },
-      { src: "assets/photos/IMG_6190.JPG", alt: "Portrait mit Cap im Gegenlicht" },
-      { src: "assets/photos/portrait-rural-man-field.jpg", alt: "Portrait auf dem Feld bei warmem Licht" },
-      { src: "assets/photos/portrait-rural-man-field-close.jpg", alt: "Portrait im Kornfeld" },
-      { src: "assets/photos/portrait-rural-man-village.jpg", alt: "Stehendes Portrait im Dorf" },
-      { src: "assets/photos/portrait-rural-man-dog-road.jpg", alt: "Portrait mit Hund auf einer Landstraße" },
-      { src: "assets/photos/portrait-window-stripes.webp", alt: "Portrait vor hellem Fenster" },
-      { src: "assets/photos/portrait-studio-beanie.webp", alt: "Studio Portrait mit Mütze" },
-      { src: "assets/photos/portrait-blue-jacket-glasses.jpg", alt: "Portrait mit Brille" },
-      { src: "assets/photos/IMG_4051.JPG", alt: "Portrait im Sessel mit ruhigem Licht" },
-      { src: "assets/photos/IMG_7060.JPG", alt: "Portrait am Bahnhof bei kühlem Licht" },
-      { src: "assets/photos/portrait-night-arcade.webp", alt: "Nachtportrait" },
-      { src: "assets/photos/portrait-point-night.webp", alt: "Portrait bei Nacht" },
-      { src: "assets/photos/portrait-leather-jacket-snow.webp", alt: "Portrait im Schnee" },
-      { src: "assets/photos/IMG_8490.JPG", alt: "Nachtportrait im Schnee" },
-      { src: "assets/photos/IMG_9603.JPG", alt: "Portrait auf dem Parkdeck bei Nacht" },
-      { src: "assets/photos/IMG_9677.JPG", alt: "Stehendes Nachtportrait auf dem Parkdeck" },
-      { src: "assets/photos/IMG_9686.JPG", alt: "Portrait vor dramatischem Nachthimmel" },
-    ],
-  },
-  wedding: {
-    title: "Hochzeit",
-    copy: "Details, Menschen und echte Augenblicke vom Hochzeitstag.",
-    hero: "assets/photos/wedding-blue-bouquet.webp",
-    alt: "Hochzeitsdetail mit Ringen",
-    eyebrow: "Reportage",
-    heroPosition: "center 34%",
-    images: [
-      { src: "assets/photos/wedding-blue-bouquet.webp", alt: "Hände mit Eheringen auf Brautstrauß" },
-      { src: "assets/photos/wedding-red-bouquet.webp", alt: "Hochzeitsringe und Brautstrauß" },
-      { src: "assets/photos/wedding-table-flowers.webp", alt: "Blumen auf Hochzeitstisch" },
-      { src: "assets/photos/wedding-table-detail.webp", alt: "Details auf Hochzeitstisch" },
-      { src: "assets/photos/wedding-guest-toast.webp", alt: "Hochzeitsgast mit Glas" },
-    ],
-  },
-  club: {
-    title: "Club",
-    copy: "Licht, Bewegung und Atmosphäre aus der Nacht.",
-    hero: "assets/photos/club-dj-red-light.webp",
-    alt: "DJ im Clublicht",
-    eyebrow: "Nightlife",
-    heroPosition: "center 42%",
-    images: [
-      { src: "assets/photos/club-dj-profile-dark.webp", alt: "DJ im dunklen Raum" },
-      { src: "assets/photos/club-dj-red-light.webp", alt: "DJ am Mischpult mit rotem Licht" },
-      { src: "assets/photos/club-dj-console.webp", alt: "DJ am Mischpult" },
-    ],
-  },
-  auto: {
-    title: "Autos",
-    copy: "Klare Linien, dunkle Stimmung und urbanes Licht.",
-    hero: "assets/photos/automotive-audi-night.webp",
-    alt: "Auto bei Nacht",
-    eyebrow: "Automotive",
-    heroPosition: "center 50%",
-    images: [{ src: "assets/photos/automotive-audi-night.webp", alt: "Audi bei Nacht" }],
-  },
-  animal: {
-    title: "Tiere",
-    copy: "Natürliche Tierbilder mit Ruhe und Nähe.",
-    hero: "assets/photos/animal-boxer-road-sit.jpg",
-    alt: "Boxer sitzt auf einer Landstraße",
-    images: [
-      { src: "assets/photos/animal-cats-window.webp", alt: "Zwei Katzen am Fenster" },
-      { src: "assets/photos/IMG_5413.JPG", alt: "Nahaufnahme einer Katze mit aufmerksamem Blick" },
-      { src: "assets/photos/animal-cat-close.webp", alt: "Katze leckt ihre Pfote" },
-      { src: "assets/photos/animal-dog-grass.webp", alt: "Hund auf einer Wiese" },
-      { src: "assets/photos/animal-boxer-run-road.jpg", alt: "Boxer läuft auf einer Landstraße" },
-      { src: "assets/photos/animal-boxer-road-sit.jpg", alt: "Boxer sitzt auf einer Landstraße" },
-      { src: "assets/photos/animal-boxer-road-sit-2.jpg", alt: "Boxer sitzt zentral auf einer Landstraße" },
-      { src: "assets/photos/animal-boxer-close-1.jpg", alt: "Nahes Boxerportrait im warmen Licht" },
-      { src: "assets/photos/animal-boxer-close-2.jpg", alt: "Boxer Nahaufnahme von oben" },
-      { src: "assets/photos/animal-boxer-close-under.jpg", alt: "Boxer Nahaufnahme zwischen den Beinen einer Person" },
-    ],
-  },
-};
-
-const hashAliases = {
-  portraits: "portrait",
-  portrait: "portrait",
-  hochzeiten: "wedding",
-  hochzeit: "wedding",
-  club: "club",
-  autos: "auto",
-  auto: "auto",
-  tiere: "animal",
-};
-
-let activeCategory = "portrait";
+let activeCategory = null;
 let activeItems = [];
 let activeIndex = 0;
-let scrollTicking = false;
-let transitionLocked = false;
-let heroSlideTimer = null;
-let portfolioHeroTimer = null;
-let portfolioHeroIndex = 0;
-let portfolioHeroVisibleLayer = 0;
-let musicReady = false;
-let musicPositionReady = false;
-let lastSavedMusicTime = 0;
-let musicToggleUnlocked = !document.body.classList.contains("home-page");
-
-function revealMusicToggle() {
-  if (!musicToggle) return;
-  if (musicToggleUnlocked) return;
-  musicToggleUnlocked = true;
-  musicToggle.hidden = false;
-  window.requestAnimationFrame(() => {
-    musicToggle.classList.add("is-visible");
-  });
-}
-
-function updateMusicToggleVisibility() {
-  if (!musicToggle) return;
-
-  if (!document.body.classList.contains("home-page")) {
-    musicToggleUnlocked = true;
-    musicToggle.hidden = false;
-    musicToggle.classList.add("is-visible");
-    return;
-  }
-
-  if (musicToggleUnlocked) {
-    musicToggle.hidden = false;
-    musicToggle.classList.add("is-visible");
-    return;
-  }
-
-  const hasScrolled = window.scrollY > 24;
-  const reachedHeroCta =
-    !!heroCta &&
-    hasScrolled &&
-    heroCta.getBoundingClientRect().top <= (window.innerHeight || 1) * 0.88;
-  const leftHero =
-    !!heroSection &&
-    hasScrolled &&
-    heroSection.getBoundingClientRect().bottom <= (window.innerHeight || 1) * 0.82;
-
-  if (reachedHeroCta || leftHero) {
-    revealMusicToggle();
-    return;
-  }
-
-  musicToggle.classList.remove("is-visible");
-  musicToggle.hidden = true;
-}
-
-function scrollPageTop() {
-  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-  document.documentElement.scrollTop = 0;
-  document.body.scrollTop = 0;
-}
-
-function isCategoryRoute(route) {
-  if (!route) return false;
-
-  try {
-    const url = new URL(route, window.location.href);
-    return (
-      /portfolio\.html$/i.test(url.pathname) &&
-      Boolean(url.searchParams.get("filter")) &&
-      categories[url.searchParams.get("filter")]
-    );
-  } catch {
-    return false;
-  }
-}
-
-function startCategoryEntryTransition() {
-  if (!document.body.classList.contains("portfolio-page")) return;
-  if (!getInitialCategory()) return;
-
-  document.body.classList.add("is-category-entering");
-  document.body.classList.remove("is-category-entered");
-
-  window.requestAnimationFrame(() => {
-    window.requestAnimationFrame(() => {
-      document.body.classList.add("is-category-entered");
-    });
-  });
-
-  window.setTimeout(() => {
-    document.body.classList.remove("is-category-entering");
-  }, Math.max(categoryTransitionDurationMs + 220, 520));
-}
-
-function navigateToRoute(route) {
-  if (!route) return;
-  if (transitionLocked) return;
-
-  if (document.body.classList.contains("portfolio-page") && isCategoryRoute(route)) {
-    transitionLocked = true;
-    persistMusicTime();
-    document.body.classList.remove("is-category-entered");
-    document.body.classList.add("is-category-leaving");
-
-    window.setTimeout(() => {
-      window.location.assign(route);
-    }, categoryTransitionDurationMs);
-    return;
-  }
-
-  persistMusicTime();
-  window.location.assign(route);
-}
 
 function updateHeader() {
   if (!header) return;
-  header.classList.toggle("is-scrolled", window.scrollY > 36);
+  header.classList.toggle("is-scrolled", window.scrollY > 24);
 }
 
-function setMusicButtonState(isPlaying) {
-  if (!musicToggle) return;
-  musicToggle.classList.toggle("is-playing", isPlaying);
-  musicToggle.setAttribute("aria-pressed", String(isPlaying));
-  musicToggle.setAttribute(
-    "aria-label",
-    isPlaying ? "Hintergrundmusik pausieren" : "Hintergrundmusik starten",
+function setupReveal() {
+  const items = Array.from(document.querySelectorAll(".reveal"));
+  if (!items.length) return;
+
+  if (!("IntersectionObserver" in window) || reduceMotion) {
+    items.forEach((item) => item.classList.add("is-visible"));
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      });
+    },
+    { rootMargin: "0px 0px -8% 0px", threshold: 0.12 },
   );
-  const label = musicToggle.querySelector(".music-toggle-label");
-  if (label) label.textContent = isPlaying ? "Ambiente an" : "Ambiente aus";
-}
 
-function persistMusicState(isEnabled) {
-  try {
-    window.localStorage.setItem(musicStorageKey, isEnabled ? "on" : "off");
-  } catch {}
-}
-
-function persistMusicTime(time = ambientAudio?.currentTime ?? 0, force = false) {
-  if (!ambientAudio || !Number.isFinite(time)) return;
-
-  const safeTime = Math.max(0, time);
-  if (!force && Math.abs(safeTime - lastSavedMusicTime) < 0.35) return;
-
-  lastSavedMusicTime = safeTime;
-
-  try {
-    const storedTime = safeTime.toFixed(3);
-    window.localStorage.setItem(musicTimeStorageKey, storedTime);
-    window.sessionStorage.setItem(musicTimeStorageKey, storedTime);
-  } catch {}
-}
-
-function readMusicState() {
-  try {
-    return window.localStorage.getItem(musicStorageKey);
-  } catch {
-    return null;
-  }
-}
-
-function readMusicTime() {
-  try {
-    const rawValue =
-      window.localStorage.getItem(musicTimeStorageKey) ??
-      window.sessionStorage.getItem(musicTimeStorageKey);
-    const parsedValue = Number.parseFloat(rawValue ?? "");
-    return Number.isFinite(parsedValue) && parsedValue >= 0 ? parsedValue : 0;
-  } catch {
-    return 0;
-  }
-}
-
-function restoreMusicTime() {
-  if (!ambientAudio || musicPositionReady) return;
-
-  const savedTime = readMusicTime();
-  if (!savedTime) {
-    musicPositionReady = true;
-    return;
-  }
-
-  const applySavedTime = () => {
-    const maxTime =
-      Number.isFinite(ambientAudio.duration) && ambientAudio.duration > 0
-        ? Math.max(0, ambientAudio.duration - 0.25)
-        : savedTime;
-    ambientAudio.currentTime = Math.min(savedTime, maxTime);
-    lastSavedMusicTime = ambientAudio.currentTime;
-    musicPositionReady = true;
-  };
-
-  if (ambientAudio.readyState >= 1) {
-    applySavedTime();
-    return;
-  }
-
-  ambientAudio.addEventListener("loadedmetadata", applySavedTime, { once: true });
-}
-
-async function tryPlayAmbientAudio() {
-  if (!ambientAudio) return false;
-  try {
-    await ambientAudio.play();
-    setMusicButtonState(true);
-    persistMusicState(true);
-    return true;
-  } catch {
-    setMusicButtonState(false);
-    return false;
-  }
-}
-
-function setupAmbientAudio() {
-  if (!ambientAudio || !musicToggle || musicReady) return;
-  musicReady = true;
-  ambientAudio.volume = 0.3;
-  ambientAudio.loop = true;
-  ambientAudio.preload = "auto";
-  ambientAudio.playsInline = true;
-  restoreMusicTime();
-
-  setMusicButtonState(false);
-  updateMusicToggleVisibility();
-
-  let interactionResumeBound = false;
-  const interactionEvents = ["pointerdown", "pointerup", "click", "touchstart", "touchend", "keydown"];
-  const unbindInteractionResume = (handler) => {
-    interactionEvents.forEach((eventName) => {
-      document.removeEventListener(eventName, handler, true);
-    });
-  };
-
-  const bindInteractionResume = () => {
-    if (interactionResumeBound) return;
-    interactionResumeBound = true;
-
-    const resumePlayback = async () => {
-      if (!ambientAudio.paused) return;
-      restoreMusicTime();
-      let started = await tryPlayAmbientAudio();
-      if (!started) {
-        await new Promise((resolve) => window.requestAnimationFrame(resolve));
-        started = await tryPlayAmbientAudio();
-      }
-      if (started) {
-        unbindInteractionResume(resumePlayback);
-      }
-    };
-
-    interactionEvents.forEach((eventName) => {
-      document.addEventListener(eventName, resumePlayback, true);
-    });
-  };
-
-  const attemptAutoplay = () => {
-    void tryPlayAmbientAudio().then((started) => {
-      if (!started) bindInteractionResume();
-    });
-  };
-
-  attemptAutoplay();
-
-  musicToggle.addEventListener("click", async () => {
-    if (ambientAudio.paused) {
-      restoreMusicTime();
-      const started = await tryPlayAmbientAudio();
-      if (!started) setMusicButtonState(false);
-      return;
-    }
-
-    persistMusicTime(undefined, true);
-    ambientAudio.pause();
-    persistMusicState(false);
-    setMusicButtonState(false);
-  });
-
-  ambientAudio.addEventListener("play", () => {
-    persistMusicState(true);
-    persistMusicTime(undefined, true);
-    setMusicButtonState(true);
-  });
-  ambientAudio.addEventListener("pause", () => {
-    persistMusicTime(undefined, true);
-    persistMusicState(false);
-    setMusicButtonState(false);
-  });
-  ambientAudio.addEventListener("timeupdate", () => persistMusicTime());
-  ambientAudio.addEventListener("seeked", () => persistMusicTime(undefined, true));
-  ambientAudio.addEventListener("ended", () => persistMusicTime(0, true));
-
-  window.addEventListener("pagehide", () => persistMusicTime(undefined, true), { passive: true });
-  window.addEventListener("beforeunload", () => persistMusicTime(undefined, true));
-  window.addEventListener("pageshow", () => {
-    restoreMusicTime();
-    if (ambientAudio.paused) attemptAutoplay();
-  });
-  document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "hidden") persistMusicTime(undefined, true);
-  });
+  items.forEach((item) => observer.observe(item));
 }
 
 function getInitialCategory() {
   const query = new URLSearchParams(window.location.search).get("filter");
-  const hash = window.location.hash.replace("#", "");
-
-  if (query && categories[query]) return query;
-  if (hashAliases[hash]) return hashAliases[hash];
-  return null;
-}
-
-function updatePortfolioMode(category) {
-  if (!portfolioOverview || !portfolioDetail) return;
-
-  const hasCategory = Boolean(category && categories[category]);
-  portfolioOverview.toggleAttribute("hidden", hasCategory);
-  portfolioDetail.toggleAttribute("hidden", !hasCategory);
-  document.body.classList.toggle("portfolio-overview-mode", !hasCategory);
-  document.body.classList.toggle("portfolio-detail-mode", hasCategory);
-}
-
-function syncHero(category) {
-  const data = categories[category] ?? categories.portrait;
-  const eyebrowFallbacks = {
-    animal: "Tiere",
-  };
-  const positionFallbacks = {
-    animal: "center 42%",
-  };
-  if (portfolioHero) portfolioHero.dataset.category = category;
-  if (portfolioEyebrow) {
-    portfolioEyebrow.textContent = data.eyebrow ?? eyebrowFallbacks[category] ?? "Kuratiert";
-  }
-  if (portfolioTitle) portfolioTitle.textContent = data.title;
-  if (portfolioCopy) portfolioCopy.textContent = data.copy;
-  const heroPosition = data.heroPosition ?? positionFallbacks[category] ?? "center center";
-  [portfolioHeroImagePrimary, portfolioHeroImageSecondary].forEach((image) => {
-    if (!image) return;
-    image.style.objectPosition = heroPosition;
-  });
-
-  setupPortfolioHeroSlideshow(category, { reset: true });
+  return query && categories[query] ? query : null;
 }
 
 function refreshActiveItems() {
   activeItems = lightboxButtons
     .filter((button) => {
       const tile = button.closest("[data-category]");
-      return tile?.dataset.category === activeCategory && !tile.classList.contains("is-hidden");
-    })
-    .sort((buttonA, buttonB) => {
-      const rectA = buttonA.getBoundingClientRect();
-      const rectB = buttonB.getBoundingClientRect();
-      const topDelta = Math.abs(rectA.top - rectB.top);
-
-      if (topDelta > 18) return rectA.top - rectB.top;
-      return rectA.left - rectB.left;
+      return tile?.dataset.category === activeCategory && !tile.hasAttribute("hidden");
     })
     .map((button) => {
       const image = button.querySelector("img");
@@ -511,84 +118,77 @@ function refreshActiveItems() {
     });
 }
 
-function applyFilter(category, options = {}) {
-  activeCategory = categories[category] ? category : "portrait";
-  updatePortfolioMode(activeCategory);
+function applyFilter(category, { updateUrl = false, scrollTop = false } = {}) {
+  if (!categories[category]) return;
+  activeCategory = category;
+  const data = categories[category];
+
+  if (portfolioOverview) portfolioOverview.hidden = true;
+  if (portfolioDetail) portfolioDetail.hidden = false;
+  document.body.dataset.mood = data.mood;
+
+  if (categoryHeroImage) {
+    categoryHeroImage.src = data.hero;
+    categoryHeroImage.alt = data.heroAlt;
+    categoryHeroImage.closest(".category-hero")?.style.setProperty("--hero-pos", data.heroPosition);
+  }
+  if (categoryEyebrow) categoryEyebrow.textContent = data.eyebrow;
+  if (categoryTitle) categoryTitle.textContent = data.title;
+  if (categoryCopy) categoryCopy.textContent = data.copy;
 
   filterLinks.forEach((link) => {
-    const isActive = link.dataset.filterLink === activeCategory;
+    const isActive = link.dataset.filterLink === category;
     link.classList.toggle("is-active", isActive);
     if (isActive) link.setAttribute("aria-current", "page");
     else link.removeAttribute("aria-current");
   });
 
   tiles.forEach((tile) => {
-    const isVisible = tile.dataset.category === activeCategory;
-    tile.classList.toggle("is-hidden", !isVisible);
-    tile.setAttribute("aria-hidden", String(!isVisible));
+    tile.toggleAttribute("hidden", tile.dataset.category !== category);
   });
 
-  syncHero(activeCategory);
   refreshActiveItems();
 
-  if (options.updateUrl) {
+  if (updateUrl) {
     const url = new URL(window.location.href);
-    url.searchParams.set("filter", activeCategory);
-    url.hash = "";
-    window.history.replaceState({}, "", url);
+    url.searchParams.set("filter", category);
+    window.history.pushState({ filter: category }, "", url);
   }
 
-  if (options.scrollTop) {
-    scrollPageTop();
-    window.requestAnimationFrame(scrollPageTop);
-  }
+  if (scrollTop) window.scrollTo({ top: 0, left: 0, behavior: "auto" });
 }
 
-function showPortfolioOverview() {
-  updatePortfolioMode(null);
-
-  tiles.forEach((tile) => {
-    tile.classList.add("is-hidden");
-    tile.setAttribute("aria-hidden", "true");
-  });
+function showOverview({ updateUrl = false } = {}) {
+  activeCategory = null;
+  if (portfolioOverview) portfolioOverview.hidden = false;
+  if (portfolioDetail) portfolioDetail.hidden = true;
+  document.body.dataset.mood = "dark";
 
   filterLinks.forEach((link) => {
     link.classList.remove("is-active");
     link.removeAttribute("aria-current");
   });
+
+  if (updateUrl) {
+    const url = new URL(window.location.href);
+    url.searchParams.delete("filter");
+    window.history.pushState({}, "", url);
+  }
 }
 
 function renderLightboxImage(index) {
   if (!modalImage || !activeItems[index]) return;
-  modalImage.style.opacity = "0";
-  modalImage.style.transform = "scale(0.985)";
-
-  window.setTimeout(() => {
-    modalImage.src = activeItems[index].src;
-    modalImage.alt = activeItems[index].alt;
-    modalImage.style.opacity = "1";
-    modalImage.style.transform = "scale(1)";
-  }, reduceMotion ? 0 : 90);
+  modalImage.src = activeItems[index].src;
+  modalImage.alt = activeItems[index].alt;
 }
 
 function openLightbox(index) {
   if (!modal || !activeItems[index]) return;
   activeIndex = index;
-  modal.classList.remove("is-flashing");
   renderLightboxImage(activeIndex);
   modal.classList.add("is-open");
   modal.setAttribute("aria-hidden", "false");
   document.body.classList.add("is-locked");
-
-  if (!reduceMotion) {
-    window.requestAnimationFrame(() => {
-      modal.classList.add("is-flashing");
-      window.setTimeout(() => {
-        modal.classList.remove("is-flashing");
-      }, 110);
-    });
-  }
-
   modalClose?.focus();
 }
 
@@ -605,642 +205,59 @@ function stepLightbox(direction) {
   renderLightboxImage(activeIndex);
 }
 
-function setupReveal() {
-  const revealItems = Array.from(document.querySelectorAll(".reveal"));
-
-  revealItems.forEach((item, index) => {
-    item.style.setProperty("--delay", `${Math.min((index % 7) * 70, 280)}ms`);
-  });
-
-  if (!("IntersectionObserver" in window) || reduceMotion) {
-    revealItems.forEach((item) => item.classList.add("is-visible"));
-    return;
-  }
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add("is-visible");
-        observer.unobserve(entry.target);
-      });
-    },
-    { rootMargin: "0px 0px -10% 0px", threshold: 0.14 },
-  );
-
-  revealItems.forEach((item) => observer.observe(item));
-}
-
-function setupTilt() {
-  if (!canHover || reduceMotion) return;
-
-  document.querySelectorAll(".tilt-card, .photo-tile button").forEach((item) => {
-    item.addEventListener("pointermove", (event) => {
-      const rect = item.getBoundingClientRect();
-      const x = (event.clientX - rect.left) / rect.width - 0.5;
-      const y = (event.clientY - rect.top) / rect.height - 0.5;
-      item.style.setProperty("--tilt-x", `${(-y * 4.2).toFixed(2)}deg`);
-      item.style.setProperty("--tilt-y", `${(x * 4.8).toFixed(2)}deg`);
-    });
-
-    item.addEventListener("pointerleave", () => {
-      item.style.removeProperty("--tilt-x");
-      item.style.removeProperty("--tilt-y");
-    });
-  });
-}
-
-function updateParallax() {
-  scrollTicking = false;
-  if (reduceMotion) return;
-
-  if (heroSection && heroMedia) {
-    const heroHeight = heroSection.offsetHeight || window.innerHeight || 1;
-    const heroProgress = Math.max(0, Math.min(window.scrollY / heroHeight, 1.2));
-    const heroDepthShift = Math.min(heroProgress * 28, 28);
-    const heroForegroundShift = Math.min(heroProgress * -10, 0);
-    const heroOverlayDim = Math.min(heroProgress * 0.08, 0.08);
-
-    heroMedia.style.setProperty("--hero-depth-shift", `${heroDepthShift.toFixed(2)}px`);
-    heroMedia.style.setProperty("--hero-overlay-dim", heroOverlayDim.toFixed(3));
-    if (heroShell) {
-      heroShell.style.setProperty("--hero-foreground-shift", `${heroForegroundShift.toFixed(2)}px`);
-    }
-  }
-
-  if (document.body.classList.contains("home-page")) {
-    const homeDepthItems = document.querySelectorAll(".home-page .category-section, .home-page .contact-section");
-    const viewport = window.innerHeight || 1;
-
-    homeDepthItems.forEach((block, index) => {
-      const rect = block.getBoundingClientRect();
-      const progress = (rect.top + rect.height * 0.5 - viewport * 0.55) / viewport;
-      const shift = Math.max(Math.min(progress * -(index === 0 ? 10 : 7), 10), -10);
-      block.style.setProperty("--section-depth-shift", `${shift.toFixed(2)}px`);
-    });
-  }
-
-  if (isTouch) return;
-
-  const viewport = window.innerHeight || 1;
-  parallaxMedia.forEach((block) => {
-    const rect = block.getBoundingClientRect();
-    const progress = (rect.top + rect.height * 0.5 - viewport * 0.5) / viewport;
-    const shift = Math.max(Math.min(progress * -18, 18), -18);
-    block.style.setProperty("--parallax-shift", `${shift}px`);
-  });
-}
-
-function onScroll() {
-  updateHeader();
-  updateMusicToggleVisibility();
-  if (scrollTicking) return;
-  scrollTicking = true;
-  window.requestAnimationFrame(updateParallax);
-}
-
-function shuffle(list) {
-  const clone = [...list];
-  for (let index = clone.length - 1; index > 0; index -= 1) {
-    const randomIndex = Math.floor(Math.random() * (index + 1));
-    [clone[index], clone[randomIndex]] = [clone[randomIndex], clone[index]];
-  }
-  return clone;
-}
-
-function setupRandomCategoryImages() {
-  if (!categoryCards.length) return;
-
-  categoryCards.forEach((card) => {
-    const category = card.dataset.categoryCard;
-    const image = card.querySelector("img");
-    const pool = categories[category]?.images ?? [];
-    if (!image || !pool.length) return;
-
-    const selected = pool[Math.floor(Math.random() * pool.length)];
-    image.src = selected.src;
-    image.alt = selected.alt;
-  });
-}
-
-function setupRandomPortfolioSpotlights() {
-  if (!portfolioSpotlights.length) return;
-
-  portfolioSpotlights.forEach((spotlight) => {
-    const category = spotlight.dataset.spotlight;
-    const image = spotlight.querySelector("img");
-    const pool = categories[category]?.images ?? [];
-    if (!image || !pool.length) return;
-
-    const selected = pool[Math.floor(Math.random() * pool.length)];
-    image.src = selected.src;
-    image.alt = selected.alt;
-  });
-}
-
-function classifyGalleryTile(tile, index) {
-  const image = tile.querySelector("img");
-  if (!image) return;
-
-  const width = image.naturalWidth || image.width || 1;
-  const height = image.naturalHeight || image.height || 1;
-  const ratio = width / height;
-
-  tile.classList.remove("is-portrait", "is-landscape", "is-featured");
-
-  if (ratio >= 1.18) tile.classList.add("is-landscape");
-  else if (ratio <= 0.82) tile.classList.add("is-portrait");
-
-  if ((ratio >= 1 && index % 6 === 0) || (ratio <= 0.82 && index % 5 === 1)) {
-    tile.classList.add("is-featured");
-  }
-}
-
-function setupGallerySizing() {
-  if (!tiles.length) return;
-
-  Object.keys(categories).forEach((categoryKey) => {
-    const categoryTiles = tiles.filter((tile) => tile.dataset.category === categoryKey);
-
-    categoryTiles.forEach((tile, index) => {
-      const image = tile.querySelector("img");
-      if (!image) return;
-
-      if (image.complete) classifyGalleryTile(tile, index);
-      else {
-        image.addEventListener("load", () => classifyGalleryTile(tile, index), { once: true });
-      }
-    });
-  });
-}
-
-function getHeroSlideshowImages() {
-  if (window.innerWidth <= 680) {
-    return [
-      {
-        src: "assets/photos/IMG_4051.JPG",
-        alt: "Portrait im Sessel mit ruhigem Licht",
-        position: "center 28%",
-        brightness: "0.74",
-        contrast: "1.05",
-        saturate: "0.78",
-      },
-      {
-        src: "assets/photos/animal-boxer-close-1.jpg",
-        alt: "Boxerportrait im warmen Licht",
-        position: "center 24%",
-        brightness: "0.76",
-        contrast: "1.04",
-        saturate: "0.8",
-      },
-      {
-        src: "assets/photos/IMG_6190.JPG",
-        alt: "Portrait mit Cap im Gegenlicht",
-        position: "center 18%",
-        brightness: "0.76",
-        contrast: "1.04",
-        saturate: "0.78",
-      },
-      {
-        src: "assets/photos/portrait-rural-man-village.jpg",
-        alt: "Stehendes Portrait im Dorf",
-        position: "center 18%",
-        brightness: "0.76",
-        contrast: "1.04",
-        saturate: "0.78",
-      },
-      {
-        src: "assets/photos/IMG_8490.JPG",
-        alt: "Nachtportrait im Schnee",
-        position: "center 24%",
-        brightness: "0.7",
-        contrast: "1.05",
-        saturate: "0.72",
-      },
-      {
-        src: "assets/photos/portrait-blue-jacket-glasses.jpg",
-        alt: "Portrait mit Brille",
-        position: "center 22%",
-        brightness: "0.73",
-        contrast: "1.05",
-        saturate: "0.77",
-      },
-      {
-        src: "assets/photos/IMG_9603.JPG",
-        alt: "Portrait auf dem Parkdeck bei Nacht",
-        position: "center 24%",
-        brightness: "0.72",
-        contrast: "1.06",
-        saturate: "0.74",
-      },
-    ].filter(Boolean);
-  }
-
-  const ordered = [
-    {
-      src: "assets/photos/automotive-audi-night.webp",
-      alt: "Auto bei Nacht",
-      position: "center 38%",
-      brightness: "0.68",
-      contrast: "1.08",
-      saturate: "0.74",
-    },
-    {
-      src: "assets/photos/IMG_5413.JPG",
-      alt: "Nahaufnahme einer Katze",
-      position: "center 42%",
-      brightness: "0.76",
-      contrast: "1.04",
-      saturate: "0.78",
-    },
-    {
-      src: "assets/photos/IMG_7060.JPG",
-      alt: "Portrait am Bahnhof",
-      position: "center 34%",
-      brightness: "0.74",
-      contrast: "1.05",
-      saturate: "0.76",
-    },
-    {
-      src: "assets/photos/portrait-rural-man-field.jpg",
-      alt: "Portrait auf dem Feld bei warmem Licht",
-      position: "center 42%",
-      brightness: "0.76",
-      contrast: "1.04",
-      saturate: "0.78",
-    },
-    {
-      src: "assets/photos/IMG_9686.JPG",
-      alt: "Portrait vor dramatischem Nachthimmel",
-      position: "center 28%",
-      brightness: "0.69",
-      contrast: "1.08",
-      saturate: "0.72",
-    },
-    {
-      src: "assets/photos/animal-cats-window.webp",
-      alt: "Zwei Katzen am Fenster",
-      position: "center 34%",
-      brightness: "0.75",
-      contrast: "1.03",
-      saturate: "0.75",
-    },
-    {
-      src: "assets/photos/club-dj-profile-dark.webp",
-      alt: "DJ im dunklen Raum",
-      position: "center 34%",
-      brightness: "0.67",
-      contrast: "1.08",
-      saturate: "0.74",
-    },
-  ].filter(Boolean);
-
-  const deduped = ordered.filter((item, index, list) => {
-    return list.findIndex((entry) => entry.src === item.src && entry.alt === item.alt) === index;
-  });
-
-  return deduped.slice(0, 6);
-}
-
-function applyHeroImageTone(slide, image) {
-  if (!slide || !image) return;
-
-  slide.style.objectPosition = image.position ?? "";
-  slide.style.setProperty("--hero-brightness", image.brightness ?? "0.74");
-  slide.style.setProperty("--hero-contrast", image.contrast ?? "1.06");
-  slide.style.setProperty("--hero-saturate", image.saturate ?? "0.78");
-}
-
-function applyHeroMotion(slide, index = 0) {
-  if (!slide) return;
-
-  const motionPresets = [
-    {
-      startX: "-1.2%",
-      endX: "0.9%",
-      startY: "4px",
-      endY: "-10px",
-      zoomStart: "1.045",
-      zoomEnd: "1.105",
-    },
-    {
-      startX: "0.9%",
-      endX: "-0.75%",
-      startY: "-4px",
-      endY: "8px",
-      zoomStart: "1.05",
-      zoomEnd: "1.115",
-    },
-    {
-      startX: "-0.6%",
-      endX: "0.65%",
-      startY: "2px",
-      endY: "-12px",
-      zoomStart: "1.04",
-      zoomEnd: "1.1",
-    },
-    {
-      startX: "0.7%",
-      endX: "-0.5%",
-      startY: "6px",
-      endY: "-8px",
-      zoomStart: "1.05",
-      zoomEnd: "1.108",
-    },
-  ];
-
-  const preset = motionPresets[index % motionPresets.length];
-  slide.style.setProperty("--hero-pan-start-x", preset.startX);
-  slide.style.setProperty("--hero-pan-end-x", preset.endX);
-  slide.style.setProperty("--hero-pan-start-y", preset.startY);
-  slide.style.setProperty("--hero-pan-end-y", preset.endY);
-  slide.style.setProperty("--hero-zoom-start", preset.zoomStart);
-  slide.style.setProperty("--hero-zoom-end", preset.zoomEnd);
-}
-
-function setupHeroSlideshow() {
-  if (heroSlides.length < 2) return;
-
-  const slides = getHeroSlideshowImages();
-  if (!slides.length) return;
-
-  let activeSlideIndex = 0;
-  let visibleLayer = 0;
-
-  heroSlides.forEach((slide, index) => {
-    const image = slides[index % slides.length];
-    slide.src = image.src;
-    slide.alt = image.alt;
-    applyHeroImageTone(slide, image);
-    applyHeroMotion(slide, index);
-    slide.classList.remove("is-exiting");
-    slide.classList.toggle("is-active", index === 0);
-  });
-
-  if (reduceMotion || slides.length < 2) return;
-
-  heroSlideTimer = window.setInterval(() => {
-    const nextLayer = visibleLayer === 0 ? 1 : 0;
-    activeSlideIndex = (activeSlideIndex + 1) % slides.length;
-    const nextImage = slides[activeSlideIndex];
-    const nextSlide = heroSlides[nextLayer];
-    const currentSlide = heroSlides[visibleLayer];
-
-    if (heroMedia) heroMedia.classList.add("is-transitioning");
-
-    nextSlide.src = nextImage.src;
-    nextSlide.alt = nextImage.alt;
-    applyHeroImageTone(nextSlide, nextImage);
-    applyHeroMotion(nextSlide, activeSlideIndex);
-    nextSlide.classList.remove("is-exiting");
-    nextSlide.classList.add("is-active");
-    currentSlide.classList.remove("is-active");
-    currentSlide.classList.add("is-exiting");
-    visibleLayer = nextLayer;
-
-    window.setTimeout(() => {
-      currentSlide.classList.remove("is-exiting");
-      if (heroMedia) heroMedia.classList.remove("is-transitioning");
-    }, heroTransitionDurationMs);
-  }, 7000);
-}
-
-function setupPortfolioRouting() {
-  if (!portfolioSpotlights.length) return;
-
-  portfolioSpotlights.forEach((spotlight) => {
-    const target = spotlight.dataset.categoryRoute;
-    if (!target) return;
-
-    spotlight.addEventListener("click", (event) => {
-      if (event.target.closest("a, button")) return;
-      navigateToRoute(target);
-    });
-
-    spotlight.addEventListener("keydown", (event) => {
-      if (event.key !== "Enter" && event.key !== " ") return;
-      event.preventDefault();
-      navigateToRoute(target);
-    });
-  });
-}
-
-function getPortfolioHeroSlides(category) {
-  const data = categories[category] ?? categories.portrait;
-  const deduped = [];
-  const seen = new Set();
-  const heroPool = [
-    { src: data.hero, alt: data.alt },
-    ...(data.images ?? []),
-  ];
-
-  heroPool.forEach((item) => {
-    if (!item?.src || seen.has(item.src)) return;
-    seen.add(item.src);
-    deduped.push(item);
-  });
-
-  return deduped;
-}
-
-function applyPortfolioHeroSlide(imageElement, slide, category) {
-  if (!imageElement || !slide) return;
-
-  const data = categories[category] ?? categories.portrait;
-  const fallbackPositions = {
-    portrait: "center 28%",
-    wedding: "center 34%",
-    club: "center 42%",
-    auto: "center 50%",
-    animal: "center 38%",
-  };
-
-  imageElement.src = slide.src;
-  imageElement.alt = slide.alt;
-  imageElement.style.objectPosition = data.heroPosition ?? fallbackPositions[category] ?? "center center";
-}
-
-function setupPortfolioHeroSlideshow(category, options = {}) {
-  if (!portfolioHeroImagePrimary || !portfolioHeroImageSecondary) return;
-
-  const slides = getPortfolioHeroSlides(category);
-  if (!slides.length) return;
-
-  if (portfolioHeroTimer) {
-    window.clearInterval(portfolioHeroTimer);
-    portfolioHeroTimer = null;
-  }
-
-  if (options.reset || portfolioHeroIndex >= slides.length) {
-    portfolioHeroIndex = Math.floor(Math.random() * slides.length);
-    portfolioHeroVisibleLayer = 0;
-  }
-
-  applyPortfolioHeroSlide(portfolioHeroImagePrimary, slides[portfolioHeroIndex], category);
-  applyPortfolioHeroSlide(portfolioHeroImageSecondary, slides[portfolioHeroIndex], category);
-  portfolioHeroImagePrimary.classList.add("is-active");
-  portfolioHeroImageSecondary.classList.remove("is-active");
-
-  if (reduceMotion || slides.length < 2) return;
-
-  portfolioHeroTimer = window.setInterval(() => {
-    portfolioHeroIndex = (portfolioHeroIndex + 1) % slides.length;
-    const nextImage = slides[portfolioHeroIndex];
-    const nextLayer = portfolioHeroVisibleLayer === 0 ? portfolioHeroImageSecondary : portfolioHeroImagePrimary;
-    const currentLayer = portfolioHeroVisibleLayer === 0 ? portfolioHeroImagePrimary : portfolioHeroImageSecondary;
-
-    applyPortfolioHeroSlide(nextLayer, nextImage, category);
-    nextLayer.classList.add("is-active");
-    currentLayer.classList.remove("is-active");
-    portfolioHeroVisibleLayer = portfolioHeroVisibleLayer === 0 ? 1 : 0;
-  }, 8200);
-}
-
-function setupPortfolioShowcaseObserver() {
-  if (!showcaseSections.length || !("IntersectionObserver" in window)) {
-    if (showcaseSections[0]) showcaseSections[0].classList.add("is-current");
-    return;
-  }
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-
-        showcaseSections.forEach((section) => {
-          section.classList.toggle("is-current", section === entry.target);
-        });
-      });
-    },
-    {
-      threshold: 0.55,
-      rootMargin: "-8% 0px -8% 0px",
-    },
-  );
-
-  showcaseSections.forEach((section) => observer.observe(section));
-}
-
-function setupCategoryRoutes() {
-  if (!categoryRouteLinks.length) return;
-
-  categoryRouteLinks.forEach((link) => {
-    const target = link.dataset.categoryRoute || link.getAttribute("href");
-    if (!target) return;
-
+if (portfolioOverview && portfolioDetail) {
+  const initial = getInitialCategory();
+  if (initial) applyFilter(initial);
+  else showOverview();
+
+  routeLinks.forEach((link) => {
     link.addEventListener("click", (event) => {
+      const target = link.dataset.categoryRoute || "";
+      const match = target.match(/filter=([a-z]+)/);
+      if (!match || !categories[match[1]]) return;
       event.preventDefault();
-      event.stopPropagation();
-      navigateToRoute(target);
+      applyFilter(match[1], { updateUrl: true, scrollTop: true });
     });
   });
-}
 
-function setupPageFade() {
-  document.body.classList.add("is-page-ready");
-
-  document.querySelectorAll("a[href]").forEach((link) => {
+  filterLinks.forEach((link) => {
     link.addEventListener("click", (event) => {
-      const href = link.getAttribute("href");
-      if (!href || href.startsWith("#")) return;
-      if (link.dataset.categoryRoute) return;
-      if (link.target && link.target !== "_self") return;
-      if (link.hasAttribute("download")) return;
-
-      const url = new URL(href, window.location.href);
-      if (url.origin !== window.location.origin && url.protocol !== "file:") return;
-
-      const currentBase = `${window.location.pathname}${window.location.search}`;
-      const nextBase = `${url.pathname}${url.search}`;
-      if (currentBase === nextBase && url.hash) return;
-
-      if (transitionLocked) {
-        event.preventDefault();
-        return;
-      }
-
-      transitionLocked = true;
-      persistMusicTime();
+      const category = link.dataset.filterLink;
+      if (!categories[category]) return;
       event.preventDefault();
-      document.body.classList.remove("is-page-ready");
-      document.body.classList.add("is-page-leaving");
-
-      window.setTimeout(() => {
-        window.location.href = link.href;
-      }, pageFadeDurationMs);
+      applyFilter(category, { updateUrl: true, scrollTop: true });
     });
   });
-}
 
-window.history.scrollRestoration = "manual";
-
-window.addEventListener("pageshow", () => {
-  document.body.classList.add("is-page-ready");
-  document.body.classList.remove("is-page-leaving");
-  document.body.classList.remove("is-category-leaving");
-  if (getInitialCategory()) {
-    scrollPageTop();
-    startCategoryEntryTransition();
-  }
-});
-
-window.addEventListener("load", () => {
-  scrollPageTop();
-  document.body.classList.add("is-page-ready");
-  document.body.classList.remove("is-page-leaving");
-  document.body.classList.remove("is-category-leaving");
-  updateHeader();
-  updateMusicToggleVisibility();
-  updateParallax();
-  setupRandomCategoryImages();
-  setupRandomPortfolioSpotlights();
-  setupGallerySizing();
-  setupHeroSlideshow();
-  setupPortfolioRouting();
-  setupPortfolioShowcaseObserver();
-  setupCategoryRoutes();
-  startCategoryEntryTransition();
-});
-
-window.addEventListener("scroll", onScroll, { passive: true });
-window.addEventListener("resize", updateParallax, { passive: true });
-
-lightboxButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    refreshActiveItems();
-    const index = activeItems.findIndex((item) => item.button === button);
-    openLightbox(Math.max(index, 0));
+  window.addEventListener("popstate", () => {
+    const category = getInitialCategory();
+    if (category) applyFilter(category);
+    else showOverview();
   });
-});
 
-modalClose?.addEventListener("click", closeLightbox);
-modalPrev?.addEventListener("click", () => stepLightbox(-1));
-modalNext?.addEventListener("click", () => stepLightbox(1));
-modal?.addEventListener("click", (event) => {
-  if (event.target === modal) closeLightbox();
-});
+  lightboxButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      refreshActiveItems();
+      const index = activeItems.findIndex((item) => item.button === button);
+      openLightbox(Math.max(index, 0));
+    });
+  });
 
-window.addEventListener("keydown", (event) => {
-  if (!modal?.classList.contains("is-open")) return;
-  if (event.key === "Escape") closeLightbox();
-  if (event.key === "ArrowLeft") stepLightbox(-1);
-  if (event.key === "ArrowRight") stepLightbox(1);
-});
+  modalClose?.addEventListener("click", closeLightbox);
+  modalPrev?.addEventListener("click", () => stepLightbox(-1));
+  modalNext?.addEventListener("click", () => stepLightbox(1));
+  modal?.addEventListener("click", (event) => {
+    if (event.target === modal) closeLightbox();
+  });
 
-if (filters.length && tiles.length) {
-  const initialCategory = getInitialCategory();
-  if (initialCategory) applyFilter(initialCategory, { scrollTop: true });
-  else showPortfolioOverview();
-} else if (tiles.length && portfolioOverview && portfolioDetail) {
-  const initialCategory = getInitialCategory();
-  if (initialCategory) applyFilter(initialCategory, { scrollTop: true });
-  else showPortfolioOverview();
+  window.addEventListener("keydown", (event) => {
+    if (!modal?.classList.contains("is-open")) return;
+    if (event.key === "Escape") closeLightbox();
+    if (event.key === "ArrowLeft") stepLightbox(-1);
+    if (event.key === "ArrowRight") stepLightbox(1);
+  });
 }
 
-setupAmbientAudio();
+window.addEventListener("scroll", updateHeader, { passive: true });
 updateHeader();
-updateMusicToggleVisibility();
 setupReveal();
-setupTilt();
-updateParallax();
-setupPageFade();

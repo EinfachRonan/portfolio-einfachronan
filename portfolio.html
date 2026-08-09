@@ -5,19 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Kategorisiertes Fotografie Portfolio von EinfachRonan."
+      content="Portfolio von EinfachRonan: Portrait, Hochzeit und Tiere bei Tageslicht &mdash; Club und Autos bei Nacht."
     />
     <title>Portfolio | EinfachRonan</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="icon" type="image/png" href="assets/logo-einfachronan.png" />
-    <link rel="stylesheet" href="styles.css?v=cinematic-premium-2" />
+    <link rel="stylesheet" href="styles.css?v=redesign-1" />
   </head>
-  <body class="portfolio-page">
+  <body class="portfolio-page" data-mood="dark">
     <header class="site-header" data-header>
       <a class="brand" href="/" aria-label="EinfachRonan Startseite">
         <img class="brand-logo" decoding="async" src="assets/logo-einfachronan.png" alt="EinfachRonan" />
@@ -38,371 +38,176 @@
     </header>
 
     <main>
-      <section class="portfolio-overview" data-portfolio-overview aria-label="Portfolio Kategorien">
-        <div class="portfolio-overview-intro reveal">
-          <p class="eyebrow">Portfolio</p>
-          <h1>Portfolio</h1>
+      <!-- ===================== OVERVIEW (no filter) ===================== -->
+      <section data-portfolio-overview>
+        <div class="container portfolio-intro reveal">
+          <p class="mood-eyebrow">Portfolio</p>
+          <h1 class="mood-title">F&uuml;nf Bereiche, zwei Stimmungen.</h1>
         </div>
 
-        <div class="portfolio-showcase-list">
-          <article class="category-showcase reveal" data-spotlight="portrait" data-category-route="portfolio.html?filter=portrait" tabindex="0">
-            <figure class="category-spotlight-media" data-parallax-media>
-              <img
-                loading="eager"
-                fetchpriority="high"
-                decoding="async"
-                src="assets/photos/portrait-city-smile.webp"
-                alt="Portrait in der Stadt"
-              />
-            </figure>
-            <div class="category-showcase-copy">
-              <p class="eyebrow">01 / Portrait</p>
-              <h2>Portrait</h2>
-              <a class="category-showcase-link" href="portfolio.html?filter=portrait" data-category-route="portfolio.html?filter=portrait">Ansehen</a>
+        <div class="portfolio-overview-groups">
+          <section class="mood-section reveal" data-mood="light" aria-labelledby="ov-daylight-title">
+            <div class="container">
+              <div class="mood-head">
+                <div>
+                  <p class="mood-eyebrow">01 &mdash; Bei Tageslicht</p>
+                  <h2 class="mood-title" id="ov-daylight-title">Portrait, Hochzeit, Tiere</h2>
+                </div>
+              </div>
+              <div class="card-grid">
+                <a class="category-card" href="portfolio.html?filter=portrait" data-category-route="portfolio.html?filter=portrait">
+                  <img loading="lazy" decoding="async" src="assets/photos/portrait-redhair-sun.webp" alt="Portrait im Sonnenlicht" />
+                  <span class="category-card-arrow" aria-hidden="true">&rarr;</span>
+                  <div class="category-card-copy">
+                    <span>Portrait</span>
+                    <p>Ruhige Portraits mit klarem Licht und echter N&auml;he.</p>
+                  </div>
+                </a>
+                <a class="category-card" href="portfolio.html?filter=wedding" data-category-route="portfolio.html?filter=wedding">
+                  <img loading="lazy" decoding="async" src="assets/photos/wedding-blue-bouquet.webp" alt="Hochzeitsdetail mit Ringen" />
+                  <span class="category-card-arrow" aria-hidden="true">&rarr;</span>
+                  <div class="category-card-copy">
+                    <span>Hochzeit</span>
+                    <p>Details und Gesten, die den Tag festhalten.</p>
+                  </div>
+                </a>
+                <a class="category-card" href="portfolio.html?filter=animal" data-category-route="portfolio.html?filter=animal">
+                  <img loading="lazy" decoding="async" src="assets/photos/animal-cats-window.webp" alt="Katzen am Fenster" />
+                  <span class="category-card-arrow" aria-hidden="true">&rarr;</span>
+                  <div class="category-card-copy">
+                    <span>Tiere</span>
+                    <p>Geduldige Tierportraits im nat&uuml;rlichen Licht.</p>
+                  </div>
+                </a>
+              </div>
             </div>
-          </article>
+          </section>
 
-          <article class="category-showcase reveal" data-spotlight="wedding" data-category-route="portfolio.html?filter=wedding" tabindex="0">
-            <figure class="category-spotlight-media" data-parallax-media>
-              <img
-                loading="lazy"
-                decoding="async"
-                src="assets/photos/wedding-blue-bouquet.webp"
-                alt="Hochzeitsdetail mit Blumen und Ringen"
-              />
-            </figure>
-            <div class="category-showcase-copy">
-              <p class="eyebrow">02 / Hochzeit</p>
-              <h2>Hochzeit</h2>
-              <a class="category-showcase-link" href="portfolio.html?filter=wedding" data-category-route="portfolio.html?filter=wedding">Ansehen</a>
+          <section class="mood-section reveal" data-mood="dark" aria-labelledby="ov-night-title">
+            <div class="container">
+              <div class="mood-head">
+                <div>
+                  <p class="mood-eyebrow">02 &mdash; Bei Nacht</p>
+                  <h2 class="mood-title" id="ov-night-title">Club, Autos</h2>
+                </div>
+              </div>
+              <div class="card-grid">
+                <a class="category-card" href="portfolio.html?filter=club" data-category-route="portfolio.html?filter=club">
+                  <img loading="lazy" decoding="async" src="assets/photos/club-dj-red-light.webp" alt="DJ im Clublicht" />
+                  <span class="category-card-arrow" aria-hidden="true">&rarr;</span>
+                  <div class="category-card-copy">
+                    <span>Club</span>
+                    <p>Bewegung und Atmosph&auml;re aus der Nacht.</p>
+                  </div>
+                </a>
+                <a class="category-card" href="portfolio.html?filter=auto" data-category-route="portfolio.html?filter=auto">
+                  <img loading="lazy" decoding="async" src="assets/photos/automotive-audi-night.webp" alt="Auto bei Nacht" />
+                  <span class="category-card-arrow" aria-hidden="true">&rarr;</span>
+                  <div class="category-card-copy">
+                    <span>Autos</span>
+                    <p>Klare Linien und urbane Lichtstimmung.</p>
+                  </div>
+                </a>
+              </div>
             </div>
-          </article>
-
-          <article class="category-showcase reveal" data-spotlight="club" data-category-route="portfolio.html?filter=club" tabindex="0">
-            <figure class="category-spotlight-media" data-parallax-media>
-              <img
-                loading="lazy"
-                decoding="async"
-                src="assets/photos/club-dj-red-light.webp"
-                alt="DJ am Mischpult mit rotem Licht"
-              />
-            </figure>
-            <div class="category-showcase-copy">
-              <p class="eyebrow">03 / Club</p>
-              <h2>Club</h2>
-              <a class="category-showcase-link" href="portfolio.html?filter=club" data-category-route="portfolio.html?filter=club">Ansehen</a>
-            </div>
-          </article>
-
-          <article class="category-showcase reveal" data-spotlight="auto" data-category-route="portfolio.html?filter=auto" tabindex="0">
-            <figure class="category-spotlight-media" data-parallax-media>
-              <img
-                loading="lazy"
-                decoding="async"
-                src="assets/photos/automotive-audi-night.webp"
-                alt="Audi bei Nacht"
-              />
-            </figure>
-            <div class="category-showcase-copy">
-              <p class="eyebrow">04 / Autos</p>
-              <h2>Autos</h2>
-              <a class="category-showcase-link" href="portfolio.html?filter=auto" data-category-route="portfolio.html?filter=auto">Ansehen</a>
-            </div>
-          </article>
-
-          <article class="category-showcase reveal" data-spotlight="animal" data-category-route="portfolio.html?filter=animal" tabindex="0">
-            <figure class="category-spotlight-media" data-parallax-media>
-              <img
-                loading="lazy"
-                decoding="async"
-                src="assets/photos/animal-cats-window.webp"
-                alt="Zwei Katzen am Fenster"
-              />
-            </figure>
-            <div class="category-showcase-copy">
-              <p class="eyebrow">05 / Tiere</p>
-              <h2>Tiere</h2>
-              <a class="category-showcase-link" href="portfolio.html?filter=animal" data-category-route="portfolio.html?filter=animal">Ansehen</a>
-            </div>
-          </article>
+          </section>
         </div>
       </section>
 
-      <section class="portfolio-detail" data-portfolio-detail hidden aria-label="Kategorieansicht">
-        <section class="portfolio-hero reveal" data-portfolio-hero>
-          <figure class="portfolio-hero-image" data-parallax-media>
-            <img
-              class="portfolio-hero-slide is-active"
-              data-portfolio-hero-image-primary
-              loading="eager"
-              fetchpriority="high"
-              decoding="async"
-              src="assets/photos/portrait-city-smile.webp"
-              alt="Portrait in der Stadt"
-            />
-            <img
-              class="portfolio-hero-slide"
-              data-portfolio-hero-image-secondary
-              loading="lazy"
-              decoding="async"
-              src="assets/photos/portrait-city-smile.webp"
-              alt="Portrait in der Stadt"
-            />
-          </figure>
-          <div class="portfolio-hero-overlay" aria-hidden="true"></div>
-          <div class="portfolio-hero-content">
-            <a class="portfolio-back" href="portfolio.html">Zur&uuml;ck zur &Uuml;bersicht</a>
-            <div class="portfolio-hero-copy">
-              <p class="eyebrow" data-portfolio-eyebrow>Kuratiert</p>
-              <h1 data-portfolio-title>Portrait</h1>
-              <p data-portfolio-copy>Ruhige Portraits, klares Licht und nat&uuml;rliche Momente.</p>
+      <!-- ===================== DETAIL (?filter=x) ===================== -->
+      <section data-portfolio-detail hidden>
+        <section class="category-hero" data-category-hero>
+          <div class="category-hero-media">
+            <img data-category-hero-image loading="eager" fetchpriority="high" decoding="async" src="" alt="" />
+          </div>
+          <div class="category-hero-content">
+            <a class="category-back" href="portfolio.html">&larr; Zur&uuml;ck zur &Uuml;bersicht</a>
+            <div class="category-hero-copy">
+              <p class="mood-eyebrow" data-category-eyebrow>Kuratiert</p>
+              <h1 class="category-hero-title" data-category-title>Portrait</h1>
+              <p data-category-copy>Ruhige Portraits mit klarem Licht und echter N&auml;he.</p>
             </div>
           </div>
         </section>
 
-        <nav class="portfolio-category-nav reveal" aria-label="Kategorien wechseln">
-          <a class="portfolio-category-link is-active" href="portfolio.html?filter=portrait" data-filter-link="portrait" data-category-route="portfolio.html?filter=portrait">
-            <span class="portfolio-category-link-title">Portrait</span>
-          </a>
-          <a class="portfolio-category-link" href="portfolio.html?filter=wedding" data-filter-link="wedding" data-category-route="portfolio.html?filter=wedding">
-            <span class="portfolio-category-link-title">Hochzeit</span>
-          </a>
-          <a class="portfolio-category-link" href="portfolio.html?filter=club" data-filter-link="club" data-category-route="portfolio.html?filter=club">
-            <span class="portfolio-category-link-title">Club</span>
-          </a>
-          <a class="portfolio-category-link" href="portfolio.html?filter=auto" data-filter-link="auto" data-category-route="portfolio.html?filter=auto">
-            <span class="portfolio-category-link-title">Autos</span>
-          </a>
-          <a class="portfolio-category-link" href="portfolio.html?filter=animal" data-filter-link="animal" data-category-route="portfolio.html?filter=animal">
-            <span class="portfolio-category-link-title">Tiere</span>
-          </a>
+        <nav class="category-nav" aria-label="Kategorien wechseln">
+          <div class="category-nav-inner">
+            <span class="category-nav-label">Tageslicht</span>
+            <div class="category-nav-group">
+              <a class="category-nav-link" href="portfolio.html?filter=portrait" data-filter-link="portrait">Portrait</a>
+              <a class="category-nav-link" href="portfolio.html?filter=wedding" data-filter-link="wedding">Hochzeit</a>
+              <a class="category-nav-link" href="portfolio.html?filter=animal" data-filter-link="animal">Tiere</a>
+            </div>
+            <div class="category-nav-divider" aria-hidden="true"></div>
+            <span class="category-nav-label">Nacht</span>
+            <div class="category-nav-group">
+              <a class="category-nav-link" href="portfolio.html?filter=club" data-filter-link="club">Club</a>
+              <a class="category-nav-link" href="portfolio.html?filter=auto" data-filter-link="auto">Autos</a>
+            </div>
+          </div>
         </nav>
 
-        <section class="gallery" aria-label="Portfolio Galerie">
-          <article class="photo-tile reveal" data-category="portrait">
-            <button type="button" data-lightbox>
-              <img loading="eager" decoding="async" src="assets/photos/portrait-city-smile.webp" alt="Portrait in der Stadt" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="portrait">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/portrait-urban-walk.webp" alt="Portrait in der Stadt" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="portrait">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/portrait-riverside-profile.webp" alt="Profilportrait am Wasser" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="portrait">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/portrait-white-shirt-outdoor.webp" alt="Portrait drau&szlig;en am Wasser" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="portrait">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/portrait-cap-outdoor.webp" alt="Portrait mit wei&szlig;er Cap" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="portrait">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/portrait-redhair-sun.webp" alt="Rothaarige Frau im Sonnenlicht" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="portrait">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/IMG_4214.JPG" alt="Portrait mit Sonnenbrille im warmen Licht" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="portrait">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/IMG_6190.JPG" alt="Portrait mit Cap im Gegenlicht" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="portrait">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/portrait-rural-man-field.jpg" alt="Portrait auf dem Feld bei warmem Licht" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="portrait">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/portrait-rural-man-field-close.jpg" alt="Portrait im Kornfeld" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="portrait">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/portrait-rural-man-village.jpg" alt="Stehendes Portrait im Dorf" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="portrait">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/portrait-rural-man-dog-road.jpg" alt="Portrait mit Hund auf einer Landstra&szlig;e" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="portrait">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/portrait-window-stripes.webp" alt="Portrait vor hellem Fenster" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="portrait">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/portrait-studio-beanie.webp" alt="Studio Portrait mit M&uuml;tze" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="portrait">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/portrait-blue-jacket-glasses.jpg" alt="Portrait mit Brille" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="portrait">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/IMG_4051.JPG" alt="Portrait im Sessel mit ruhigem Licht" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="portrait">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/IMG_7060.JPG" alt="Portrait am Bahnhof bei k&uuml;hlem Licht" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="portrait">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/portrait-night-arcade.webp" alt="Nachtportrait" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="portrait">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/portrait-point-night.webp" alt="Portrait bei Nacht" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="portrait">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/portrait-leather-jacket-snow.webp" alt="Portrait im Schnee" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="portrait">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/IMG_8490.JPG" alt="Nachtportrait im Schnee" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="portrait">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/IMG_9603.JPG" alt="Portrait auf dem Parkdeck bei Nacht" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="portrait">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/IMG_9677.JPG" alt="Stehendes Nachtportrait auf dem Parkdeck" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="portrait">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/IMG_9686.JPG" alt="Portrait vor dramatischem Nachthimmel" />
-            </button>
-          </article>
+        <div class="container gallery-wrap">
+          <div class="gallery" aria-label="Portfolio Galerie">
 
-          <article class="photo-tile reveal" data-category="wedding">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/wedding-blue-bouquet.webp" alt="H&auml;nde mit Eheringen auf Brautstrau&szlig;" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="wedding">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/wedding-red-bouquet.webp" alt="Hochzeitsringe und Brautstrau&szlig;" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="wedding">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/wedding-table-flowers.webp" alt="Blumen auf Hochzeitstisch" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="wedding">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/wedding-table-detail.webp" alt="Details auf Hochzeitstisch" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="wedding">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/wedding-guest-toast.webp" alt="Hochzeitsgast mit Glas" />
-            </button>
-          </article>
+            <!-- Portrait -->
+            <article class="photo-tile" data-category="portrait"><button type="button" data-lightbox><img loading="eager" decoding="async" src="assets/photos/portrait-redhair-sun.webp" alt="Rothaarige Frau im Sonnenlicht" /></button></article>
+            <article class="photo-tile" data-category="portrait"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/portrait-city-smile.webp" alt="Portrait in der Stadt" /></button></article>
+            <article class="photo-tile" data-category="portrait"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/portrait-urban-walk.webp" alt="Portrait beim Gehen in der Stadt" /></button></article>
+            <article class="photo-tile" data-category="portrait"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/portrait-riverside-profile.webp" alt="Profilportrait am Wasser" /></button></article>
+            <article class="photo-tile" data-category="portrait"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/portrait-white-shirt-outdoor.webp" alt="Portrait drau&szlig;en am Wasser" /></button></article>
+            <article class="photo-tile" data-category="portrait"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/portrait-cap-outdoor.webp" alt="Portrait mit wei&szlig;er Cap" /></button></article>
+            <article class="photo-tile" data-category="portrait"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/portrait-sunglasses-warm.webp" alt="Portrait mit Sonnenbrille im warmen Licht" /></button></article>
+            <article class="photo-tile" data-category="portrait"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/portrait-cap-backlight.webp" alt="Portrait mit Cap im Gegenlicht" /></button></article>
+            <article class="photo-tile" data-category="portrait"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/portrait-rural-man-field.webp" alt="Portrait auf dem Feld bei warmem Licht" /></button></article>
+            <article class="photo-tile" data-category="portrait"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/portrait-rural-man-field-close.webp" alt="Portrait im Kornfeld" /></button></article>
+            <article class="photo-tile" data-category="portrait"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/portrait-rural-man-village.webp" alt="Stehendes Portrait im Dorf" /></button></article>
+            <article class="photo-tile" data-category="portrait"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/portrait-rural-man-dog-road.webp" alt="Portrait mit Hund auf einer Landstra&szlig;e" /></button></article>
+            <article class="photo-tile" data-category="portrait"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/portrait-window-stripes.webp" alt="Portrait vor hellem Fenster" /></button></article>
+            <article class="photo-tile" data-category="portrait"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/portrait-studio-beanie.webp" alt="Studio-Portrait mit M&uuml;tze" /></button></article>
+            <article class="photo-tile" data-category="portrait"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/portrait-blue-jacket-glasses.webp" alt="Portrait mit Brille" /></button></article>
+            <article class="photo-tile" data-category="portrait"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/portrait-armchair-calm.webp" alt="Portrait im Sessel mit ruhigem Licht" /></button></article>
+            <article class="photo-tile" data-category="portrait"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/portrait-station-cool.webp" alt="Portrait am Bahnhof bei k&uuml;hlem Licht" /></button></article>
+            <article class="photo-tile" data-category="portrait"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/portrait-night-arcade.webp" alt="Nachtportrait an der Arcade" /></button></article>
+            <article class="photo-tile" data-category="portrait"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/portrait-point-night.webp" alt="Portrait bei Nacht" /></button></article>
+            <article class="photo-tile" data-category="portrait"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/portrait-leather-jacket-snow.webp" alt="Portrait im Schnee" /></button></article>
+            <article class="photo-tile" data-category="portrait"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/portrait-night-snow.webp" alt="Nachtportrait im Schnee" /></button></article>
+            <article class="photo-tile" data-category="portrait"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/portrait-parking-night.webp" alt="Portrait auf dem Parkdeck bei Nacht" /></button></article>
+            <article class="photo-tile" data-category="portrait"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/portrait-parking-night-standing.webp" alt="Stehendes Nachtportrait auf dem Parkdeck" /></button></article>
+            <article class="photo-tile" data-category="portrait"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/portrait-night-sky-dramatic.webp" alt="Portrait vor dramatischem Nachthimmel" /></button></article>
 
-          <article class="photo-tile reveal" data-category="club">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/club-dj-profile-dark.webp" alt="DJ im dunklen Raum" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="club">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/club-dj-red-light.webp" alt="DJ am Mischpult mit rotem Licht" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="club">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/club-dj-console.webp" alt="DJ am Mischpult" />
-            </button>
-          </article>
+            <!-- Hochzeit -->
+            <article class="photo-tile" data-category="wedding"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/wedding-blue-bouquet.webp" alt="H&auml;nde mit Eheringen auf Brautstrau&szlig;" /></button></article>
+            <article class="photo-tile" data-category="wedding"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/wedding-red-bouquet.webp" alt="Hochzeitsringe und Brautstrau&szlig;" /></button></article>
+            <article class="photo-tile" data-category="wedding"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/wedding-table-flowers.webp" alt="Blumen auf Hochzeitstisch" /></button></article>
+            <article class="photo-tile" data-category="wedding"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/wedding-table-detail.webp" alt="Details auf Hochzeitstisch" /></button></article>
+            <article class="photo-tile" data-category="wedding"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/wedding-guest-toast.webp" alt="Hochzeitsgast mit Glas" /></button></article>
 
-          <article class="photo-tile reveal" data-category="auto">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/automotive-audi-night.webp" alt="Audi bei Nacht" />
-            </button>
-          </article>
+            <!-- Tiere -->
+            <article class="photo-tile" data-category="animal"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/animal-cats-window.webp" alt="Zwei Katzen am Fenster" /></button></article>
+            <article class="photo-tile" data-category="animal"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/animal-cat-close-alert.webp" alt="Nahaufnahme einer Katze mit aufmerksamem Blick" /></button></article>
+            <article class="photo-tile" data-category="animal"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/animal-cat-close.webp" alt="Katze leckt ihre Pfote" /></button></article>
+            <article class="photo-tile" data-category="animal"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/animal-dog-grass.webp" alt="Hund auf einer Wiese" /></button></article>
+            <article class="photo-tile" data-category="animal"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/animal-boxer-run-road.webp" alt="Boxer l&auml;uft auf einer Landstra&szlig;e" /></button></article>
+            <article class="photo-tile" data-category="animal"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/animal-boxer-road-sit.webp" alt="Boxer sitzt auf einer Landstra&szlig;e" /></button></article>
+            <article class="photo-tile" data-category="animal"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/animal-boxer-road-sit-2.webp" alt="Boxer sitzt zentral auf einer Landstra&szlig;e" /></button></article>
+            <article class="photo-tile" data-category="animal"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/animal-boxer-close-1.webp" alt="Nahes Boxerportrait im warmen Licht" /></button></article>
+            <article class="photo-tile" data-category="animal"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/animal-boxer-close-2.webp" alt="Boxer-Nahaufnahme von oben" /></button></article>
+            <article class="photo-tile" data-category="animal"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/animal-boxer-close-under.webp" alt="Boxer-Nahaufnahme zwischen den Beinen einer Person" /></button></article>
 
-          <article class="photo-tile reveal" data-category="animal">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/animal-cats-window.webp" alt="Zwei Katzen am Fenster" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="animal">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/IMG_5413.JPG" alt="Nahaufnahme einer Katze mit aufmerksamem Blick" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="animal">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/animal-cat-close.webp" alt="Katze leckt ihre Pfote" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="animal">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/animal-dog-grass.webp" alt="Hund auf einer Wiese" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="animal">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/animal-boxer-run-road.jpg" alt="Boxer l&auml;uft auf einer Landstra&szlig;e" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="animal">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/animal-boxer-road-sit.jpg" alt="Boxer sitzt auf einer Landstra&szlig;e" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="animal">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/animal-boxer-road-sit-2.jpg" alt="Boxer sitzt zentral auf einer Landstra&szlig;e" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="animal">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/animal-boxer-close-1.jpg" alt="Nahes Boxerportrait im warmen Licht" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="animal">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/animal-boxer-close-2.jpg" alt="Boxer Nahaufnahme von oben" />
-            </button>
-          </article>
-          <article class="photo-tile reveal" data-category="animal">
-            <button type="button" data-lightbox>
-              <img loading="lazy" decoding="async" src="assets/photos/animal-boxer-close-under.jpg" alt="Boxer Nahaufnahme zwischen den Beinen einer Person" />
-            </button>
-          </article>
-        </section>
+            <!-- Club -->
+            <article class="photo-tile" data-category="club"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/club-dj-red-light.webp" alt="DJ am Mischpult mit rotem Licht" /></button></article>
+            <article class="photo-tile" data-category="club"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/club-dj-profile-dark.webp" alt="DJ im dunklen Raum" /></button></article>
+            <article class="photo-tile" data-category="club"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/club-dj-console.webp" alt="DJ am Mischpult" /></button></article>
+
+            <!-- Autos -->
+            <article class="photo-tile" data-category="auto"><button type="button" data-lightbox><img loading="lazy" decoding="async" src="assets/photos/automotive-audi-night.webp" alt="Audi bei Nacht" /></button></article>
+          </div>
+        </div>
       </section>
     </main>
 
-    <footer class="site-footer site-footer-minimal" aria-label="Footer">
+    <footer class="site-footer" aria-label="Footer">
       <a class="site-footer-brand" href="/" aria-label="EinfachRonan Startseite">
         <img class="site-footer-logo" decoding="async" src="assets/logo-einfachronan.png" alt="EinfachRonan" />
       </a>
@@ -417,40 +222,14 @@
     </footer>
 
     <div class="lightbox" data-lightbox-modal aria-hidden="true">
-      <button class="lightbox-close" type="button" aria-label="Bildansicht schlie&szlig;en" data-lightbox-close>
-        Schlie&szlig;en
-      </button>
-      <button class="lightbox-nav lightbox-prev" type="button" aria-label="Vorheriges Bild" data-lightbox-prev>
-        Zur&uuml;ck
-      </button>
+      <button class="lightbox-close" type="button" aria-label="Bildansicht schlie&szlig;en" data-lightbox-close>Schlie&szlig;en</button>
+      <button class="lightbox-nav lightbox-prev" type="button" aria-label="Vorheriges Bild" data-lightbox-prev>Zur&uuml;ck</button>
       <figure>
-        <img decoding="async" src="assets/photos/portrait-city-smile.webp" alt="" data-lightbox-image />
+        <img decoding="async" src="" alt="" data-lightbox-image />
       </figure>
-      <button class="lightbox-nav lightbox-next" type="button" aria-label="N&auml;chstes Bild" data-lightbox-next>
-        Weiter
-      </button>
+      <button class="lightbox-nav lightbox-next" type="button" aria-label="N&auml;chstes Bild" data-lightbox-next>Weiter</button>
     </div>
 
-    <audio
-      data-ambient-audio
-      preload="auto"
-      loop
-      playsinline
-      src="assets/leberch-ethereal-cinematic-512569.mp3"
-    ></audio>
-
-    <button
-      class="music-toggle"
-      type="button"
-      data-music-toggle
-      aria-pressed="false"
-      aria-label="Hintergrundmusik starten"
-      hidden
-    >
-      <span class="music-toggle-icon" aria-hidden="true"></span>
-      <span class="music-toggle-label">Ambiente</span>
-    </button>
-
-    <script src="script.js?v=cinematic-premium-2"></script>
+    <script src="script.js?v=redesign-1"></script>
   </body>
 </html>
