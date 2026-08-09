@@ -27,9 +27,4 @@ jobs:
           remote-password: ${{ secrets.STRATO_PASSWORD }}
           local-path: .
           remote-path: ${{ secrets.STRATO_PATH }}
-          sync: delta
-          sync-delta-excludes: |
-            .git*
-            .github
-            design-qa.md
-            package-lock.json
+          sync: full
