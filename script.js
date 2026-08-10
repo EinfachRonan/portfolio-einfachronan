@@ -529,6 +529,93 @@ function setupHeroParallax() {
   });
 }
 
+const cursorHoverTargets = "a, button, .category-row, .photo-tile button";
+const cursorLabels = {
+  ".category-row": "Ansehen",
+  ".photo-tile button": "Zoom",
+};
+
+function getCursorLabel(target) {
+  for (const [selector, label] of Object.entries(cursorLabels)) {
+    if (target.matches(selector)) return label;
+  }
+  return "";
+}
+
+function setupCustomCursor() {
+  const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  if (!canHover || reduceMotion) return;
+
+  const cursor = document.createElement("div");
+  cursor.className = "custom-cursor";
+  cursor.setAttribute("aria-hidden", "true");
+  const label = document.createElement("span");
+  label.className = "custom-cursor-label";
+  cursor.appendChild(label);
+  document.body.appendChild(cursor);
+  document.body.classList.add("has-custom-cursor");
+
+  window.addEventListener(
+    "pointermove",
+    (event) => {
+      cursor.style.setProperty("--cursor-x", `${event.clientX}px`);
+      cursor.style.setProperty("--cursor-y", `${event.clientY}px`);
+    },
+    { passive: true },
+  );
+
+  document.addEventListener("pointerover", (event) => {
+    const target = event.target.closest(cursorHoverTargets);
+    if (!target) return;
+    cursor.classList.add("is-active");
+    label.textContent = getCursorLabel(target);
+  });
+
+  document.addEventListener("pointerout", (event) => {
+    const target = event.target.closest(cursorHoverTargets);
+    if (!target) return;
+    cursor.classList.remove("is-active");
+    label.textContent = "";
+  });
+}
+
+function setupLightboxSwipe() {
+  if (!modal) return;
+
+  let startX = 0;
+  let startY = 0;
+  let tracking = false;
+
+  modal.addEventListener(
+    "touchstart",
+    (event) => {
+      if (event.touches.length !== 1) return;
+      startX = event.touches[0].clientX;
+      startY = event.touches[0].clientY;
+      tracking = true;
+    },
+    { passive: true },
+  );
+
+  modal.addEventListener(
+    "touchend",
+    (event) => {
+      if (!tracking) return;
+      tracking = false;
+      const touch = event.changedTouches[0];
+      const dx = touch.clientX - startX;
+      const dy = touch.clientY - startY;
+
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+        stepLightbox(dx < 0 ? 1 : -1);
+      } else if (dy > 80 && Math.abs(dy) > Math.abs(dx)) {
+        closeLightbox();
+      }
+    },
+    { passive: true },
+  );
+}
+
 function setupAutoplayFallback() {
   if (!ambientAudio || !document.body.classList.contains("home-page")) return;
 
@@ -611,6 +698,8 @@ if (tiles.length && portfolioOverview && portfolioDetail) {
 setupAmbientAudio();
 setupHeroSlideshow();
 setupHeroParallax();
+setupCustomCursor();
+setupLightboxSwipe();
 setupAutoplayFallback();
 runIntro();
 updateHeader();

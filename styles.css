@@ -62,6 +62,69 @@ button {
   font: inherit;
 }
 
+/* ---------- custom cursor ---------- */
+
+body.has-custom-cursor,
+body.has-custom-cursor * {
+  cursor: none !important;
+}
+
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 300;
+  display: grid;
+  place-items: center;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  background: transparent;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(var(--cursor-x, -100px), var(--cursor-y, -100px), 0);
+  transition:
+    transform 120ms linear,
+    width 220ms var(--ease),
+    height 220ms var(--ease),
+    margin 220ms var(--ease),
+    background 220ms ease,
+    opacity 200ms ease;
+}
+
+body.has-custom-cursor .custom-cursor {
+  opacity: 1;
+}
+
+.custom-cursor.is-active {
+  width: 58px;
+  height: 58px;
+  margin: -29px 0 0 -29px;
+  background: var(--accent-soft);
+}
+
+.custom-cursor-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+.custom-cursor.is-active .custom-cursor-label {
+  opacity: 1;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .custom-cursor {
+    display: none;
+  }
+}
+
 h1,
 h2 {
   margin: 0;
